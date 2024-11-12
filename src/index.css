@@ -130,7 +130,7 @@ sub {
 }
 .sideBar .dashboard {
   transition: 0.3s linear;
-  height: 100vh;
+  height: 100%;
   background-color: var(--headingColor);
   width: 80px;
 }
