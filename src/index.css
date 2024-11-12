@@ -1,13 +1,300 @@
-body {
+:root {
+  --main-background-color: #0e2068;
+  --secondary-background-color: #2d2e32;
+  --primaryBackground: #212222;
+  --secondaryBackground: #2f3030;
+  --primaryColor: #e0a80d;
+  --greyDark: #7d8792;
+  --headingColor: #2d2e2e;
+  --wight: #fff;
+  --black: #000;
+  --sliver: #bac8d3;
+  --grey-color: #dfdfdf;
+}
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background-color: var(--grey-color) !important;
+  font-family: "Open Sans", sans-serif !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+ul {
+  padding-left: 0;
+}
+body a {
+  text-decoration: none;
+}
+.mt-6 {
+  margin-top: 5rem;
+}
+sub {
+  bottom: -1rem !important;
+  font-size: 15px !important;
+}
+/* -------------------------- HEADER -------------------------- */
+
+.header {
+  height: fit-content;
+  background-color: var(--secondary-background-color);
+  box-shadow: 0px 5px 15px gray;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.header .card {
+  border: none;
+  border-left: 2px solid;
+  border-radius: 0;
+  background-color: inherit;
+  color: white;
+  height: 30px;
+  text-align: center;
 }
+.header .card p {
+  padding: 0 30px 0 20px;
+  margin: 0;
+}
+.header img {
+  width: 6%;
+  border-radius: 50%;
+}
+/* -------------------------- HEADER -------------------------- */
+
+/* -------------------------- DASHBOARD -------------------------- */
+/* .sideBar .content {
+  transition: 0.5s linear;
+} */
+/* .sideBar {
+  transition: 0.3s linear;
+  top: -65px !important;
+}
+.sideBar .dashboard {
+  transition: 0.3s linear;
+  height: 100vh;
+  background-color: var(--headingColor);
+  width: 250px;
+}
+.sideBar .dashboard .box {
+  transition: 0.2s ease-in;
+}
+.sideBar .dashboard .content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sideBar .box {
+  transition: 0.2s linear;
+  cursor: pointer;
+}
+.sideBar .box:hover {
+  transform: translateX(15px);
+}
+
+.sideBar .active {
+  color: rgb(13 202 240);
+  transform: translateX(15px);
+  font-weight: bold;
+} */
+/* .sideBar p,
+.sideBar h6 {
+  display: none;
+} */
+/* .sideBar:hover {
+  width: 250px;
+}
+.sideBar:hover p,
+.sideBar:hover h6 {
+  display: block;
+  margin-bottom: 0;
+} */
+/* .sideBar:hover .dashboard {
+  width: 250px;
+}
+.sideBar:hover .active {
+  transform: translateX(15px);
+} */
+/* @media (max-width: 768px) {
+  .sideBar {
+    top: -54px !important;
+  }
+} */
+/* -------------------------- DASHBOARD -------------------------- */
+/* -------------------------- SIDEBAR -------------------------- */
+/* .sideBar .content {
+  transition: 0.5s linear;
+} */
+.sideBar {
+  transition: 0.3s linear;
+  width: 80px;
+}
+.sideBar .dashboard {
+  transition: 0.3s linear;
+  height: 100vh;
+  background-color: var(--headingColor);
+  width: 80px;
+}
+.sideBar .dashboard .box {
+  transition: 0.2s ease-in;
+}
+.sideBar .dashboard .content img {
+  left: 48%;
+  width: 70%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+.sideBar .box {
+  transition: 0.2s linear;
+  cursor: pointer;
+}
+.sideBar .box:hover {
+  transform: translateX(15px);
+}
+
+.sideBar .active {
+  color: rgb(13 202 240);
+  font-weight: bold;
+}
+.sideBar p,
+.sideBar h6 {
+  display: none;
+}
+.sideBar:hover {
+  width: 350px;
+}
+.sideBar:hover p,
+.sideBar:hover h6 {
+  display: block;
+  margin-bottom: 0;
+}
+.sideBar:hover .dashboard {
+  width: 250px;
+}
+.sideBar:hover .active {
+  transform: translateX(15px);
+}
+@media (max-width: 768px) {
+  .sideBar:hover {
+    width: 50px;
+    margin-right: 145px;
+  }
+  .sideBar:hover .dashboard {
+    width: 180px;
+  }
+}
+/* -------------------------- SIDEBAR -------------------------- */
+
+/* -------------------------- Box -------------------------- */
+.dash .box {
+  background-color: var(--wight);
+  width: 100%;
+  height: 80%;
+  margin-top: 60px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 15px gray;
+}
+
+/* -------------------------- Box -------------------------- */
+/* -------------------------- Main_Head -------------------------- */
+.main-head {
+  text-align: center;
+}
+.main-head h2 {
+  font-weight: normal;
+  font-size: 40px;
+  position: relative;
+  margin-bottom: 70px;
+  text-transform: uppercase;
+  color: var(--bs-gray-dark);
+}
+.main-head h2::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  background-color: var(--bs-gray-700);
+  bottom: -10px;
+  width: 30%;
+}
+.main-head h2::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--bs-gray-700);
+  background-color: white;
+  bottom: -15px;
+}
+@media (max-width: 767px) {
+  .main-head h2 {
+    font-size: 25px;
+    font-weight: 600;
+  }
+}
+/* -------------------------- Main_Head -------------------------- */
+/* -------------------------- DASHBOARD -------------------------- */
+.dashboard .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 60px;
+  margin-bottom: 20px;
+}
+.dashboard .cards .card {
+  border-left: 4px solid var(--);
+  border-radius: 0;
+  box-shadow: 10px 10px 15px var(--greyDark);
+  color: var(--bs-secondary);
+}
+.dashboard .cards .card svg {
+  font-size: calc(1.325rem + 0.9vw) !important;
+}
+@media (max-width: 768px) {
+  .dashboard .cards .card {
+    width: 75%;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 0.5rem !important;
+  }
+  .dashboard .cards {
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    justify-items: center;
+  }
+}
+.dashboard table .fs-6 {
+  font-size: 0.75rem !important;
+}
+@media (max-width: 767px) {
+  .dashboard .tables {
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+  }
+  /* .dashboard .tables .table {
+    width: fit-content;
+  } */
+  .dashboard .tables .table .text {
+    font-size: 12px;
+  }
+  .dashboard .tables .table table {
+    font-size: 12px;
+  }
+  .dashboard .tables .table table span {
+    font-size: 7px !important;
+  }
+  .dashboard .table tr th:first-of-type {
+    display: none;
+  }
+  .dashboard .table tr th,
+  .dashboard .table tr td {
+    padding: 1px;
+  }
+}
+/* -------------------------- DASHBOARD -------------------------- */
