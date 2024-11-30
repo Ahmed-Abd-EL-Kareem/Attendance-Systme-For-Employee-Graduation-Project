@@ -1,6 +1,6 @@
 import React from "react";
-import Head from "./Head";
-import { adminDashBoard, emTable, shTable } from "../data";
+import Head from "../Head";
+import { adminDashBoard, emTable, shTable } from "../Data/data";
 
 const Dashboard = () => {
   return (
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 <p className="mt-3">Employee's Department</p>
               </div>
               <div className="tab p-2 bg-white">
-                <table className="table table-striped table-hover table-bordered text-center">
+                <table className="table table-striped table-hover table-bordered text-center shadow p-3 mb-5 bg-body-tertiary">
                   <thead className="table-dark">
                     <tr>
                       <th scope="col">#</th>
@@ -66,7 +66,7 @@ const Dashboard = () => {
                 <p className="mt-3">Employee's Per Shift</p>
               </div>
               <div className="tab p-2 bg-white">
-                <table className="table table-striped table-hover table-bordered text-center">
+                <table className="table table-striped table-hover table-bordered text-center shadow p-3 mb-5 bg-body-tertiary">
                   <thead className="table-dark">
                     <tr>
                       <th scope="col">#</th>

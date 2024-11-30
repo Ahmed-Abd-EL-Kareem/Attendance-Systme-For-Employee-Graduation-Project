@@ -40,6 +40,7 @@ sub {
   height: fit-content;
   background-color: var(--secondary-background-color);
   box-shadow: 0px 5px 15px gray;
+  z-index: 9;
 }
 
 .header .card {
@@ -63,62 +64,63 @@ sub {
 
 /* -------------------------- DASHBOARD -------------------------- */
 /* .sideBar .content {
-  transition: 0.5s linear;
-} */
+    transition: 0.5s linear;
+  } */
 /* .sideBar {
-  transition: 0.3s linear;
-  top: -65px !important;
-}
-.sideBar .dashboard {
-  transition: 0.3s linear;
-  height: 100vh;
-  background-color: var(--headingColor);
-  width: 250px;
-}
-.sideBar .dashboard .box {
-  transition: 0.2s ease-in;
-}
-.sideBar .dashboard .content img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.sideBar .box {
-  transition: 0.2s linear;
-  cursor: pointer;
-}
-.sideBar .box:hover {
-  transform: translateX(15px);
-}
-
-.sideBar .active {
-  color: rgb(13 202 240);
-  transform: translateX(15px);
-  font-weight: bold;
-} */
-/* .sideBar p,
-.sideBar h6 {
-  display: none;
-} */
-/* .sideBar:hover {
-  width: 250px;
-}
-.sideBar:hover p,
-.sideBar:hover h6 {
-  display: block;
-  margin-bottom: 0;
-} */
-/* .sideBar:hover .dashboard {
-  width: 250px;
-}
-.sideBar:hover .active {
-  transform: translateX(15px);
-} */
-/* @media (max-width: 768px) {
-  .sideBar {
-    top: -54px !important;
+    transition: 0.3s linear;
+    top: -65px !important;
   }
-} */
+  .sideBar .dashboard {
+    transition: 0.3s linear;
+    height: 100vh;
+    background-color: var(--headingColor);
+    width: 250px;
+  }
+  .sideBar .dashboard .box {
+    transition: 0.2s ease-in;
+  }
+  .sideBar .dashboard .content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sideBar .box {
+    transition: 0.2s linear;
+    cursor: pointer;
+  }
+  .sideBar .box:hover {
+    transform: translateX(15px);
+  }
+  
+  .sideBar .active {
+    color: rgb(13 202 240);
+    transform: translateX(15px);
+    font-weight: bold;
+  } */
+/* .sideBar p,
+  .sideBar h6 {
+    display: none;
+  } */
+/* .sideBar:hover {
+    width: 250px;
+  }
+  .sideBar:hover p,
+  .sideBar:hover h6 {
+    display: block;
+    margin-bottom: 0;
+  } */
+/* .sideBar:hover .dashboard {
+    width: 250px;
+  }
+  .sideBar:hover .active {
+    transform: translateX(15px);
+  } */
+/* @media (max-width: 768px) {
+    .sideBar {
+      top: -54px !important;
+    }
+  } */
+
 /* -------------------------- DASHBOARD -------------------------- */
 /* -------------------------- SIDEBAR -------------------------- */
 /* .sideBar .content {
@@ -127,6 +129,7 @@ sub {
 .sideBar {
   transition: 0.3s linear;
   width: 80px;
+  z-index: 10;
 }
 .sideBar .dashboard {
   transition: 0.3s linear;
@@ -165,26 +168,51 @@ sub {
 .sideBar:hover {
   width: 350px;
 }
-.sideBar:hover p,
-.sideBar:hover h6 {
+.sideBar .dashboard:hover p,
+.sideBar .dashboard:hover h6 {
   display: block;
   margin-bottom: 0;
 }
-.sideBar:hover .dashboard {
+.sideBar .dashboard:hover {
   width: 250px;
 }
-.sideBar:hover .active {
+.sideBar .dashboard:hover .active {
   transform: translateX(15px);
 }
-@media (max-width: 768px) {
-  .sideBar:hover {
-    width: 50px;
-    margin-right: 145px;
+
+@media (max-width: 567px) {
+  .sideBar .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: -1;
   }
-  .sideBar:hover .dashboard {
+  .sideBar .dashboard:hover + .overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+  .sideBar .dashboard:hover {
+    width: 100px;
+  }
+  .sideBar:hover {
+    width: 80px !important;
+  }
+}
+@media (max-width: 767px) {
+  .sideBar:hover {
+    width: 180px;
+  }
+  .sideBar .dashboard:hover {
     width: 180px;
   }
 }
+
 /* -------------------------- SIDEBAR -------------------------- */
 
 /* -------------------------- Box -------------------------- */
@@ -206,7 +234,7 @@ sub {
   font-weight: normal;
   font-size: 40px;
   position: relative;
-  margin-bottom: 70px;
+  margin-bottom: 50px;
   text-transform: uppercase;
   color: var(--bs-gray-dark);
 }
@@ -298,3 +326,350 @@ sub {
   }
 }
 /* -------------------------- DASHBOARD -------------------------- */
+/* -------------------------- DEPARTMENT -------------------------- */
+
+.icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  padding: 7px;
+  color: black;
+}
+.edit {
+  background-color: green;
+}
+.delete {
+  background-color: red;
+}
+
+@media (max-width: 767px) {
+  .department .table .text {
+    font-size: 12px;
+  }
+  .department .table table {
+    font-size: 12px;
+  }
+  .department .table tr th:first-of-type {
+    display: none;
+  }
+  .department .table tr td:first-of-type {
+    display: none;
+  }
+  .department .table tr th,
+  .department .table tr td {
+    padding: 1px;
+    width: 10px;
+  }
+}
+/* Button */
+/* .add_button .pushable {
+  position: relative;
+  background: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  outline-offset: 4px;
+  outline-color: deeppink;
+  transition: filter 250ms;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.add_button .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: hsl(226, 25%, 69%);
+  border-radius: 8px;
+  filter: blur(2px);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+} */
+/* 
+.add_button .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(248, 96%, 15%) 0%,
+    hsl(248, 96%, 25%) 8%,
+    hsl(248, 96%, 15%) 92%,
+    hsl(248, 96%, 5%) 100%
+  );
+}
+
+.add_button .front {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  background: hsl(248, 100%, 35%);
+  padding: 16px 32px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+} */
+
+.add_button .pushable,
+.back_button .pushable {
+  position: relative;
+  background: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  outline-offset: 4px;
+  outline-color: deeppink;
+  transition: filter 250ms;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.add_button .shadow,
+.back_button .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: hsl(226, 25%, 69%);
+  border-radius: 8px;
+  filter: blur(2px);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.add_button .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(248, 96%, 15%) 0%,
+    hsl(248, 96%, 25%) 8%,
+    hsl(248, 96%, 15%) 92%,
+    hsl(248, 96%, 5%) 100%
+  );
+}
+
+.add_button .front {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  background: hsl(248, 100%, 35%);
+  padding: 13px 15px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+.back_button .edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(0, 0%, 25%) 0%,
+    hsl(0, 0%, 35%) 8%,
+    hsl(0, 0%, 25%) 92%,
+    hsl(0, 0%, 15%) 100%
+  );
+}
+
+.back_button .front {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  background: hsl(0, 0%, 45%);
+  padding: 13px 15px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.add_button .pushable:hover,
+.back_button .pushable:hover {
+  filter: brightness(110%);
+}
+
+.add_button .pushable:hover .front,
+.back_button .pushable:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.add_button .pushable:active .front,
+.back_button .pushable:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.add_button .pushable:hover .shadow,
+.back_button .pushable:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.add_button .pushable:active .shadow,
+.back_button .pushable:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.add_button .pushable:focus:not(:focus-visible),
+.back_button .pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+@media (max-width: 767px) {
+  .add_button,
+  .back_button {
+    text-align: center;
+  }
+}
+.pagination .button {
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background-image: linear-gradient(30deg, #000, #000);
+  border-radius: 30px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 0.6em 1.5em;
+}
+
+.pagination .button:hover {
+  background-position: right center;
+  background-size: 200% auto;
+  -webkit-animation: pulse 2s infinite;
+  animation: pulse512 1.5s infinite;
+}
+.pagination .disabled {
+  cursor: not-allowed;
+  background-color: gray;
+  background-image: none;
+  border: none;
+  color: #fff;
+  border-radius: 30px;
+  background-size: 100% auto;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 0.6em 1.5em;
+}
+@keyframes pulse512 {
+  0% {
+    box-shadow: 0 0 0 0 hsl(248, 96%, 15%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+  }
+}
+/* Button */
+.department .form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgb(68 75 86 / 25%) !important;
+  border-color: transparent;
+  border: none !important;
+}
+/* -------------------------- DEPARTMENT -------------------------- */
+/* -------------------------- ADD DEPARTMENT -------------------------- */
+
+.add .card {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (max-width: 767px) {
+  .add .card {
+    width: 100% !important;
+  }
+}
+.add input {
+  padding: 3px 10px;
+  border: 1px solid var(--bs-dark-border-subtle);
+  border-radius: 20px;
+  box-shadow: 1px 2px 5px gray;
+  margin-bottom: 25px;
+}
+.add input:focus {
+  box-shadow: 0 0 0 0.25rem rgb(68 75 86 / 25%) !important;
+}
+.add input:focus-visible {
+  outline: none !important;
+}
+.add label {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: -15px;
+}
+
+.add .button {
+  cursor: pointer;
+  position: relative;
+  padding: 10px 24px;
+  font-size: 18px;
+  color: hsl(248, 96%, 15%);
+  border: 2px solid hsl(248, 96%, 15%);
+  border-radius: 34px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.add .button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: hsl(248, 96%, 25%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.add .button:hover::before {
+  scale: 3;
+}
+
+.add .button:hover {
+  color: #fff;
+  scale: 1.1;
+  box-shadow: 0 0px 20px rgba(193, 163, 98, 0.4);
+}
+
+.add .button:active {
+  scale: 1;
+}
+
+/* -------------------------- ADD DEPARTMENT -------------------------- */

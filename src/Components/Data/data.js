@@ -1,5 +1,5 @@
 const { Building, ArrowRightLeft } = require("lucide-react");
-const { FaUsers } = require("react-icons/fa");
+const { FaUsers, FaClipboardList, FaThList } = require("react-icons/fa");
 const { FaClipboardUser } = require("react-icons/fa6");
 
 export const adminDashBoard = [
@@ -67,5 +67,16 @@ export const shTable = [
     shift: "Shift 3",
     time: "(1:00 PM - 8:30 PM)",
     numEmployees: 8,
+  },
+];
+
+export const employeeDashBoard = [
+  {
+    text: "Attendance Form",
+    icon: <FaClipboardList />,
+  },
+  {
+    text: "History",
+    icon: <FaThList />,
   },
 ];

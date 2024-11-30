@@ -2,8 +2,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import NavBar from "./Components/NavBar";
-import Dashboard from "./Components/Dashboard";
+import Dashboard from "./Components/Admin/Dashboard";
+import Department from "./Components/Admin/Department/Department";
+import AddDepart from "./Components/Admin/Department/AddDepart";
+import EditDepart from "./Components/Admin/Department/EditDepart";
 function App() {
+  // let params = useParams();
+  // console.log(params);
+  // "/dashboard/accounts"
   return (
     <>
       <div className="d-flex">
@@ -11,6 +17,9 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/department" element={<Department />} />
+            <Route path="/department/add" element={<AddDepart />} />
+            <Route path="/department/edit/:id" element={<EditDepart />} />
           </Routes>
         </BrowserRouter>
       </div>
