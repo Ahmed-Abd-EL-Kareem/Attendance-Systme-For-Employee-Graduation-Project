@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "../../Head";
 import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
@@ -10,11 +10,17 @@ const AddShift = () => {
     toast.success("New Department Added !!", {
       theme: "colored",
     });
+  const [startHours, setStartHours] = useState("");
+  const [startMinutes, setStartMinutes] = useState("");
+  const [startSeconds, setStartSeconds] = useState("");
+  const [endHours, setEndHours] = useState("");
+  const [endMinutes, setEndMinutes] = useState("");
+  const [endSeconds, setEndSeconds] = useState("");
   return (
     <>
       <div className="add mt-6 w-100">
         <div className="container ">
-          <Head title="DEPARTMENT" />
+          <Head title="SHIFT" />
           <div className="back_button mb-2">
             <Link to="/shift">
               <button className="pushable">
@@ -45,7 +51,9 @@ const AddShift = () => {
                     id="start"
                     placeholder="Hours"
                     min="0"
-                    max="24"
+                    max="23"
+                    value={startHours}
+                    onChange={(e) => setStartHours(e.target.value.slice(0, 2))}
                   />
                   <input
                     className="w-25"
@@ -54,7 +62,11 @@ const AddShift = () => {
                     id="start"
                     placeholder="Minutes"
                     min="0"
-                    max="60"
+                    max="59"
+                    value={startMinutes}
+                    onChange={(e) =>
+                      setStartMinutes(e.target.value.slice(0, 2))
+                    }
                   />
                   <input
                     className="w-25"
@@ -63,7 +75,11 @@ const AddShift = () => {
                     id="start"
                     placeholder="Seconds"
                     min="0"
-                    max="60"
+                    max="59"
+                    value={startSeconds}
+                    onChange={(e) =>
+                      setStartSeconds(e.target.value.slice(0, 2))
+                    }
                   />
                 </div>
                 <label htmlFor="end">Shift End Time :</label>
@@ -75,7 +91,9 @@ const AddShift = () => {
                     id="end"
                     placeholder="Hours"
                     min="0"
-                    max="24"
+                    max="23"
+                    value={endHours}
+                    onChange={(e) => setEndHours(e.target.value.slice(0, 2))}
                   />
                   <input
                     className="w-25"
@@ -84,7 +102,9 @@ const AddShift = () => {
                     id="end"
                     placeholder="Minutes"
                     min="0"
-                    max="60"
+                    max="59"
+                    value={endMinutes}
+                    onChange={(e) => setEndMinutes(e.target.value.slice(0, 2))}
                   />
                   <input
                     className="w-25"
@@ -93,7 +113,9 @@ const AddShift = () => {
                     id="end"
                     placeholder="Seconds"
                     min="0"
-                    max="60"
+                    max="59"
+                    value={endSeconds}
+                    onChange={(e) => setEndSeconds(e.target.value.slice(0, 2))}
                   />
                 </div>
               </div>

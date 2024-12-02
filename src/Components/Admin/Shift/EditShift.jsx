@@ -24,7 +24,7 @@ const EditShift = () => {
     <>
       <div className="add ms-1 mt-6 w-100">
         <div className="container">
-          <Head title="DEPARTMENT" />
+          <Head title="SHIFT" />
           <div className="back_button mb-2">
             <Link to="/shift">
               <button className="pushable">
@@ -56,8 +56,8 @@ const EditShift = () => {
                     id="start"
                     placeholder="Hours"
                     min="0"
-                    max="24"
-                    onChange={(e) => setStartHours(e.target.value)}
+                    max="23"
+                    onChange={(e) => setStartHours(e.target.value.slice(0, 2))}
                   />
                   <input
                     value={startMinutes}
@@ -67,8 +67,10 @@ const EditShift = () => {
                     id="start"
                     placeholder="Minutes"
                     min="0"
-                    max="60"
-                    onChange={(e) => setStartMinutes(e.target.value)}
+                    max="59"
+                    onChange={(e) =>
+                      setStartMinutes(e.target.value.slice(0, 2))
+                    }
                   />
                   <input
                     value={startSeconds}
@@ -78,8 +80,10 @@ const EditShift = () => {
                     id="start"
                     placeholder="Seconds"
                     min="0"
-                    max="60"
-                    onChange={(e) => setStartSeconds(e.target.value)}
+                    max="59"
+                    onChange={(e) =>
+                      setStartSeconds(e.target.value.slice(0, 2))
+                    }
                   />
                 </div>
                 <label htmlFor="name">Shift End Time :</label>
@@ -92,8 +96,8 @@ const EditShift = () => {
                     id="end"
                     placeholder="Hours"
                     min="0"
-                    max="24"
-                    onChange={(e) => setEndHours(e.target.value)}
+                    max="23"
+                    onChange={(e) => setEndHours(e.target.value.slice(0, 2))}
                   />
                   <input
                     value={endMinutes}
@@ -103,8 +107,8 @@ const EditShift = () => {
                     id="end"
                     placeholder="Minutes"
                     min="0"
-                    max="60"
-                    onChange={(e) => setEndMinutes(e.target.value)}
+                    max="59"
+                    onChange={(e) => setEndMinutes(e.target.value.slice(0, 2))}
                   />
                   <input
                     value={endSeconds}
@@ -114,13 +118,28 @@ const EditShift = () => {
                     id="end"
                     placeholder="Seconds"
                     min="0"
-                    max="60"
-                    onChange={(e) => setEndSeconds(e.target.value)}
+                    max="59"
+                    onChange={(e) => setEndSeconds(e.target.value.slice(0, 2))}
                   />
                 </div>
               </div>
               <div className="d-flex justify-content-end mt-3">
-                <button class="button" onClick={notify}>
+                <button
+                  class="button"
+                  onClick={() => {
+                    return (
+                      console.log(
+                        startHours,
+                        startMinutes,
+                        startSeconds,
+                        endHours,
+                        endMinutes,
+                        endSeconds
+                      ),
+                      notify
+                    );
+                  }}
+                >
                   <span className="pe-1 me-1 ">
                     <BsPlusCircleFill
                       style={{ transform: "translateY(-1px)" }}
