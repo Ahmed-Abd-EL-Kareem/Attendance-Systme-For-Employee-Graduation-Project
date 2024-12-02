@@ -6,6 +6,9 @@ import Dashboard from "./Components/Admin/Dashboard";
 import Department from "./Components/Admin/Department/Department";
 import AddDepart from "./Components/Admin/Department/AddDepart";
 import EditDepart from "./Components/Admin/Department/EditDepart";
+import Shift from "./Components/Admin/Shift/Shift";
+import AddShift from "./Components/Admin/Shift/AddShift";
+import EditShift from "./Components/Admin/Shift/EditShift";
 function App() {
   // let params = useParams();
   // console.log(params);
@@ -20,6 +23,9 @@ function App() {
             <Route path="/department" element={<Department />} />
             <Route path="/department/add" element={<AddDepart />} />
             <Route path="/department/edit/:id" element={<EditDepart />} />
+            <Route path="/shift" element={<Shift />} />
+            <Route path="/shift/add" element={<AddShift />} />
+            <Route path="/shift/edit/:id" element={<EditShift />} />
           </Routes>
         </BrowserRouter>
       </div>

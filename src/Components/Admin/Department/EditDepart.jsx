@@ -26,7 +26,7 @@ const EditDepart = () => {
                   <span className="pe-2 me-2 border-end">
                     <MdArrowBackIos />
                   </span>
-                  Add Department
+                  Back
                 </span>
               </button>
             </Link>

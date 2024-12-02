@@ -608,6 +608,9 @@ sub {
   .add .card {
     width: 100% !important;
   }
+  .add input {
+    width: 100% !important;
+  }
 }
 .add input {
   padding: 3px 10px;

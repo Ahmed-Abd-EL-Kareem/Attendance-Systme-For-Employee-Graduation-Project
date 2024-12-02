@@ -24,12 +24,12 @@ const DepartInfo = () => {
                   <span className="pe-2 me-2 border-end">
                     <MdArrowBackIos />
                   </span>
-                  Add Department
+                  Back
                 </span>
               </button>
             </Link>
           </div>
-          <div className="card col-lg-8 col-xl-8 col-xxl-8 bg-light mt-3 ms-1">
+          <div className="card  col-lg-8 col-xl-8 col-xxl-8 bg-light mt-3 ms-1">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
               <p className="mt-3">Department Data</p>
             </div>
