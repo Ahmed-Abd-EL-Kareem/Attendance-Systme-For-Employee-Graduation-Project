@@ -120,7 +120,14 @@ sub {
       top: -54px !important;
     }
   } */
-
+.menuBar {
+  display: none;
+}
+@media (max-width: 768px) {
+  .menuBar {
+    display: block;
+  }
+}
 /* -------------------------- DASHBOARD -------------------------- */
 /* -------------------------- SIDEBAR -------------------------- */
 /* .sideBar .content {
@@ -180,7 +187,7 @@ sub {
   transform: translateX(15px);
 }
 
-@media (max-width: 567px) {
+/* @media (max-width: 567px) {
   .sideBar .overlay {
     position: fixed;
     top: 0;
@@ -201,15 +208,62 @@ sub {
     width: 100px;
   }
   .sideBar:hover {
-    width: 80px !important;
+    width: 0px !important;
   }
-}
-@media (max-width: 767px) {
+} */
+/* @media (max-width: 767px) {
   .sideBar:hover {
     width: 180px;
   }
   .sideBar .dashboard:hover {
     width: 180px;
+  }
+} */
+
+@media (max-width: 567px) {
+  .sideBar .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: -1;
+  }
+  .sideBar .dashboard + .overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+  .sideBar .dashboard {
+    width: 100px;
+  }
+  .sideBar {
+    width: 0px !important;
+  }
+}
+@media (max-width: 767px) {
+  .sideBar {
+    width: 0px;
+  }
+  .sideBar:hover {
+    width: 0px;
+  }
+  .sideBar .dashboard {
+    width: 180px;
+  }
+  .sideBar .hide {
+    display: none;
+  }
+  .sideBar .dashboard:hover {
+    width: 180px;
+  }
+  .sideBar .dashboard p,
+  .sideBar .dashboard h6 {
+    display: block;
+    margin-bottom: 0;
   }
 }
 
@@ -303,7 +357,7 @@ sub {
   .dashboard .tables {
     flex-direction: column;
     align-items: center;
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
   /* .dashboard .tables .table {
     width: fit-content;
