@@ -415,7 +415,7 @@ sub {
   .department .table tr th,
   .department .table tr td .employee .table tr th,
   .employee .table tr td {
-    padding: 1px;
+    padding: 0.25rem !important;
     width: 10px;
   }
 }
