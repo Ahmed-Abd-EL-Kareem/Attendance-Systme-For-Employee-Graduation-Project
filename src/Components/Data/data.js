@@ -72,7 +72,7 @@ export const shTable = [
 
 export const employeeDashBoard = [
   {
-    text: "Attendance Form",
+    text: "Attendance-Form",
     icon: <FaClipboardList />,
   },
   {

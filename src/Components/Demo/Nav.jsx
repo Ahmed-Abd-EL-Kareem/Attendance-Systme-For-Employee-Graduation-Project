@@ -82,7 +82,7 @@ const DashBoard = () => {
   const location = useLocation();
   // console.log(location.pathname.split("/")[1]);
   const [sideBar, setSideBar] = useState(false);
-  const [account, setAccount] = useState("admin");
+  const [account, setAccount] = useState("");
   const isActive = (path) => location.pathname.split("/")[1] === path;
 
   return (
@@ -168,31 +168,35 @@ const DashBoard = () => {
                 <ul className="my-4 border-bottom p-0">
                   {employeeDashBoard.map((val, index) => {
                     return (
-                      <li
-                        key={index}
-                        className={`box d-flex ms-2 mb-4 ${
-                          isActive(`/${val.text.toLowerCase()}`)
-                            ? "active"
-                            : "text-light"
-                        }`}
-                        // onClick={() => setActive(index)}
-                      >
-                        {val.icon} <p className="ms-2">{val.text}</p>
-                      </li>
+                      <Link to={`/${val.text.toLowerCase()}`}>
+                        <li
+                          key={index}
+                          className={`box d-flex ms-2 mb-4 ${
+                            isActive(`${val.text.toLowerCase()}`)
+                              ? "active"
+                              : "text-light"
+                          }`}
+                          // onClick={() => setActive(index)}
+                        >
+                          {val.icon} <p className="ms-2">{val.text}</p>
+                        </li>
+                      </Link>
                     );
                   })}
                 </ul>
                 <h6 className="text-secondary fw-bold my-4">PROFILE</h6>
-                <div className="border-bottom">
-                  <div
-                    className={`box d-flex ms-2 mb-4 ${
-                      isActive("/profile") ? "active" : "text-light"
-                    }`}
-                    // onClick={() => setActive(-1)}
-                  >
-                    <FaAddressCard /> <p className="ms-2">My Profile</p>
+                <Link to={`/profile`}>
+                  <div className="border-bottom">
+                    <div
+                      className={`box d-flex ms-2 mb-4 ${
+                        isActive("profile") ? "active" : "text-light"
+                      }`}
+                      // onClick={() => setActive(-1)}
+                    >
+                      <FaAddressCard /> <p className="ms-2">My Profile</p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </>
             )}
           </div>

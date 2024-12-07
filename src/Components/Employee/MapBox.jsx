@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 const MapBox = () => {
@@ -75,7 +75,9 @@ const MapBox = () => {
       mapRef.current.remove();
     };
   }, []);
-
+  const [loc, setLoc] = useState("");
+  // setLoc();
+  console.log(mapboxgl.tracepoint);
   return (
     <div
       id="map"
