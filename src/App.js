@@ -25,11 +25,11 @@ function App() {
             <Route path="/department" element={<Department />} />
             <Route path="/department/add" element={<AddDepart />} />
             <Route path="/department/edit/:id" element={<EditDepart />} />
-            {/* <Route path="/shift" element={<Shift />} />
+            <Route path="/shift" element={<Shift />} />
             <Route path="/shift/add" element={<AddShift />} />
             <Route path="/shift/edit/:id" element={<EditShift />} />
             <Route path="/employee" element={<Employee />} />
-            <Route path="/employee/add" element={<AddEmp />} /> */}
+            <Route path="/employee/add" element={<AddEmp />} />
           </Routes>
         </BrowserRouter>
       </div>

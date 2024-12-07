@@ -415,8 +415,12 @@ sub {
   .department .table tr th,
   .department .table tr td .employee .table tr th,
   .employee .table tr td {
-    padding: 0.25rem !important;
+    padding: 1px;
     width: 10px;
+  }
+  .department .table tr th,
+  .department .table tr td {
+    padding: 0.25rem 0.25rem !important;
   }
 }
 /* Button */
