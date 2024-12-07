@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 const AddShift = () => {
   const notify = () =>
-    toast.success("New Department Added !!", {
+    toast.success("New Shift Added !!", {
       theme: "colored",
     });
   const [startHours, setStartHours] = useState("");

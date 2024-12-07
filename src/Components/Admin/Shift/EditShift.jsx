@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
-import { getSharedRowData } from "./Shift";
+import { SGetSharedRowData } from "./Shift";
 import "react-toastify/dist/ReactToastify.css";
 const EditShift = () => {
   const notify = () =>
-    toast.success("New Department Added !!", {
+    toast.success("Shift Updated Successfully!!", {
       theme: "colored",
     });
-  const start = getSharedRowData().start.split(":");
-  const end = getSharedRowData().end.split(":");
+  const start = SGetSharedRowData().start.split(":");
+  const end = SGetSharedRowData().end.split(":");
   const [startHours, setStartHours] = useState(start[0]);
   const [startMinutes, setStartMinutes] = useState(start[1]);
   const [startSeconds, setStartSeconds] = useState(start[2]);
@@ -127,17 +127,7 @@ const EditShift = () => {
                 <button
                   class="button"
                   onClick={() => {
-                    return (
-                      console.log(
-                        startHours,
-                        startMinutes,
-                        startSeconds,
-                        endHours,
-                        endMinutes,
-                        endSeconds
-                      ),
-                      notify
-                    );
+                    notify();
                   }}
                 >
                   <span className="pe-1 me-1 ">

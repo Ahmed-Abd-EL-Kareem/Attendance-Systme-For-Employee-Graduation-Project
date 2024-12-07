@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
-import { getSharedRowData } from "./Department";
+import { DGetSharedRowData } from "./Department";
 import "react-toastify/dist/ReactToastify.css";
 const EditDepart = () => {
   const notify = () =>
-    toast.success("New Department Added !!", {
+    toast.success("Department Updated Successfully!!", {
       theme: "colored",
     });
-  const [departName, setDepartName] = useState(getSharedRowData().name);
+  const [departName, setDepartName] = useState(DGetSharedRowData().name);
   return (
     <>
       <div className="add ms-1 mt-6 w-100">
@@ -43,7 +43,7 @@ const EditDepart = () => {
                   type="text"
                   name="id"
                   id="id"
-                  value={getSharedRowData().id}
+                  value={DGetSharedRowData().id}
                   disabled
                 />
                 <label htmlFor="name">Department Name :</label>

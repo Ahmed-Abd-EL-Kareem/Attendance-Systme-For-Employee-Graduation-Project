@@ -397,20 +397,24 @@ sub {
 }
 
 @media (max-width: 767px) {
-  .department .table .text {
+  .department .table .text,
+  .employee .table .text {
     font-size: 12px;
   }
   .department .table table {
     font-size: 12px;
   }
-  .department .table tr th:first-of-type {
+  .department .table tr th:first-of-type,
+  .employee .table tr th:first-of-type {
     display: none;
   }
-  .department .table tr td:first-of-type {
+  .department .table tr td:first-of-type,
+  .employee .table tr td:first-of-type {
     display: none;
   }
   .department .table tr th,
-  .department .table tr td {
+  .department .table tr td .employee .table tr th,
+  .employee .table tr td {
     padding: 1px;
     width: 10px;
   }
@@ -644,6 +648,87 @@ sub {
     box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
   }
 }
+.buttonDownload {
+  display: inline-block;
+  position: relative;
+  padding: 5px 25px;
+  background-color: #4cc713;
+  color: white;
+  font-family: sans-serif;
+  text-decoration: none;
+  font-size: 0.9em;
+  text-align: center;
+  text-indent: 15px;
+  border: none;
+  border-radius: 2em;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.buttonDownload:hover {
+  background-color: #1a60a2;
+  color: white;
+}
+
+.buttonDownload:before,
+.buttonDownload:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  left: 15px;
+  top: 52%;
+}
+
+.buttonDownload:before {
+  width: 10px;
+  height: 2px;
+  border-style: solid;
+  border-width: 0 2px 2px;
+}
+
+.buttonDownload:after {
+  width: 0;
+  height: 0;
+  margin-left: 1px;
+  margin-top: -7px;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: transparent;
+  border-top-color: inherit;
+  animation: downloadArrow 1s linear infinite;
+  animation-play-state: paused;
+}
+
+.buttonDownload:hover:before {
+  border-color: #bdd3ef;
+}
+
+.buttonDownload:hover:after {
+  border-top-color: #eff1f7;
+  animation-play-state: running;
+}
+
+@keyframes downloadArrow {
+  0% {
+    margin-top: -7px;
+    opacity: 1;
+  }
+
+  0.001% {
+    margin-top: -15px;
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    margin-top: 0;
+    opacity: 0.4;
+  }
+}
+
 /* Button */
 .department .form-control:focus {
   box-shadow: 0 0 0 0.25rem rgb(68 75 86 / 25%) !important;
@@ -666,17 +751,20 @@ sub {
     width: 100% !important;
   }
 }
-.add input {
+.add input,
+.add select {
   padding: 3px 10px;
   border: 1px solid var(--bs-dark-border-subtle);
   border-radius: 20px;
   box-shadow: 1px 2px 5px gray;
   margin-bottom: 25px;
 }
-.add input:focus {
+.add input:focus,
+.add select:focus {
   box-shadow: 0 0 0 0.25rem rgb(68 75 86 / 25%) !important;
 }
-.add input:focus-visible {
+.add input:focus-visible,
+.add select:focus-visible {
   outline: none !important;
 }
 .add label {
@@ -730,3 +818,54 @@ sub {
 }
 
 /* -------------------------- ADD DEPARTMENT -------------------------- */
+
+/* -------------------------- Employee -------------------------- */
+.employee table span {
+  font-size: 12px;
+  color: gray;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .employee .table table {
+    font-size: 7px !important;
+  }
+  .employee .table table span {
+    font-size: 7px !important;
+  }
+  .employee table span {
+    font-size: 7px;
+  }
+  .employee table img {
+    width: 20px !important;
+  }
+  .employee table .icon {
+    width: 15px !important;
+    height: 15px !important;
+    padding: 1px !important;
+  }
+}
+@media (max-width: 991px) {
+  .employee table .icon {
+    width: 25px;
+    height: 25px;
+    padding: 4px;
+  }
+  .employee .table table {
+    font-size: 13px;
+  }
+}
+/* .Emp {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(135px, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 60px;
+  margin-bottom: 20px;
+} */
+.add .gender input {
+  margin-right: 0px;
+  box-shadow: none;
+}
+.add .gender input:focus {
+  box-shadow: none !important;
+}
+/* -------------------------- Employee -------------------------- */

@@ -9,12 +9,12 @@ let sharedRowData = null; // Placeholder for the clicked row's data
 const setSharedRowData = (data) => {
   sharedRowData = data;
 };
-export const getSharedRowData = () => sharedRowData;
+export const DGetSharedRowData = () => sharedRowData;
 const Department = () => {
   const handleEdit = (rowData) => {
     setSharedRowData(rowData);
     // console.log("Edit clicked for row:", rowData);
-    console.log("Edit clicked for row:", getSharedRowData());
+    console.log("Edit clicked for row:", DGetSharedRowData());
     // exports.rowData = rowData;
     // You can now use rowData for editing (e.g., open a modal or navigate to an edit page)
   };
