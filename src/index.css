@@ -686,7 +686,6 @@ sub {
   font-weight: 600;
   letter-spacing: 2px;
   background: transparent;
-  color: black;
   overflow: hidden;
   box-shadow: 0 0 0 0 transparent;
   -webkit-transition: all 0.2s ease-in;
@@ -695,9 +694,11 @@ sub {
 }
 .attendance .in {
   border: 1px solid rgb(41, 154, 29);
+  color: rgb(41, 154, 29);
 }
 .attendance .out {
   border: 1px solid rgb(166, 33, 29);
+  color: rgb(166, 33, 29);
 }
 .attendance .button:hover {
   -webkit-transition: all 0.2s ease-out;

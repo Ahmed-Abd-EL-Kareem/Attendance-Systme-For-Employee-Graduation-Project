@@ -1,9 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-const MapBox = () => {
+
+const MapBox = ({ onLocationChange }) => {
   const mapContainerRef = useRef();
   const mapRef = useRef();
+  const [isInsidePolygon, setIsInsidePolygon] = useState(false);
+
+  const polygonCoordinates = [
+    [31.706848, 26.563412],
+    [31.70914, 26.563613],
+    [31.708994, 26.565924],
+    [31.709151, 26.566343],
+    [31.708764, 26.566395],
+    [31.708521, 26.566081],
+    [31.706914, 26.566116],
+    [31.706844, 26.563392],
+  ];
 
   useEffect(() => {
     mapboxgl.accessToken =
@@ -23,19 +36,7 @@ const MapBox = () => {
           type: "Feature",
           geometry: {
             type: "Polygon",
-            // These coordinates outline Maine.
-            coordinates: [
-              [
-                [31.706848, 26.563412],
-                [31.70914, 26.563613],
-                [31.708994, 26.565924],
-                [31.709151, 26.566343],
-                [31.708764, 26.566395],
-                [31.708521, 26.566081],
-                [31.706914, 26.566116],
-                [31.706844, 26.563392],
-              ],
-            ],
+            coordinates: [polygonCoordinates],
           },
         },
       });
@@ -46,7 +47,7 @@ const MapBox = () => {
         source: "maine",
         layout: {},
         paint: {
-          "fill-color": "#0080ff",
+          "fill-color": isInsidePolygon ? "#00FF00" : "#9c0500", // Change color dynamically
           "fill-opacity": 0.5,
         },
       });
@@ -62,22 +63,58 @@ const MapBox = () => {
         },
       });
     });
-    mapRef.current.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-        showUserHeading: true,
-      })
-    );
+
+    const geolocateControl = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserHeading: true,
+    });
+
+    mapRef.current.addControl(geolocateControl);
+
+    // Event listener for geolocation
+    geolocateControl.on("geolocate", (e) => {
+      const userCoordinates = [e.coords.longitude, e.coords.latitude];
+      const inside = isPointInPolygon(userCoordinates, polygonCoordinates);
+
+      setIsInsidePolygon(inside);
+      onLocationChange(inside);
+
+      // Update polygon color dynamically
+      mapRef.current.setPaintProperty(
+        "maine",
+        "fill-color",
+        inside ? "#00FF00" : "#9c0500"
+      );
+    });
+
     return () => {
       mapRef.current.remove();
     };
   }, []);
-  const [loc, setLoc] = useState("");
-  // setLoc();
-  console.log(mapboxgl.tracepoint);
+
+  // Helper function to check if a point is inside a polygon
+  const isPointInPolygon = (point, polygon) => {
+    const x = point[0],
+      y = point[1];
+    let inside = false;
+
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const xi = polygon[i][0],
+        yi = polygon[i][1];
+      const xj = polygon[j][0],
+        yj = polygon[j][1];
+
+      const intersect =
+        yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+  };
+
   return (
     <div
       id="map"
