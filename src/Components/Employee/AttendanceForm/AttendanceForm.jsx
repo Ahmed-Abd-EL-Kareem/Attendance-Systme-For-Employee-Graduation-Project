@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MapBox from "./MapBox";
-import Head from "../Head";
+import Head from "../../Head";
 
 const AttendanceForm = () => {
   const [isLocationValid, setIsLocationValid] = useState(false);
@@ -23,7 +23,7 @@ const AttendanceForm = () => {
               </div>
             </div>
             <div
-              className="buttons gap-3 d-flex justify-content-center flex-direction-row px-3"
+              className="buttons gap-4 d-flex justify-content-center flex-direction-row px-3"
               // style={{ transform: "translateX(50%)" }}
             >
               <button

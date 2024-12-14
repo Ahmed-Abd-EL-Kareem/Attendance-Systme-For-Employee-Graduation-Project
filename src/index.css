@@ -600,7 +600,7 @@ sub {
   display: inline-block;
   position: relative;
   padding: 5px 25px;
-  background-color: #4cc713;
+  background-color: gray;
   color: white;
   font-family: sans-serif;
   text-decoration: none;
@@ -614,7 +614,7 @@ sub {
 }
 
 .buttonDownload:hover {
-  background-color: #1a60a2;
+  background-color: rgb(41, 154, 29);
   color: white;
 }
 
@@ -655,7 +655,13 @@ sub {
   border-top-color: #eff1f7;
   animation-play-state: running;
 }
-
+::file-selector-button {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  margin: 0 10px !important;
+}
 @keyframes downloadArrow {
   0% {
     margin-top: -7px;
@@ -675,6 +681,66 @@ sub {
     margin-top: 0;
     opacity: 0.4;
   }
+}
+/* From Uiverse.io by Yaya12085 */
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border-radius: calc(45px / 2);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background: linear-gradient(144deg, #313ae2, #396df0 50%, #00b8eb);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  font-size: 2.2em;
+  color: white;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.4em;
+  font-weight: 500;
+  transition-duration: 0.3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  transition-duration: 0.3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 15px;
+}
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 15px;
+}
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px, 2px);
 }
 /* USER Buttons*/
 .attendance .button {

@@ -11,7 +11,9 @@ import AddShift from "./Components/Admin/Shift/AddShift";
 import EditShift from "./Components/Admin/Shift/EditShift";
 import Employee from "./Components/Admin/Employee/Employee";
 import AddEmp from "./Components/Admin/Employee/AddEmp";
-import AttendanceForm from "./Components/Employee/AttendanceForm";
+import AttendanceForm from "./Components/Employee/AttendanceForm/AttendanceForm";
+import EditEmp from "./Components/Admin/Employee/EditEmp";
+import User from "./Components/Admin/Users/User";
 function App() {
   // let params = useParams();
   // console.log(params);
@@ -22,7 +24,7 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            {/* <Route path="/" element={<Dashboard />} /> */}
             <Route path="/department" element={<Department />} />
             <Route path="/department/add" element={<AddDepart />} />
             <Route path="/department/edit/:id" element={<EditDepart />} />
@@ -31,8 +33,11 @@ function App() {
             <Route path="/shift/edit/:id" element={<EditShift />} />
             <Route path="/employee" element={<Employee />} />
             <Route path="/employee/add" element={<AddEmp />} />
+            <Route path="/employee/edit/:id" element={<EditEmp />} />
+            <Route path="/users" element={<User />} />
+
             {/* Employee */}
-            <Route path="/attendance-form" element={<AttendanceForm />} />
+            <Route path="/" element={<AttendanceForm />} />
           </Routes>
         </BrowserRouter>
       </div>

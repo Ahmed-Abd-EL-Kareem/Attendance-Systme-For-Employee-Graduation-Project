@@ -82,7 +82,7 @@ const DashBoard = () => {
   const location = useLocation();
   // console.log(location.pathname.split("/")[1]);
   const [sideBar, setSideBar] = useState(false);
-  const [account, setAccount] = useState("");
+  const [account, setAccount] = useState("admin");
   const isActive = (path) => location.pathname.split("/")[1] === path;
 
   return (

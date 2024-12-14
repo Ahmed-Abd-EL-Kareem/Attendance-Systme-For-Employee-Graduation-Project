@@ -25,7 +25,7 @@ const MapBox = ({ onLocationChange }) => {
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [31.708109, 26.565009],
+      center: [31.708109, 26.565009], // Default center
       zoom: 16,
     });
 
@@ -47,7 +47,7 @@ const MapBox = ({ onLocationChange }) => {
         source: "maine",
         layout: {},
         paint: {
-          "fill-color": isInsidePolygon ? "#00FF00" : "#9c0500", // Change color dynamically
+          "fill-color": "#9c0500", // Default color
           "fill-opacity": 0.5,
         },
       });
@@ -62,8 +62,47 @@ const MapBox = ({ onLocationChange }) => {
           "line-width": 3,
         },
       });
-    });
 
+      // Use Geolocation API to center map on user's location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userCoordinates = [
+              position.coords.longitude,
+              position.coords.latitude,
+            ];
+
+            // mapRef.current.flyTo({
+            //   center: userCoordinates,
+            //   zoom: 16,
+            // });
+
+            const inside = isPointInPolygon(
+              userCoordinates,
+              polygonCoordinates
+            );
+
+            setIsInsidePolygon(inside);
+            onLocationChange(inside);
+
+            // Ensure style is loaded before updating paint properties
+            mapRef.current.on("styledata", () => {
+              mapRef.current.setPaintProperty(
+                "maine",
+                "fill-color",
+                inside ? "#00FF00" : "#9c0500"
+              );
+            });
+          },
+          (error) => {
+            console.error("Error getting user location", error);
+          },
+          { enableHighAccuracy: true }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    });
     const geolocateControl = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true,
@@ -73,23 +112,6 @@ const MapBox = ({ onLocationChange }) => {
     });
 
     mapRef.current.addControl(geolocateControl);
-
-    // Event listener for geolocation
-    geolocateControl.on("geolocate", (e) => {
-      const userCoordinates = [e.coords.longitude, e.coords.latitude];
-      const inside = isPointInPolygon(userCoordinates, polygonCoordinates);
-
-      setIsInsidePolygon(inside);
-      onLocationChange(inside);
-
-      // Update polygon color dynamically
-      mapRef.current.setPaintProperty(
-        "maine",
-        "fill-color",
-        inside ? "#00FF00" : "#9c0500"
-      );
-    });
-
     return () => {
       mapRef.current.remove();
     };
