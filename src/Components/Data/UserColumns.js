@@ -26,10 +26,8 @@ export const columns = [
         row.original.user
       ) : (
         <Link to="/users/add">
-          <button class="Btn">
-            <div class="sign">+</div>
-
-            <div class="text">Create Account</div>
+          <button className="Btn">
+            <span>Create Account</span>
           </button>
         </Link>
       ),

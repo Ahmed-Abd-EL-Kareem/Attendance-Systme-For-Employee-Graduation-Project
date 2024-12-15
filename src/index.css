@@ -398,23 +398,30 @@ sub {
 
 @media (max-width: 767px) {
   .department .table .text,
-  .employee .table .text {
+  .employee .table .text,
+  .user .table .text {
     font-size: 12px;
   }
-  .department .table table {
+  .department .table table,
+  .user .table table {
     font-size: 12px;
   }
   .department .table tr th:first-of-type,
-  .employee .table tr th:first-of-type {
+  .employee .table tr th:first-of-type,
+  .user .table tr th:first-of-type {
     display: none;
   }
   .department .table tr td:first-of-type,
-  .employee .table tr td:first-of-type {
+  .employee .table tr td:first-of-type,
+  .user .table tr td:first-of-type {
     display: none;
   }
   .department .table tr th,
-  .department .table tr td .employee .table tr th,
-  .employee .table tr td {
+  .department .table tr td,
+  .employee .table tr th,
+  .employee .table tr td,
+  .user .table tr th,
+  .user .table tr td {
     padding: 1px;
     width: 10px;
   }
@@ -423,8 +430,8 @@ sub {
     padding: 0.25rem 0.25rem !important;
   }
 }
-/* Button */
 
+/* Button */
 .add_button .pushable,
 .back_button .pushable {
   position: relative;
@@ -682,66 +689,59 @@ sub {
     opacity: 0.4;
   }
 }
-/* From Uiverse.io by Yaya12085 */
+/* From Uiverse.io by BHARGAVPATEL1244 */
 .Btn {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 45px;
-  height: 45px;
-  border-radius: calc(45px / 2);
-  border: none;
+  outline: none;
   cursor: pointer;
+  border: none;
+  padding: 0.45rem 1.2rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
   position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 500px;
   overflow: hidden;
-  transition-duration: 0.3s;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background: linear-gradient(144deg, #313ae2, #396df0 50%, #00b8eb);
+  background: var(--grey-color);
+  color: ghostwhite;
 }
 
-/* plus sign */
-.sign {
-  width: 100%;
-  font-size: 2.2em;
-  color: white;
-  transition-duration: 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.Btn span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
 }
-/* text */
-.text {
+
+.Btn:hover span {
+  color: black;
+}
+
+.Btn::before,
+.Btn::after {
   position: absolute;
-  right: 0%;
-  width: 0%;
-  opacity: 0;
-  color: white;
-  font-size: 1.4em;
-  font-weight: 500;
-  transition-duration: 0.3s;
-}
-/* hover effect on button width */
-.Btn:hover {
-  width: 125px;
-  transition-duration: 0.3s;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-.Btn:hover .sign {
-  width: 30%;
-  transition-duration: 0.3s;
-  padding-left: 15px;
+.Btn::before {
+  content: "";
+  background: #000;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
 }
-/* hover effect button's text */
-.Btn:hover .text {
-  opacity: 1;
-  width: 70%;
-  transition-duration: 0.3s;
-  padding-right: 15px;
+
+.Btn:hover::before {
+  transform: translate3d(100%, 0, 0);
 }
-/* button click effect*/
-.Btn:active {
-  transform: translate(2px, 2px);
-}
+
 /* USER Buttons*/
 .attendance .button {
   position: relative;
