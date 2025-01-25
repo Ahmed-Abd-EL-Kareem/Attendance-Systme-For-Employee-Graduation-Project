@@ -34,6 +34,8 @@ const Table = ({ columns, data, search }) => {
   return (
     <>
       <table
+        data-aos="zoom-in"
+        data-aos-duration="1000"
         className="table table-striped table-hover table-bordered text-center shadow p-3 mb-0 bg-body-tertiary"
         {...getTableProps()}
       >
@@ -42,7 +44,13 @@ const Table = ({ columns, data, search }) => {
             const { key: headerKey, ...restHeaderGroupProps } =
               headerGroup.getHeaderGroupProps(); // Extract key for headerGroup
             return (
-              <tr key={headerKey} {...restHeaderGroupProps}>
+              <tr
+                data-aos="fade-right"
+                data-aos-duration="1500"
+                data-aos-delay="1000"
+                key={headerKey}
+                {...restHeaderGroupProps}
+              >
                 {headerGroup.headers.map((column) => {
                   const { key: columnKey, ...restColumnProps } =
                     column.getHeaderProps(column.getSortByToggleProps()); // Extract key for <th>
@@ -67,7 +75,14 @@ const Table = ({ columns, data, search }) => {
             prepareRow(row);
             const { key, ...restRowProps } = row.getRowProps(); // Extract key for <tr>
             return (
-              <tr key={key} {...restRowProps}>
+              <tr
+                data-aos={
+                  key.split("_")[1] % 2 === 0 ? "fade-right" : "fade-left"
+                }
+                data-aos-duration="1500"
+                key={key}
+                {...restRowProps}
+              >
                 {row.cells.map((cell) => {
                   const { key: cellKey, ...restCellProps } =
                     cell.getCellProps(); // Extract key for <td>

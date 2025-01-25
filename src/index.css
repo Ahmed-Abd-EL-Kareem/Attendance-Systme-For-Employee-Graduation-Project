@@ -274,6 +274,12 @@ sub {
     top: 4px;
     left: 55px;
   }
+  .logout {
+    transform: translateY(3px);
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 15px !important;
+  }
 }
 
 /* -------------------------- SIDEBAR -------------------------- */
@@ -827,7 +833,7 @@ sub {
 }
 /* hover effect on button width */
 .logout:hover {
-  width: 125px;
+  width: 125px !important;
   border-radius: 40px;
   transition-duration: 0.3s;
 }

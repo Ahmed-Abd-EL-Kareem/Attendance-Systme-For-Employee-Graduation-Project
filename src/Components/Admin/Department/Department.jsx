@@ -32,7 +32,11 @@ const Department = () => {
           <Head title="Department" />
           <div className="add_button mb-2">
             <Link to="/department/add">
-              <button className="pushable">
+              <button
+                data-aos="fade-right"
+                data-aos-duration="1500"
+                className="pushable"
+              >
                 <span className="shadow" />
                 <span className="edge" />
                 <span className="front">
@@ -46,8 +50,18 @@ const Department = () => {
           </div>
           <div className="table bg-light ">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
-              <p className="mt-3">DataTable Department</p>
-              <div class="d-flex align-items-center form">
+              <p
+                data-aos="fade-right"
+                data-aos-duration="1500"
+                className="mt-3"
+              >
+                DataTable Department
+              </p>
+              <div
+                data-aos="fade-left"
+                data-aos-duration="1500"
+                class="d-flex align-items-center form"
+              >
                 <input
                   class="form-control "
                   type="search"
