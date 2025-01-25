@@ -7,11 +7,10 @@ let sharedRowData = null; // Placeholder for the clicked row's data
 const setSharedRowData = (data) => {
   sharedRowData = data;
 };
-export const SGetSharedRowData = () => sharedRowData;
+export const UGetSharedRowData = () => sharedRowData;
 const User = () => {
   const handleEdit = (rowData) => {
     setSharedRowData(rowData);
-    console.log("Edit clicked for row:", SGetSharedRowData());
   };
 
   const data = Data.data.map((item) => ({

@@ -12,6 +12,8 @@ const Dashboard = () => {
             {adminDashBoard.map((val, i) => {
               return (
                 <div
+                  data-aos="flip-left"
+                  data-aos-duration="1500"
                   className="card d-flex flex-row align-items-stretch justify-content-between p-3"
                   key={i}
                   style={
@@ -34,7 +36,11 @@ const Dashboard = () => {
             })}
           </div>
           <div className="tables d-flex gap-3">
-            <div className="table bg-light ">
+            <div
+              className="table bg-light "
+              data-aos="fade-down-right"
+              data-aos-duration="1500"
+            >
               <div className="text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
                 <p className="mt-3">Employee's Department</p>
               </div>
@@ -61,7 +67,11 @@ const Dashboard = () => {
                 </table>
               </div>
             </div>
-            <div className="table bg-light ">
+            <div
+              className="table bg-light "
+              data-aos="fade-up-left"
+              data-aos-duration="1500"
+            >
               <div className="text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
                 <p className="mt-3">Employee's Per Shift</p>
               </div>
@@ -77,7 +87,7 @@ const Dashboard = () => {
                   <tbody>
                     {shTable.map((val, i) => {
                       return (
-                        <tr key={i}>
+                        <tr key={val.id || i}>
                           <th scope="row">{i + 1}</th>
                           <td>
                             {val.shift}

@@ -25,8 +25,11 @@ export const columns = [
       row.original.user ? (
         row.original.user
       ) : (
-        <Link to="/users/add">
-          <button className="Btn">
+        <Link to={`/users/add/${row.original.id}`}>
+          <button
+            className="Btn"
+            onClick={() => row.original.onEdit(row.original)}
+          >
             <span>Create Account</span>
           </button>
         </Link>

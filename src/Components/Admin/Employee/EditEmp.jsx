@@ -217,7 +217,7 @@ const EditEmp = () => {
                       style={{ transform: "translateY(-1px)" }}
                     />
                   </span>
-                  Save
+                  Save changes
                 </button>
               </div>
             </div>

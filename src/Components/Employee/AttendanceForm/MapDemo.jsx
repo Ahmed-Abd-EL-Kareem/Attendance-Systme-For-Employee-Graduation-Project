@@ -156,8 +156,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const MapBox = ({ onLocationChange }) => {
-  const mapContainerRef = useRef();
-  const mapRef = useRef();
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
   const [isInsidePolygon, setIsInsidePolygon] = useState(false);
 
   const polygonCoordinates = [
@@ -184,8 +184,6 @@ const MapBox = ({ onLocationChange }) => {
     });
 
     mapRef.current.on("load", () => {
-      console.log("Map loaded successfully.");
-
       // Add the polygon source and layer
       mapRef.current.addSource("polygon", {
         type: "geojson",
@@ -218,7 +216,8 @@ const MapBox = ({ onLocationChange }) => {
         },
       });
 
-      // Add Geolocate Control
+      // Track user location continuously
+      trackUserLocation();
       const geolocateControl = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true,
@@ -228,15 +227,10 @@ const MapBox = ({ onLocationChange }) => {
       });
 
       mapRef.current.addControl(geolocateControl);
-
-      // Start tracking user location
-      trackUserLocation();
     });
 
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-      }
+      mapRef.current?.remove();
     };
   }, []);
 
@@ -253,22 +247,18 @@ const MapBox = ({ onLocationChange }) => {
           setIsInsidePolygon(inside);
           onLocationChange(inside);
 
-          // Ensure the map and layer exist before updating
-          if (
-            mapRef.current &&
-            mapRef.current.isStyleLoaded() &&
-            mapRef.current.getLayer("polygon-fill")
-          ) {
-            mapRef.current.setPaintProperty(
-              "polygon-fill",
-              "fill-color",
-              inside ? "#00FF00" : "#9c0500"
-            );
-          } else {
-            console.warn(
-              "Map is not initialized, style not loaded, or 'polygon-fill' layer not found."
-            );
-          }
+          // Update the polygon color dynamically
+          mapRef.current.setPaintProperty(
+            "polygon-fill",
+            "fill-color",
+            inside ? "#00FF00" : "#9c0500"
+          );
+
+          // // Optionally fly the map to the user's location
+          // mapRef.current.flyTo({
+          //   center: userCoordinates,
+          //   zoom: 16,
+          // });
         },
         (error) => {
           console.error("Error tracking user location", error);

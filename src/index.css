@@ -186,7 +186,12 @@ sub {
 .sideBar .dashboard:hover .active {
   transform: translateX(15px);
 }
-
+.logOut {
+  position: relative;
+  z-index: 9;
+  top: 6px;
+  left: 15px;
+}
 /* @media (max-width: 567px) {
   .sideBar .overlay {
     position: fixed;
@@ -265,6 +270,10 @@ sub {
     display: block;
     margin-bottom: 0;
   }
+  .logOut {
+    top: 4px;
+    left: 55px;
+  }
 }
 
 /* -------------------------- SIDEBAR -------------------------- */
@@ -329,13 +338,20 @@ sub {
   grid-row-gap: 60px;
   margin-bottom: 20px;
 }
-.dashboard .cards .card {
-  border-left: 4px solid var(--);
+/* .dashboard .cards .card {
   border-radius: 0;
   box-shadow: 10px 10px 15px var(--greyDark);
   color: var(--bs-secondary);
 }
 .dashboard .cards .card svg {
+  font-size: calc(1.325rem + 0.9vw) !important;
+} */
+.dashboard .card {
+  border-radius: 0;
+  box-shadow: 10px 10px 15px var(--greyDark);
+  color: var(--bs-secondary);
+}
+.dashboard .card svg {
   font-size: calc(1.325rem + 0.9vw) !important;
 }
 @media (max-width: 768px) {
@@ -399,20 +415,24 @@ sub {
 @media (max-width: 767px) {
   .department .table .text,
   .employee .table .text,
+  .report .table .text,
   .user .table .text {
     font-size: 12px;
   }
   .department .table table,
+  .report .table table,
   .user .table table {
     font-size: 12px;
   }
   .department .table tr th:first-of-type,
   .employee .table tr th:first-of-type,
+  .report .table tr th:first-of-type,
   .user .table tr th:first-of-type {
     display: none;
   }
   .department .table tr td:first-of-type,
   .employee .table tr td:first-of-type,
+  .report .table tr td:first-of-type,
   .user .table tr td:first-of-type {
     display: none;
   }
@@ -420,6 +440,8 @@ sub {
   .department .table tr td,
   .employee .table tr th,
   .employee .table tr td,
+  .report .table tr th,
+  .report .table tr td,
   .user .table tr th,
   .user .table tr td {
     padding: 1px;
@@ -428,6 +450,11 @@ sub {
   .department .table tr th,
   .department .table tr td {
     padding: 0.25rem 0.25rem !important;
+  }
+  .icon {
+    width: 19px !important;
+    height: 25px !important;
+    padding: 3px !important;
   }
 }
 
@@ -689,7 +716,6 @@ sub {
     opacity: 0.4;
   }
 }
-/* From Uiverse.io by BHARGAVPATEL1244 */
 .Btn {
   outline: none;
   cursor: pointer;
@@ -741,7 +767,88 @@ sub {
 .Btn:hover::before {
   transform: translate3d(100%, 0, 0);
 }
+@media (max-width: 767px) {
+  .Btn {
+    padding: 0.25rem 0.2rem !important;
+    font-size: 7px !important;
+    letter-spacing: 0 !important;
+  }
+}
+@media (max-width: 991px) {
+  .Btn {
+    padding: 0.25rem 0.2rem;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+}
+/* LogOut */
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
 
+/* plus sign */
+.logout .sign {
+  width: 100%;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout .sign svg {
+  width: 17px;
+}
+
+.logout .sign svg path {
+  fill: white;
+}
+/* text */
+.logout .text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: 0.3s;
+}
+/* hover effect on button width */
+.logout:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: 0.3s;
+}
+
+.logout:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.logout:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.logout:active {
+  transform: translate(2px, 2px);
+}
+/* LogOut */
 /* USER Buttons*/
 .attendance .button {
   position: relative;
@@ -839,13 +946,15 @@ sub {
 /* -------------------------- DEPARTMENT -------------------------- */
 /* -------------------------- ADD DEPARTMENT -------------------------- */
 
-.add .card {
+.add .card,
+.profile .card {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
 }
 @media (max-width: 767px) {
-  .add .card {
+  .add .card,
+  .profile .card {
     width: 100% !important;
   }
   .add input {
@@ -945,6 +1054,7 @@ sub {
     padding: 1px !important;
   }
 }
+
 @media (max-width: 991px) {
   .employee table .icon {
     width: 25px;
@@ -970,3 +1080,263 @@ sub {
   box-shadow: none !important;
 }
 /* -------------------------- Employee -------------------------- */
+/* -------------------------- Report -------------------------- */
+/* From Uiverse.io by suda-code */
+.btn-rep {
+  padding: 5px 25px 5px 15px;
+  border: 0;
+  border-radius: 100px;
+  background-color: hsl(248, 96%, 25%);
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.btn-rep:hover {
+  background-color: hsl(248, 100%, 35%);
+  box-shadow: 0 0 20px hsl(248, 96%, 15%);
+  transform: scale(1.1);
+}
+
+.btn-rep:active {
+  background-color: hsl(248, 100%, 35%);
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+.report .card input,
+.report .card select,
+.history .card input,
+.history .card select {
+  padding: 3px 10px;
+  border: 1px solid var(--bs-dark-border-subtle);
+  border-radius: 20px;
+  box-shadow: 1px 2px 5px gray;
+}
+.report .card input:focus,
+.report .card select:focus,
+.history .card input:focus,
+.history .card select:focus {
+  box-shadow: 0 0 0 0.25rem rgb(68 75 86 / 25%) !important;
+}
+.report .card input:focus-visible,
+.report .card select:focus-visible,
+.history .card input:focus-visible,
+.history .card select:focus-visible {
+  outline: none !important;
+}
+.report .card label,
+.history .card label {
+  font-size: 16px;
+  font-weight: 500;
+}
+.report .buttonDownload,
+.history .buttonDownload {
+  margin-bottom: 0px !important;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printableTable,
+  .printableTable * {
+    visibility: visible;
+  }
+  .printableTable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+/* -------------------------- Report -------------------------- */
+
+/* -------------------------- Profile -------------------------- */
+.info {
+  border: 2px solid gray;
+  border-radius: 20px;
+  text-align: center;
+  background: rgb(128 128 128 / 8%);
+  box-shadow: 3px 3px 5px gray;
+  width: 100%;
+}
+.emCard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-column-gap: 20px;
+  grid-row-gap: 60px;
+  margin-bottom: 20px;
+}
+.profile .box .form img {
+  box-shadow: 2px 7px 15px gray;
+}
+/* -------------------------- Profile -------------------------- */
+/* -------------------------- Login -------------------------- */
+.login .contain {
+  height: 100vh;
+  background: rgb(32, 32, 32);
+}
+.login .contain .right {
+  background-color: rgb(32, 32, 32);
+}
+.login .contain .right .form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 0.4em;
+  background-color: #171717;
+  border-radius: 25px;
+  transition: 0.4s ease-in-out;
+  justify-content: center;
+}
+
+.login .contain .right .form:hover {
+  transform: scale(1.05);
+  border: 1px solid black;
+}
+
+.login .contain .right .heading {
+  text-align: center;
+  margin: 2em;
+  color: rgb(255, 255, 255);
+  font-size: 1.2em;
+}
+
+.login .contain .right .field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border-radius: 25px;
+  padding: 0.6em;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #171717;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.login .contain .right .input-icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: white;
+}
+
+.login .contain .right .input-field {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #d3d3d3;
+}
+
+.login .contain .right .form .btn {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 2.5em;
+}
+.login .contain .right .button3 {
+  margin-bottom: 3em;
+  padding: 0.5em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: 0.4s ease-in-out;
+  background-color: #252525;
+  color: white;
+}
+.login .contain .right .button3:hover {
+  background-color: black;
+  color: white;
+}
+.login .contain .right .button {
+  position: relative;
+  width: 100%;
+  border: 2px solid black;
+  background-color: black;
+  height: 40px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  border-radius: 30px;
+  margin: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.login .contain .right .button::after {
+  content: "";
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.253);
+  height: 100%;
+  width: 150px;
+  top: 0;
+  left: -200px;
+  border-bottom-right-radius: 100px;
+  border-top-left-radius: 100px;
+  filter: blur(10px);
+  transition-duration: 0.5s;
+}
+
+.login .contain .right .button:hover::after {
+  transform: translateX(600px);
+  transition-duration: 0.5s;
+}
+.login .contain .left {
+  height: 100vh;
+  background-color: rgb(22, 22, 22);
+}
+.login .contain .left .img img {
+  animation: image 3s ease-in-out infinite alternate;
+}
+@keyframes image {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.login .contain .left .Typewriter {
+  padding: 0 20px;
+  font-size: 35px;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+}
+@media (max-width: 991px) {
+  .login .contain .right .form {
+    width: 75% !important;
+  }
+  @media (max-width: 767px) {
+    .login .contain {
+      flex-direction: column;
+    }
+    .login .contain .left {
+      transform: translateY(100%);
+      background-color: transparent !important;
+      height: 100px;
+    }
+    .login .contain .left .Typewriter {
+      padding: 0;
+      font-size: 25px;
+    }
+    .login .contain .left .img {
+      display: none !important;
+    }
+    .login .contain .right {
+      height: 100%;
+      width: 100% !important;
+    }
+  }
+}
+/* -------------------------- Login -------------------------- */
