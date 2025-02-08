@@ -107,7 +107,7 @@ const Nav = () => {
           // style={sideBar ? { display: "block" } : { display: "none" }}
         >
           <div className="content">
-            <img src="/img/Untitled design (1).png" alt="" />
+            <img className="mt-2" src="/img/face-gate.png" alt="" />
             <div className=" ms-3 me-4 mt-3 ">
               {account === true ? (
                 <>
