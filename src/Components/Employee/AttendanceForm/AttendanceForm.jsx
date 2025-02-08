@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MapBox from "./MapBox";
 import Head from "../../Head";
-
+import FaceRecognition from "./FaceRecognition";
 const AttendanceForm = () => {
   const [isLocationValid, setIsLocationValid] = useState(false);
   const handleLocationChange = (insidePolygon) => {
@@ -17,7 +17,9 @@ const AttendanceForm = () => {
               className="content  w-100 d-flex flex-wrap"
               style={{ height: "85%" }}
             >
-              <div className="face col-md-6 col-12 "></div>
+              <div className="face col-md-6 col-12 d-flex  align-items-center py-4 ps-4">
+                <FaceRecognition />
+              </div>
               <div className="mapBox col-md-6 col-12 p-4">
                 <MapBox onLocationChange={handleLocationChange} />
               </div>

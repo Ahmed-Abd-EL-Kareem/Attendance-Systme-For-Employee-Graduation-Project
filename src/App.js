@@ -63,9 +63,9 @@ function AppContent() {
       <Route path="/report" element={<Report />} />
 
       {/* Employee */}
-      <Route path="/attendance-form" element={<AttendanceForm />} />
+      {/* <Route path="/attendance-form" element={<AttendanceForm />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/history" element={<History />} />
+      <Route path="/history" element={<History />} /> */}
     </Routes>
   );
 

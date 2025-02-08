@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "../Head";
 import { adminDashBoard, emTable, shTable } from "../Data/data";
+// import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -10,7 +11,9 @@ const Dashboard = () => {
           <Head title="Dashboard" />
           <div className="cards">
             {adminDashBoard.map((val, i) => {
+              // const name = val.text.toLocaleLowerCase();
               return (
+                // <Link to={`/${name}`}>
                 <div
                   data-aos="flip-left"
                   data-aos-duration="1500"
@@ -32,6 +35,7 @@ const Dashboard = () => {
                     {val.icon}
                   </p>
                 </div>
+                // </Link>
               );
             })}
           </div>

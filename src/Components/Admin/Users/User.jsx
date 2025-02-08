@@ -26,8 +26,18 @@ const User = () => {
           <Head title="User" />
           <div className="table bg-light ">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
-              <p className="mt-3">DataTable Users</p>
-              <div class="d-flex align-items-center form">
+              <p
+                className="mt-3"
+                data-aos="fade-right"
+                data-aos-duration="1500"
+              >
+                DataTable Users
+              </p>
+              <div
+                class="d-flex align-items-center form"
+                data-aos="fade-left"
+                data-aos-duration="1500"
+              >
                 <input
                   class="form-control "
                   type="search"

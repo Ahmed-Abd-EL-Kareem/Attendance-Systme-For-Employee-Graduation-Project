@@ -422,23 +422,27 @@ sub {
   .department .table .text,
   .employee .table .text,
   .report .table .text,
+  .history .table .text,
   .user .table .text {
     font-size: 12px;
   }
   .department .table table,
   .report .table table,
+  .history .table table,
   .user .table table {
     font-size: 12px;
   }
   .department .table tr th:first-of-type,
   .employee .table tr th:first-of-type,
   .report .table tr th:first-of-type,
+  .history .table tr th:first-of-type,
   .user .table tr th:first-of-type {
     display: none;
   }
   .department .table tr td:first-of-type,
   .employee .table tr td:first-of-type,
   .report .table tr td:first-of-type,
+  .history.table tr td:first-of-type,
   .user .table tr td:first-of-type {
     display: none;
   }
@@ -448,6 +452,8 @@ sub {
   .employee .table tr td,
   .report .table tr th,
   .report .table tr td,
+  .history .table tr th,
+  .history .table tr td,
   .user .table tr th,
   .user .table tr td {
     padding: 1px;

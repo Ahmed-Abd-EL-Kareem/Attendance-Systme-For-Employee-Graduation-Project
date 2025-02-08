@@ -32,7 +32,11 @@ const Report = () => {
         <div className="container">
           <Head title="Report" />
           <div className="card bg-light p-4">
-            <fieldset className="border p-3">
+            <fieldset
+              className="border p-3"
+              data-aos="zoom-out"
+              data-aos-duration="1500"
+            >
               <legend>Filter Report</legend>
               <div className="form d-flex flex-wrap justify-content-around align-items-center ">
                 <div className="mt-3">

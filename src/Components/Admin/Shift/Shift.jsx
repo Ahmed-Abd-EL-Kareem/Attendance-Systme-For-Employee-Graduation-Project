@@ -29,7 +29,11 @@ const Shift = () => {
           <Head title="Shift" />
           <div className="add_button mb-2">
             <Link to="/shift/add">
-              <button className="pushable">
+              <button
+                className="pushable"
+                data-aos="fade-right"
+                data-aos-duration="1500"
+              >
                 <span className="shadow" />
                 <span className="edge" />
                 <span className="front">
@@ -43,8 +47,18 @@ const Shift = () => {
           </div>
           <div className="table bg-light ">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
-              <p className="mt-3">DataTable Shift</p>
-              <div class="d-flex align-items-center form">
+              <p
+                className="mt-3"
+                data-aos="fade-right"
+                data-aos-duration="1500"
+              >
+                DataTable Shift
+              </p>
+              <div
+                class="d-flex align-items-center form"
+                data-aos="fade-left"
+                data-aos-duration="1500"
+              >
                 <input
                   class="form-control "
                   type="search"
