@@ -13,10 +13,7 @@ const AttendanceForm = () => {
         <div className="dash container">
           <Head title="Attendance Form" />
           <div className="box ">
-            <div
-              className="content  w-100 d-flex flex-wrap "
-              style={{ height: "85%" }}
-            >
+            <div className="content  w-100 d-flex " style={{ height: "85%" }}>
               <div className="face w-50 p-4 position-relative ">
                 <FaceRecognition />
               </div>
@@ -30,14 +27,22 @@ const AttendanceForm = () => {
             >
               <button
                 type="button"
-                className="button out col-md-4 col-lg-2 "
+                className={
+                  !isLocationValid
+                    ? "button disabled col-md-4 col-lg-2"
+                    : "button out col-md-4 col-lg-2 "
+                }
                 disabled={!isLocationValid}
               >
                 Check Out
               </button>
               <button
                 type="button"
-                className="button in col-md-4 col-lg-2"
+                className={
+                  !isLocationValid
+                    ? "button disabled col-md-4 col-lg-2"
+                    : "button in col-md-4 col-lg-2"
+                }
                 disabled={!isLocationValid}
               >
                 Check IN

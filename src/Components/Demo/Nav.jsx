@@ -170,9 +170,8 @@ const Nav = () => {
                   <ul className="my-4 border-bottom p-0">
                     {employeeDashBoard.map((val, index) => {
                       return (
-                        <Link to={`/${val.text.toLowerCase()}`}>
+                        <Link key={index} to={`/${val.text.toLowerCase()}`}>
                           <li
-                            key={index}
                             className={`box d-flex ms-2 mb-4 ${
                               isActive(`${val.text.toLowerCase()}`)
                                 ? "active"

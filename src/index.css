@@ -885,7 +885,12 @@ sub {
   border: 1px solid rgb(166, 33, 29);
   color: rgb(166, 33, 29);
 }
-.attendance .button:hover {
+.attendance .disabled {
+  border: 1px solid gray;
+  color: gray;
+}
+.attendance .in:hover,
+.attendance .out:hover {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
@@ -900,13 +905,15 @@ sub {
   box-shadow: 0 0 30px 5px rgba(166, 33, 29, 0.815);
 }
 
-.attendance .button:hover::before {
+.attendance .in:hover::before,
+.attendance .out:hover::before {
   -webkit-animation: sh02 0.5s 0s linear;
   -moz-animation: sh02 0.5s 0s linear;
   animation: sh02 0.5s 0s linear;
 }
 
-.attendance .button::before {
+.attendance .in::before,
+.attendance .out::before {
   content: "";
   display: block;
   width: 0px;
@@ -940,7 +947,8 @@ sub {
   }
 }
 
-.attendance .button:active {
+.attendance .in:active,
+.attendance .out:active {
   box-shadow: 0 0 0 0 transparent;
   -webkit-transition: box-shadow 0.2s ease-in;
   -moz-transition: box-shadow 0.2s ease-in;
@@ -1352,3 +1360,77 @@ sub {
   }
 }
 /* -------------------------- Login -------------------------- */
+/* -------------------------- Attendance Form -------------------------- */
+@media (max-width: 767px) {
+  .attendance .box .content {
+    align-items: center;
+    flex-direction: column;
+  }
+  .attendance .box .content .face {
+    padding: 10px 1.5rem 0 !important;
+    height: 25vh;
+  }
+  .attendance .box .content .face .cam {
+    height: 25vh !important;
+  }
+  .attendance .box .content .face video {
+    height: 25vh !important;
+    width: 70vw !important;
+  }
+  .attendance .box .content .mapBox {
+    width: 100% !important;
+  }
+
+  .custum-file-upload {
+    height: 185px !important;
+  }
+}
+.custum-file-upload {
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #e8e8e8;
+  background-color: #212121;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px #e8e8e8;
+}
+
+.custum-file-upload .camIcon {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custum-file-upload .text span {
+  font-weight: 400;
+  color: #e8e8e8;
+}
+
+.custum-file-upload input {
+  display: none;
+}
+.btn-close-camera {
+  background: none;
+  border: none;
+  transition: transform 0.2s;
+}
+
+.btn-close-camera:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+/* -------------------------- Attendance Form -------------------------- */

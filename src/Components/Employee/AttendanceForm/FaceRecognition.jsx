@@ -69,6 +69,8 @@
 
 // export default FaceRecognition;
 import { useState, useEffect, useRef } from "react";
+import { RiCameraLensFill } from "react-icons/ri";
+import { CgClose } from "react-icons/cg";
 
 const CameraAccess = () => {
   const videoRef = useRef(null);
@@ -77,25 +79,39 @@ const CameraAccess = () => {
 
   // Start camera
   const startCamera = async () => {
+    console.log("Start camera button clicked"); // Debug log
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setError(""); // Clear previous errors
+      console.log("Requesting camera access..."); // Debug log
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" }, // Front camera by default
+      });
+      console.log("Camera access granted"); // Debug log
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setCameraActive(true);
+        console.log("Camera is active"); // Debug log
       }
     } catch (err) {
+      console.error("Camera error:", err); // Debug log
       setError("Camera access denied or not available");
-      console.error("Camera error:", err);
+      setCameraActive(false);
     }
   };
 
   // Stop camera
   const stopCamera = () => {
+    console.log("Stop camera button clicked"); // Debug log
     if (videoRef.current?.srcObject) {
       const tracks = videoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => track.stop());
-      setCameraActive(false);
+      tracks.forEach((track) => {
+        track.stop();
+        videoRef.current.srcObject.removeTrack(track);
+      });
+      videoRef.current.srcObject = null;
     }
+    setCameraActive(false);
   };
 
   // Cleanup on unmount
@@ -104,24 +120,43 @@ const CameraAccess = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className="w-100"
-          style={{ height: "50vh" }}
-        />
-      </div>
+    <div
+      className="cam d-flex justify-content-center align-items-center position-relative"
+      style={{ height: "50vh" }}
+    >
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        className="w-100"
+        style={{ height: "50vh", display: cameraActive ? "block" : "none" }}
+      />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="text-danger mt-2">{error}</p>}
 
-      <div className="position-relative">
+      <div className="position-absolute camBtn">
         {!cameraActive ? (
-          <button onClick={startCamera}>Start Camera</button>
+          <button
+            onClick={startCamera}
+            aria-label="Start camera for face recognition"
+          >
+            <div className="custum-file-upload">
+              <div className="camIcon">
+                <RiCameraLensFill className="fs-1 text-white" />
+              </div>
+              <div className="text">
+                <span>Click to Check Your Face Recognition</span>
+              </div>
+            </div>
+          </button>
         ) : (
-          <button onClick={stopCamera}>Stop Camera</button>
+          <button
+            onClick={stopCamera}
+            aria-label="Stop camera"
+            className="btn-close-camera"
+          >
+            <CgClose className="fs-1" style={{ color: "red" }} />
+          </button>
         )}
       </div>
     </div>

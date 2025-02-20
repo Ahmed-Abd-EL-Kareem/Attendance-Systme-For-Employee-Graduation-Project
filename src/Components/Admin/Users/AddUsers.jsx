@@ -56,6 +56,14 @@ const AddUsers = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <label htmlFor="pass">Password Confirm :</label>
+                <input
+                  type="password"
+                  name="pass"
+                  id="pass"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
               <div className="d-flex justify-content-end mt-3">
                 <button class="button" onClick={notify}>
