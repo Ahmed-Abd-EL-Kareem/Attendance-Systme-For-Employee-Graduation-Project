@@ -14,13 +14,13 @@ const AttendanceForm = () => {
           <Head title="Attendance Form" />
           <div className="box ">
             <div
-              className="content  w-100 d-flex flex-wrap"
+              className="content  w-100 d-flex flex-wrap "
               style={{ height: "85%" }}
             >
-              <div className="face col-md-6 col-12 d-flex  align-items-center py-4 ps-4">
+              <div className="face w-50 p-4 position-relative ">
                 <FaceRecognition />
               </div>
-              <div className="mapBox col-md-6 col-12 p-4">
+              <div className="mapBox w-50 p-4" style={{ height: "100%" }}>
                 <MapBox onLocationChange={handleLocationChange} />
               </div>
             </div>

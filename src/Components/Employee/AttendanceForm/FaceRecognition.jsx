@@ -110,13 +110,14 @@ const CameraAccess = () => {
           ref={videoRef}
           autoPlay
           playsInline
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          className="w-100"
+          style={{ height: "50vh" }}
         />
       </div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <div style={{ marginTop: "20px" }}>
+      <div className="position-relative">
         {!cameraActive ? (
           <button onClick={startCamera}>Start Camera</button>
         ) : (
