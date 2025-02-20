@@ -134,13 +134,14 @@ const CameraAccess = () => {
 
       {error && <p className="text-danger mt-2">{error}</p>}
 
-      <div className="position-absolute camBtn">
+      <div className="position-absolute camBtn w-100 h-100">
         {!cameraActive ? (
           <button
             onClick={startCamera}
             aria-label="Start camera for face recognition"
+            className="w-100 h-100"
           >
-            <div className="custum-file-upload">
+            <div className="custum-file-upload w-100 h-100">
               <div className="camIcon">
                 <RiCameraLensFill className="fs-1 text-white" />
               </div>
