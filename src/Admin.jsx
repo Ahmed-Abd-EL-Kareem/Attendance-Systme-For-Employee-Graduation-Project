@@ -14,7 +14,7 @@ import User from "./Components/Admin/Users/User";
 import AddUsers from "./Components/Admin/Users/AddUsers";
 import EditUsers from "./Components/Admin/Users/EditUser";
 import Report from "./Components/Admin/Report/Report";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import NotFound from "./notFound";
 import axios from "axios";
 import Loading from "./Components/Loading";

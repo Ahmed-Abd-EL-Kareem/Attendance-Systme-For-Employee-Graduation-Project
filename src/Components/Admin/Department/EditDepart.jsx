@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "../../Head";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";

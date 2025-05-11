@@ -5,8 +5,8 @@ import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-import DData from "../../Data/DepartData.json";
-import SData from "../../Data/ShiftData.json";
+// import DData from "../../Data/DepartData.json";
+// import SData from "../../Data/ShiftData.json";
 import axios from "axios";
 import SmallLoad from "../../SmallLoad";
 

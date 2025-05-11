@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Head from "../../Head";
 import { RiFileHistoryFill } from "react-icons/ri";
 import { columns } from "../../Data/ReportColumns";
