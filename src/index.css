@@ -34,6 +34,7 @@ sub {
   bottom: -1rem !important;
   font-size: 15px !important;
 }
+
 /* -------------------------- HEADER -------------------------- */
 
 .header {
@@ -41,8 +42,11 @@ sub {
   background-color: var(--secondary-background-color);
   box-shadow: 0px 5px 15px gray;
   z-index: 9;
+  min-height: 60px;
 }
-
+.header .content {
+  height: 65px;
+}
 .header .card {
   border: none;
   border-left: 2px solid;
@@ -57,9 +61,14 @@ sub {
   margin: 0;
 }
 .header img {
-  width: 6%;
+  height: 100%;
   border-radius: 50%;
 }
+/* @media (max-width: 768px) {
+  .header img {
+    width: 10%;
+  }
+} */
 /* -------------------------- HEADER -------------------------- */
 
 /* -------------------------- DASHBOARD -------------------------- */
@@ -143,6 +152,7 @@ sub {
   height: 100vh;
   background-color: var(--headingColor);
   width: 80px;
+  overflow-y: auto;
 }
 .sideBar .dashboard .box {
   transition: 0.2s ease-in;
@@ -173,7 +183,8 @@ sub {
   display: none;
 }
 .sideBar:hover {
-  width: 350px;
+  width: 300px;
+  margin-right: 50px;
 }
 .sideBar .dashboard:hover p,
 .sideBar .dashboard:hover h6 {
@@ -247,14 +258,17 @@ sub {
   }
   .sideBar {
     width: 0px !important;
+    margin-right: 0px !important;
   }
 }
 @media (max-width: 767px) {
   .sideBar {
     width: 0px;
+    margin-right: 0px !important;
   }
   .sideBar:hover {
     width: 0px;
+    margin-right: 0px !important;
   }
   .sideBar .dashboard {
     width: 180px;
@@ -337,7 +351,7 @@ sub {
 }
 /* -------------------------- Main_Head -------------------------- */
 /* -------------------------- DASHBOARD -------------------------- */
-.dashboard .cards {
+.dashboards .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-column-gap: 20px;
@@ -352,31 +366,71 @@ sub {
 .dashboard .cards .card svg {
   font-size: calc(1.325rem + 0.9vw) !important;
 } */
-.dashboard .card {
+.dashboards .card {
   border-radius: 0;
   box-shadow: 10px 10px 15px var(--greyDark);
   color: var(--bs-secondary);
+  height: 85px;
 }
-.dashboard .card svg {
+.dashboards .card:hover {
+  transform: scale(1.05);
+  transition: 0.05s
+    linear(
+      0 0%,
+      0.22 2.1%,
+      0.86 6.5%,
+      1.11 8.6%,
+      1.3 10.7%,
+      1.35 11.8%,
+      1.37 12.9%,
+      1.37 13.7%,
+      1.36 14.5%,
+      1.32 16.2%,
+      1.03 21.8%,
+      0.94 24%,
+      0.89 25.9%,
+      0.88 26.85%,
+      0.87 27.8%,
+      0.87 29.25%,
+      0.88 30.7%,
+      0.91 32.4%,
+      0.98 36.4%,
+      1.01 38.3%,
+      1.04 40.5%,
+      1.05 42.7%,
+      1.05 44.1%,
+      1.04 45.7%,
+      1 53.3%,
+      0.99 55.4%,
+      0.98 57.5%,
+      0.99 60.7%,
+      1 68.1%,
+      1.01 72.2%,
+      1 86.7%,
+      1 100%
+    );
+  background-color: var(--bs-card-cap-bg);
+}
+.dashboards .card svg {
   font-size: calc(1.325rem + 0.9vw) !important;
 }
 @media (max-width: 768px) {
-  .dashboard .cards .card {
-    width: 75%;
+  .dashboards .cards .card {
+    width: 75vw;
     flex-direction: column !important;
     align-items: center !important;
     padding: 0.5rem !important;
   }
-  .dashboard .cards {
-    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  .dashboards .cards {
+    /* grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); */
     justify-items: center;
   }
 }
-.dashboard table .fs-6 {
+.dashboards table .fs-6 {
   font-size: 0.75rem !important;
 }
 @media (max-width: 767px) {
-  .dashboard .tables {
+  .dashboards .tables {
     flex-direction: column;
     align-items: center;
     /* margin-left: 20px; */
@@ -384,20 +438,20 @@ sub {
   /* .dashboard .tables .table {
     width: fit-content;
   } */
-  .dashboard .tables .table .text {
+  .dashboards .tables .table .text {
     font-size: 12px;
   }
-  .dashboard .tables .table table {
+  .dashboards .tables .table table {
     font-size: 12px;
   }
-  .dashboard .tables .table table span {
+  .dashboards .tables .table table span {
     font-size: 7px !important;
   }
-  .dashboard .table tr th:first-of-type {
+  .dashboards .table tr th:first-of-type {
     display: none;
   }
-  .dashboard .table tr th,
-  .dashboard .table tr td {
+  .dashboards .table tr th,
+  .dashboards .table tr td {
     padding: 1px;
   }
 }
@@ -405,17 +459,29 @@ sub {
 /* -------------------------- DEPARTMENT -------------------------- */
 
 .icon {
+  border-radius: 50%;
+  display: inline-flex;
   width: 30px;
   height: 30px;
   cursor: pointer;
-  padding: 7px;
-  color: black;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.3s linear;
 }
 .edit {
   background-color: green;
 }
+.edit:hover {
+  transform: scale(1.1);
+  background-color: rgb(3, 233, 3);
+}
 .delete {
-  background-color: red;
+  background-color: rgb(180, 0, 0);
+}
+.delete:hover {
+  transform: scale(1.1);
+  background-color: rgb(255, 0, 0);
 }
 
 @media (max-width: 767px) {
@@ -427,10 +493,12 @@ sub {
     font-size: 12px;
   }
   .department .table table,
-  .report .table table,
   .history .table table,
   .user .table table {
     font-size: 12px;
+  }
+  .report .table table {
+    font-size: 9px;
   }
   .department .table tr th:first-of-type,
   .employee .table tr th:first-of-type,
@@ -732,7 +800,7 @@ sub {
   outline: none;
   cursor: pointer;
   border: none;
-  padding: 0.45rem 1.2rem;
+  padding: 0.25rem 1.2rem;
   margin: 0;
   font-family: inherit;
   font-size: inherit;
@@ -1050,7 +1118,9 @@ sub {
 /* -------------------------- ADD DEPARTMENT -------------------------- */
 
 /* -------------------------- Employee -------------------------- */
-.employee table span {
+.employee table span,
+.report table span,
+.shift table span {
   font-size: 12px;
   color: gray;
   font-weight: 500;
@@ -1059,10 +1129,12 @@ sub {
   .employee .table table {
     font-size: 7px !important;
   }
-  .employee .table table span {
+  .employee .table table span,
+  .report .table table span {
     font-size: 7px !important;
   }
-  .employee table span {
+  .employee table span,
+  .report table span {
     font-size: 7px;
   }
   .employee table img {
@@ -1077,9 +1149,8 @@ sub {
 
 @media (max-width: 991px) {
   .employee table .icon {
-    width: 25px;
-    height: 25px;
-    padding: 4px;
+    width: 20px;
+    height: 20px;
   }
   .employee .table table {
     font-size: 13px;
@@ -1101,7 +1172,6 @@ sub {
 }
 /* -------------------------- Employee -------------------------- */
 /* -------------------------- Report -------------------------- */
-/* From Uiverse.io by suda-code */
 .btn-rep {
   padding: 5px 25px 5px 15px;
   border: 0;
@@ -1171,6 +1241,113 @@ sub {
     width: 100%;
   }
 }
+/* From Uiverse.io by cbolson */
+.report .switch {
+  --_switch-bg-clr: black;
+  --_switch-padding: 4px; /* padding around button*/
+  --_slider-bg-clr: var(--bs-gray-600); /* slider color unchecked */
+  --_slider-bg-clr-on: var(--bs-gray-700); /* slider color checked */
+  --_slider-txt-clr: #ffffff;
+  --_label-padding: 0.5rem 2rem; /* padding around the labels -  this gives the switch it's global width and height */
+  --_switch-easing: cubic-bezier(
+    0.47,
+    1.64,
+    0.41,
+    0.8
+  ); /* easing on toggle switch */
+  color: white;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 20px;
+}
+
+.report .switch input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.report .switch > span {
+  display: grid;
+  place-content: center;
+  transition: opacity 300ms ease-in-out 150ms;
+  padding: var(--_label-padding);
+}
+.report .switch::before,
+.report .switch::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  transition: inset 150ms ease-in-out;
+}
+/* switch slider */
+.report .switch::before {
+  background-color: var(--_slider-bg-clr);
+  inset: var(--_switch-padding) 50% var(--_switch-padding)
+    var(--_switch-padding);
+  transition: inset 500ms var(--_switch-easing),
+    background-color 500ms ease-in-out;
+  z-index: -1;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.3);
+}
+/* switch bg color */
+.report .switch::after {
+  background-color: var(--_switch-bg-clr);
+  inset: 0;
+  z-index: -2;
+}
+/* switch hover & focus */
+.report .switch:focus-within::after {
+  inset: -0.25rem;
+}
+.report .switch:has(input:checked):hover > span:first-of-type,
+.report .switch:has(input:not(:checked)):hover > span:last-of-type {
+  opacity: 1;
+  transition-delay: 0ms;
+  transition-duration: 100ms;
+}
+/* switch hover */
+.report .switch:has(input:checked):hover::before {
+  inset: var(--_switch-padding) var(--_switch-padding) var(--_switch-padding)
+    45%;
+}
+.report .switch:has(input:not(:checked)):hover::before {
+  inset: var(--_switch-padding) 45% var(--_switch-padding)
+    var(--_switch-padding);
+}
+/* checked - move slider to right */
+.report .switch:has(input:checked)::before {
+  background-color: var(--_slider-bg-clr-on);
+  inset: var(--_switch-padding) var(--_switch-padding) var(--_switch-padding)
+    50%;
+}
+/* checked - set opacity */
+.report .switch > span:last-of-type,
+.report .switch > input:checked + span:first-of-type {
+  opacity: 0.75;
+}
+.report .switch > input:checked ~ span:last-of-type {
+  opacity: 1;
+}
+@media (max-width: 767px) {
+  .report .switch {
+    font-size: 12px !important;
+  }
+}
+
 /* -------------------------- Report -------------------------- */
 
 /* -------------------------- Profile -------------------------- */
@@ -1194,6 +1371,15 @@ sub {
 }
 /* -------------------------- Profile -------------------------- */
 /* -------------------------- Login -------------------------- */
+.login input:-webkit-autofill,
+.login input:-webkit-autofill:hover,
+.login input:-webkit-autofill:focus,
+.login input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 0px transparent inset !important; /* Override background */
+  -webkit-text-fill-color: #fff !important; /* Override text color */
+  background-color: transparent !important; /* Ensure background is transparent */
+  transition: background-color 5000s ease-in-out 0s; /* Prevent background color change */
+}
 .login .contain {
   height: 100vh;
   background: rgb(32, 32, 32);
@@ -1238,6 +1424,9 @@ sub {
   color: white;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+.login .contain .right .error::placeholder {
+  color: #a91e1e;
 }
 
 .login .contain .right .input-icon {
@@ -1435,3 +1624,129 @@ sub {
   cursor: pointer;
 }
 /* -------------------------- Attendance Form -------------------------- */
+/* -------------------------- Custom Alert -------------------------- */
+/* .custom-alert {
+  background-color: inherit;
+  padding: 5px;
+  text-align: center;
+}
+
+.custom-alert p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.confirm-button,
+.cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.confirm-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+} */
+.delete-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-modal.open {
+  display: flex;
+}
+
+.delete-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.delete-modal-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+.delete-modal-content .buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.delete-modal-content button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.delete-modal-content .confirm-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-modal-content .confirm-button:hover {
+  background-color: #c82333;
+}
+
+.delete-modal-content .cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.delete-modal-content .cancel-button:hover {
+  background-color: #5a6268;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------- Custom Alert -------------------------- */

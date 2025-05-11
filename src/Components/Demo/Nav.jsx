@@ -1,90 +1,63 @@
-// import { LayoutDashboard, Menu } from "lucide-react";
-// import React, { useState } from "react";
-// import { adminDashBoard } from "../../data";
-// import { FaPaste } from "react-icons/fa";
-// import { Link } from "react-router-dom";
-// const DashBoard = () => {
-//   const [sideBar, setSideBar] = useState(false);
-//   const [active, setActive] = useState(0);
-//   return (
-//     <div className="sideBar position-relative start-0">
-//       <div className="d-flex flex-row-reverse">
-//         <Menu
-//           style={{ margin: " 12px 0 0 15px", color: "white" }}
-//           onClick={() => {
-//             setSideBar(!sideBar);
-//           }}
-//         />
-//         <div
-//           className="dashboard text-light"
-//           style={sideBar ? { display: "block" } : { display: "none" }}
-//         >
-//           <div className="content">
-//             <img src="/img/logo.png" alt="" />
-//             <div className=" ms-3 me-4 mt-3 ">
-//               <h6 className="text-secondary fw-bold mb-4">Admin</h6>
-//               <div className=" border-bottom">
-//                 <Link to="/dashboard">
-//                   <div
-//                     className={`box d-flex ms-2 ${
-//                       active === 1 || active === 0 ? "active" : "text-light"
-//                     }`}
-//                     onClick={() => setActive(1)}
-//                   >
-//                     <LayoutDashboard /> <p className="ms-2 ">Dashboard</p>
-//                   </div>
-//                 </Link>
-//               </div>
-
-//               <h6 className="text-secondary fw-bold my-4">Master</h6>
-//               <ul className="my-4 ms-2 border-bottom p-0">
-//                 {adminDashBoard.map((val, index) => {
-//                   return (
-//                     <li
-//                       key={index}
-//                       className={`box d-flex ms-2 ${
-//                         active === index + 2 ? "active" : "text-light"
-//                       }`}
-//                       onClick={() => setActive(index + 2)}
-//                     >
-//                       {val.icon} <p className="ms-2">{val.text}</p>
-//                     </li>
-//                   );
-//                 })}
-//               </ul>
-//               <div className="text-secondary fw-bold my-4">Report</div>
-//               <div className="border-bottom">
-//                 <div
-//                   className={`box d-flex ms-2 ${
-//                     active === -1 ? "active" : "text-light"
-//                   }`}
-//                   onClick={() => setActive(-1)}
-//                 >
-//                   <FaPaste /> <p className="ms-2">Print Report</p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default DashBoard;
 import { LayoutDashboard, Menu } from "lucide-react";
 import React, { useState } from "react";
 import { adminDashBoard, employeeDashBoard } from "../Data/data";
 import { FaAddressCard, FaPaste } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaRightFromBracket } from "react-icons/fa6";
+import { PiPasswordFill } from "react-icons/pi";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Nav = () => {
   const location = useLocation();
-  // console.log(location.pathname.split("/")[1]);
+  const navigate = useNavigate();
   const [sideBar, setSideBar] = useState(false);
   const [account, setAccount] = useState(true);
-  const isActive = (path) => location.pathname.split("/")[1] === path;
+  const isActive = (path) => location.pathname.split("/")[2] === path;
+  const isActive2 = (path) => location.pathname.split("/")[3] === path;
+  const id = location.pathname.split("/")[2];
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/logout",
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data.status === "success") {
+        // حفظ reportId و reportExpiry مؤقتاً
+        const reportId = localStorage.getItem("reportId");
+        const reportExpiry = localStorage.getItem("reportExpiry");
+
+        // مسح جميع البيانات من localStorage
+        localStorage.clear();
+
+        // إعادة reportId و reportExpiry إذا كانا موجودين
+        if (reportId && reportExpiry) {
+          localStorage.setItem("reportId", reportId);
+          localStorage.setItem("reportExpiry", reportExpiry);
+        }
+
+        // إزالة جميع الكوكيز
+        document.cookie.split(";").forEach((cookie) => {
+          const [name] = cookie.trim().split("=");
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        });
+
+        toast.success("Logged out successfully", {
+          theme: "colored",
+        });
+
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error logging out", {
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <>
@@ -109,14 +82,14 @@ const Nav = () => {
           <div className="content">
             <img className="mt-2" src="/img/face-gate.png" alt="" />
             <div className=" ms-3 me-4 mt-3 ">
-              {account === true ? (
+              {location.pathname.split("/")[1] === "admin" ? (
                 <>
                   <h6 className="text-secondary fw-bold mb-4">Admin</h6>
                   <div className=" border-bottom">
-                    <Link to={`/dashboard`}>
+                    <Link to={`/admin/${id}/dashboard`}>
                       <div
                         className={`box d-flex ms-2 mb-4 ${
-                          isActive("dashboard") ? "active" : "text-light"
+                          isActive2("dashboard") ? "active" : "text-light"
                         }`}
                         // onClick={() => setActive1("/")}
                       >
@@ -128,11 +101,14 @@ const Nav = () => {
                   <ul className="my-4 border-bottom p-0">
                     {adminDashBoard.map((val, index) => {
                       return (
-                        <Link key={index} to={`/${val.text.toLowerCase()}`}>
+                        <Link
+                          key={index}
+                          to={`/admin/${id}/${val.text.toLowerCase()}`}
+                        >
                           <li
                             key={index}
                             className={`box d-flex ms-2 mb-4 ${
-                              isActive(`${val.text.toLowerCase()}`) ||
+                              isActive2(`${val.text.toLowerCase()}`) ||
                               location.pathname.includes(
                                 `${val.text.toLowerCase()}`
                               )
@@ -148,11 +124,11 @@ const Nav = () => {
                     })}
                   </ul>
                   <h6 className="text-secondary fw-bold my-4">Report</h6>
-                  <Link to={`/report`}>
-                    <div className="border-bottom">
+                  <Link to={`/admin/${id}/report`}>
+                    <div className="border-bottom mb-4">
                       <div
                         className={`box d-flex ms-2 mb-4 ${
-                          isActive("report") ||
+                          isActive2("report") ||
                           location.pathname.includes("report")
                             ? "active"
                             : "text-light"
@@ -170,10 +146,13 @@ const Nav = () => {
                   <ul className="my-4 border-bottom p-0">
                     {employeeDashBoard.map((val, index) => {
                       return (
-                        <Link key={index} to={`/${val.text.toLowerCase()}`}>
+                        <Link
+                          key={index}
+                          to={`/employee/${id}/${val.text.toLowerCase()}`}
+                        >
                           <li
                             className={`box d-flex ms-2 mb-4 ${
-                              isActive(`${val.text.toLowerCase()}`)
+                              isActive2(`${val.text.toLowerCase()}`)
                                 ? "active"
                                 : "text-light"
                             }`}
@@ -186,15 +165,28 @@ const Nav = () => {
                     })}
                   </ul>
                   <h6 className="text-secondary fw-bold my-4">PROFILE</h6>
-                  <Link to={`/profile`}>
-                    <div className="border-bottom">
+                  <Link to={`/employee/${id}/profile`}>
+                    <div>
                       <div
                         className={`box d-flex ms-2 mb-4 ${
-                          isActive("profile") ? "active" : "text-light"
+                          isActive2("profile") ? "active" : "text-light"
                         }`}
                         // onClick={() => setActive(-1)}
                       >
                         <FaAddressCard /> <p className="ms-2">My Profile</p>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link to={`/employee/${id}/change-password`}>
+                    <div className="border-bottom">
+                      <div
+                        className={`box d-flex ms-2 mb-4 align-items-center ${
+                          isActive2("change-password") ? "active" : "text-light"
+                        }`}
+                        // onClick={() => setActive(-1)}
+                      >
+                        <PiPasswordFill className="fs-5" />
+                        <p className="ms-2">Change Password</p>
                       </div>
                     </div>
                   </Link>
@@ -209,14 +201,12 @@ const Nav = () => {
         ></div>
       </div>
       <div className="logOut">
-        <Link to={account === true ? "/attendance-form" : "/"}>
-          <button className="logout" onClick={() => setAccount(!account)}>
-            <div className="sign">
-              <FaRightFromBracket />
-            </div>
-            <div className="text">Logout</div>
-          </button>
-        </Link>
+        <button className="logout" onClick={handleLogout}>
+          <div className="sign">
+            <FaRightFromBracket />
+          </div>
+          <div className="text">Logout</div>
+        </button>
       </div>
     </>
   );

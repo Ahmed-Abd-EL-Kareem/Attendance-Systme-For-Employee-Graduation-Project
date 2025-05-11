@@ -1,25 +1,36 @@
-import React, { useState } from "react";
-import Data from "../../Data/EmpData.json";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { columns } from "../../Data/EmpColumns";
 import Table from "../../Table/Table";
 import Head from "../../Head";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-let sharedRowData = null; // Placeholder for the clicked row's data
-const setSharedRowData = (data) => {
-  sharedRowData = data;
-};
-export const EGetSharedRowData = () => sharedRowData;
-const Employee = () => {
-  const handleEdit = (rowData) => {
-    setSharedRowData(rowData);
-    console.log("Edit clicked for row:", EGetSharedRowData());
-  };
 
-  const data = Data.data.map((item) => ({
-    ...item,
-    onEdit: handleEdit, // Attach the onEdit function to each row
-  }));
+const Employee = ({ employees, id }) => {
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setData(employees);
+    // const fetchDoctor = async () => {
+    //   const { data } = await axios.get(
+    //     "http://127.0.0.1:8000/api/v1/employees",
+    //     { withCredentials: true }
+    //   );
+    //   setData(data?.data.employees);
+    // };
+    // fetchDoctor();
+  }, [employees]);
+
+  // const handleEdit = (rowData) => {
+  //   console.log("Employee ID:", rowData.id);
+  //   navigate(`/admin/employee/edit/${rowData.id}`);
+  // };
+
+  // const enhancedData = data.map((item) => ({
+  //   ...item,
+  //   onEdit: handleEdit,
+  // }));
 
   const [searchItem, setSearchItem] = useState("");
   return (
@@ -28,7 +39,7 @@ const Employee = () => {
         <div className="container">
           <Head title="Employee" />
           <div className="add_button mb-2">
-            <Link to="/employee/add">
+            <Link to={`/admin/${id}/employee/add`}>
               <button
                 className="pushable"
                 data-aos="fade-right"
@@ -55,12 +66,12 @@ const Employee = () => {
                 DataTable Employee
               </p>
               <div
-                class="d-flex align-items-center form"
+                className="d-flex align-items-center form"
                 data-aos="fade-left"
                 data-aos-duration="1500"
               >
                 <input
-                  class="form-control "
+                  className="form-control "
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
@@ -68,7 +79,7 @@ const Employee = () => {
                   onChange={(e) => setSearchItem(e.target.value)}
                 />
                 <i
-                  class="fa-solid fa-magnifying-glass"
+                  className="fa-solid fa-magnifying-glass"
                   style={{ marginLeft: "-33px" }}
                 ></i>
               </div>

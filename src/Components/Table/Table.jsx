@@ -87,7 +87,18 @@ const Table = ({ columns, data, search }) => {
                   const { key: cellKey, ...restCellProps } =
                     cell.getCellProps(); // Extract key for <td>
                   return (
-                    <td key={cellKey} {...restCellProps}>
+                    <td
+                      key={cellKey}
+                      {...restCellProps}
+                      style={{
+                        backgroundColor:
+                          cell.value === "Unset" || cell.value === ""
+                            ? "rgb(255, 28, 28)"
+                            : "transparent",
+                        color: cell.value === "Unset" ? "white" : "inherit",
+                        fontWeight: cell.value === "Unset" ? "bold" : "normal",
+                      }}
+                    >
                       {cell.render("Cell")}
                     </td>
                   );

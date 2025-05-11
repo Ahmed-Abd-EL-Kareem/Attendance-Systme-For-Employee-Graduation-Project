@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Head from "../../Head";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,63 +8,132 @@ import { toast, ToastContainer } from "react-toastify";
 import DData from "../../Data/DepartData.json";
 import SData from "../../Data/ShiftData.json";
 import axios from "axios";
+import SmallLoad from "../../SmallLoad";
 
-const AddEmp = () => {
-  const notify = () =>
-    toast.success("New Employee Added!!", {
-      theme: "colored",
-    });
-  const [imageUrl, setImageUrl] = useState(null);
+const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
+  const [loading, setLoading] = useState(false);
+  const [empName, setEmpName] = useState("");
+  const [img, setImg] = useState("");
+  const [gender, setGender] = useState("");
+  const [dof, setDof] = useState("");
+  const [shift, setShift] = useState("");
+  const [date, setDate] = useState("");
+  const [department, setDepartment] = useState("");
+  const navigate = useNavigate();
+  // const notify = () =>
+  //   toast.success("New Employee Added!!", {
+  //     theme: "colored",
+  //   });
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    try {
-      const uploadedImage = await uploadImage(file);
-      setImageUrl(uploadedImage.secure_url);
-      console.log(uploadedImage.secure_url);
-    } catch (error) {
-      toast.error("Image upload failed");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // التحقق من إدخال جميع الحقول
+    const missingFields = [];
+    if (!empName.trim()) missingFields.push("Employee Name");
+    if (!gender) missingFields.push("Gender");
+    if (!dof) missingFields.push("Date of Birth");
+    if (!shift) missingFields.push("Shift");
+    if (!date) missingFields.push("Hire Date");
+    if (!department) missingFields.push("Department");
+    if (!img) missingFields.push("Employee Image");
+
+    if (missingFields.length > 0) {
+      toast.error(`Please enter: ${missingFields.join(", ")}`, {
+        theme: "colored",
+      });
+      return;
     }
-  };
 
-  const uploadImage = async (file) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "attendance");
+    setLoading(true);
 
-    const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dctocnh6f/image/upload",
-      data
-    );
-
-    return response.data;
-  };
-
-  const picture = async (file) => {
     try {
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", "my-uploads");
+      const formData = new FormData();
+      formData.append("name", empName);
+      formData.append("gender", gender);
+      formData.append("dof", dof);
+      formData.append("shift", shift);
+      formData.append("date", date);
+      const departmentId = departments.find((d) => d.name === department)._id;
+      formData.append("department", departmentId);
 
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dctocnh6f/image/upload",
-        data
+      if (img && img.startsWith("data:image")) {
+        const response = await fetch(img);
+        const blob = await response.blob();
+        formData.append("image", blob, "image.jpg");
+      }
+
+      await axios.post(
+        "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      console.log(response.data); // Log the actual response data
-      return response.data; // Return the response data
+      toast.success("Employee added successfully!", {
+        theme: "colored",
+      });
+      setLoading(false);
+      setTimeout(() => {
+        navigate(`/admin/${id}/employee`);
+      }, 5000);
+      // تحديث البيانات في جميع المسارات
+      if (onUpdateSuccess) {
+        await onUpdateSuccess();
+      }
     } catch (error) {
-      console.error("Image upload error:", error);
-      throw error; // Re-throw to allow caller to handle the error
+      console.error("Error adding employee:", error);
+      toast.error("Failed to add employee", {
+        theme: "colored",
+      });
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // التحقق من حجم الصورة (أقصى 5 ميجابايت)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Image size should be less than 5MB", {
+          theme: "colored",
+        });
+        e.target.value = ""; // مسح قيمة الإدخال
+        return;
+      }
+
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!allowedTypes.includes(file.type)) {
+        toast.error(
+          "Unsupported file type. Please select a JPEG, PNG, or JPG image",
+          {
+            theme: "colored",
+          }
+        );
+        e.target.value = ""; // مسح قيمة الإدخال
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <div className="add mt-6 w-100">
-        <div className="container ">
+        <div className="container">
           <Head title="Employee" />
           <div className="back_button mb-2">
-            <Link to="/employee">
+            <Link to={`/admin/${id}/employee`}>
               <button className="pushable">
                 <span className="shadow" />
                 <span className="edge" />
@@ -77,80 +146,136 @@ const AddEmp = () => {
               </button>
             </Link>
           </div>
-          <div className="card col-lg-8 col-xl-8 col-xxl-8 bg-light mt-3 ms-1 mb-3">
+          <div className="card col-lg-10 col-xl-9 col-xxl-8 bg-light mt-3 ms-1 mb-3">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
               <p className="mt-3">Employee Data</p>
             </div>
             <div className="box mt-3 p-3 px-4">
               <h3>Add New Employee</h3>
-              <div className="form mt-4 px-3 row">
-                <div className="col-md-6 d-flex flex-column">
-                  <label htmlFor="eName">Employee Name :</label>
-                  <input type="text" name="eName" id="eName" />
-                  <label htmlFor="dName">Department Name :</label>
-                  <select name="dName" id="dName">
-                    {DData.data.map((item) => (
-                      <option key={item.id} value={item.name}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="eEmail">Email Address :</label>
-                  <input type="email" name="eEmail" id="eEmail" />
-                  <label htmlFor="gender">Gender :</label>
-                  <div
-                    className="gender d-flex justify-content-evenly align-items-baseline  "
-                    id="gender"
-                  >
-                    <input type="radio" name="gender" id="male" value="male" />
-                    <label htmlFor="male">Male</label>
+              <form onSubmit={handleSubmit} className="form mt-4 px-3 row">
+                <div className="img d-flex flex-column align-items-center justify-content-center mb-4">
+                  <img
+                    src={img || "./img/avatar.png"}
+                    alt=""
+                    className="w-25 rounded-circle mb-4"
+                  />
+                  <div className="d-flex justify-content-between w-100">
+                    <label htmlFor="image">Employee Image:</label>
                     <input
-                      type="radio"
-                      name="gender"
-                      id="female"
-                      value="female"
+                      type="file"
+                      name="image"
+                      id="image"
+                      className="buttonDownload"
+                      accept="image/jpeg,image/png,image/jpg"
+                      onChange={handleImageChange}
                     />
-                    <label htmlFor="female">Female</label>
                   </div>
                 </div>
-                <div className="col-md-6 d-flex flex-column">
-                  <label htmlFor="image">Employee Image :</label>
-                  <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    className="buttonDownload"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                  />
-
-                  <label htmlFor="shift">Shift :</label>
-                  <select name="shift" id="shift">
-                    {SData.data.map((item) => (
-                      <option
-                        key={item.id}
-                        value={`${item.start} - ${item.end}`}
-                      >
-                        {`${item.start} - ${item.end}`}
-                      </option>
-                    ))}
-                  </select>
-                  <label htmlFor="dob">Employee D.O.B :</label>
-                  <input type="date" name="dob" id="dob" />
-                  <label htmlFor="hire">Hire Date :</label>
-                  <input type="date" name="hire" id="hire" />
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3">
-                <button className="button" onClick={notify}>
-                  <span className="pe-1 me-1 ">
-                    <BsPlusCircleFill
-                      style={{ transform: "translateY(-1px)" }}
+                <div className="row">
+                  <div className="col-md-6 d-flex flex-column">
+                    <label htmlFor="eName">Employee Name:</label>
+                    <input
+                      type="text"
+                      name="eName"
+                      id="eName"
+                      value={empName}
+                      onChange={(e) => setEmpName(e.target.value)}
                     />
-                  </span>
-                  Save
-                </button>
-              </div>
+                    <label htmlFor="dob">Date of Birth:</label>
+                    <input
+                      type="date"
+                      name="dob"
+                      id="dob"
+                      value={dof}
+                      onChange={(e) => setDof(e.target.value)}
+                    />
+                    <label htmlFor="shift">Shift:</label>
+                    <select
+                      name="shift"
+                      id="shift"
+                      value={shift}
+                      onChange={(e) => setShift(e.target.value)}
+                    >
+                      <option value="">Select Shift</option>
+                      {shifts.map((item) => (
+                        <option key={item._id} value={item._id}>
+                          {`${item.startTime12h} - ${item.endTime12h}`}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-6 d-flex flex-column">
+                    <label htmlFor="hire">Hire Date:</label>
+                    <input
+                      type="date"
+                      name="hire"
+                      id="hire"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                    <label htmlFor="department">Department:</label>
+                    <select
+                      name="department"
+                      id="department"
+                      value={department}
+                      onChange={(e) => setDepartment(e.target.value)}
+                    >
+                      <option value="">Select Department</option>
+                      {departments.map((item) => (
+                        <option key={item._id} value={item.name}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    <label htmlFor="gender">Gender:</label>
+                    <div
+                      className="gender d-flex justify-content-evenly align-items-baseline"
+                      id="gender"
+                    >
+                      <input
+                        type="radio"
+                        name="gender"
+                        id="male"
+                        value="Male"
+                        checked={gender === "Male"}
+                        onChange={() => setGender("Male")}
+                      />
+                      <label htmlFor="male">Male</label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        id="female"
+                        value="Female"
+                        checked={gender === "Female"}
+                        onChange={() => setGender("Female")}
+                      />
+                      <label htmlFor="female">Female</label>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex justify-content-end mt-3">
+                  <button
+                    type="submit"
+                    className="button d-flex"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <SmallLoad /> Saving...
+                      </>
+                    ) : (
+                      <>
+                        <span className="pe-1 me-1">
+                          <BsPlusCircleFill
+                            style={{ transform: "translateY(-1px)" }}
+                          />
+                        </span>
+                        Save
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

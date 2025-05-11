@@ -1,6 +1,10 @@
-import { FaRegEdit } from "react-icons/fa";
+import { FaUserEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import { useState } from "react";
 
 export const columns = [
   {
@@ -9,7 +13,7 @@ export const columns = [
   },
   {
     Header: "Employee ID",
-    accessor: "id",
+    accessor: "emId",
   },
   {
     Header: "Employee Name",
@@ -17,37 +21,111 @@ export const columns = [
   },
   {
     Header: "Department ID",
-    accessor: "depId",
+    accessor: (row) =>
+      row.department && row.department.depId ? row.department.depId : "Unset",
   },
   {
     Header: "UserName",
-    Cell: ({ row }) =>
-      row.original.user ? (
-        row.original.user
-      ) : (
-        <Link to={`/users/add/${row.original.id}`}>
-          <button
-            className="Btn"
-            onClick={() => row.original.onEdit(row.original)}
-          >
+    Cell: ({ row }) => {
+      const { id } = useParams();
+      return row.original.account === undefined ||
+        row.original.account === null ? (
+        <Link to={`/admin/${id}/users/add/${row.original._id}`}>
+          <button className="Btn">
             <span>Create Account</span>
           </button>
         </Link>
-      ),
+      ) : (
+        row.original.account.userName
+      );
+    },
   },
   {
     Header: "Actions",
-    Cell: ({ row }) => (
-      <>
-        <Link to={`/users/edit/${row.original.id}`}>
-          <FaRegEdit
-            className="icon edit"
-            onClick={() => row.original.onEdit(row.original)}
-          />
-        </Link>
-        |
-        <MdDeleteForever className="icon delete" />
-      </>
-    ),
+    Cell: ({ row }) => {
+      const { id } = useParams();
+      const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+      if (row.original.account === undefined || row.original.account === null) {
+        return null;
+      } else {
+        if (row.original.account.role === "admin") {
+          return (
+            <>
+              <Link to={`/admin/${id}/users/edit/${row.original.account._id}`}>
+                <div className="icon edit">
+                  <FaUserEdit />
+                </div>
+              </Link>
+            </>
+          );
+        } else {
+          const handleDelete = (userId) => {
+            // console.log("userId", userId);
+            setIsDeleteModalOpen(true);
+          };
+
+          const deleteUser = async (userId) => {
+            try {
+              const response = await axios.delete(
+                `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${userId}`,
+                {
+                  withCredentials: true,
+                }
+              );
+
+              if (
+                response.data.status === "success" ||
+                response.data.status === undefined
+              ) {
+                toast.success("User deleted successfully", {
+                  theme: "colored",
+                });
+                window.location.reload();
+              }
+            } catch (error) {
+              if (error.response) {
+                toast.error(
+                  error.response.data.message || "Error deleting user",
+                  {
+                    theme: "colored",
+                  }
+                );
+              } else {
+                toast.error("Error connecting to the server", {
+                  theme: "colored",
+                });
+              }
+            }
+          };
+
+          return (
+            <>
+              <Link to={`/admin/${id}/users/edit/${row.original.account._id}`}>
+                <div className="icon edit">
+                  <FaUserEdit />
+                </div>
+              </Link>
+              |
+              <div className="icon delete">
+                <MdDeleteForever
+                  onClick={() => handleDelete(row.original.account._id)}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+              <DeleteModal
+                isOpen={isDeleteModalOpen}
+                message="Are You Sure You Want To Delete This User Account?"
+                onConfirm={() => {
+                  deleteUser(row.original.account._id);
+                  setIsDeleteModalOpen(false);
+                }}
+                onCancel={() => setIsDeleteModalOpen(false)}
+              />
+            </>
+          );
+        }
+      }
+    },
   },
 ];

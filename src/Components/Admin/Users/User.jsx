@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "../../Head";
 import Table from "../../Table/Table";
 import { columns } from "../../Data/UserColumns";
-import Data from "../../Data/UsersData.json";
-let sharedRowData = null; // Placeholder for the clicked row's data
-const setSharedRowData = (data) => {
-  sharedRowData = data;
-};
-export const UGetSharedRowData = () => sharedRowData;
-const User = () => {
-  const handleEdit = (rowData) => {
-    setSharedRowData(rowData);
-  };
 
-  const data = Data.data.map((item) => ({
-    ...item,
-    onEdit: handleEdit, // Attach the onEdit function to each row
-  }));
+import { Link, useNavigate } from "react-router-dom";
+import { FaCirclePlus } from "react-icons/fa6";
+
+const User = ({ employees }) => {
+  const [data, setData] = useState([]);
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    setData(employees);
+  }, [employees]);
+
+  // const handleEdit = (rowData) => {
+  //   console.log("Account ID:", rowData.id);
+  //   navigate(`/admin/users/edit/${rowData.id}`);
+  // };
+
+  // const enhancedData = data.map((item) => ({
+  //   ...item,
+  //   onEdit: handleEdit,
+  // }));
+
   const [searchItem, setSearchItem] = useState("");
 
   return (
@@ -34,12 +41,12 @@ const User = () => {
                 DataTable Users
               </p>
               <div
-                class="d-flex align-items-center form"
+                className="d-flex align-items-center form"
                 data-aos="fade-left"
                 data-aos-duration="1500"
               >
                 <input
-                  class="form-control "
+                  className="form-control "
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
@@ -47,7 +54,7 @@ const User = () => {
                   onChange={(e) => setSearchItem(e.target.value)}
                 />
                 <i
-                  class="fa-solid fa-magnifying-glass"
+                  className="fa-solid fa-magnifying-glass"
                   style={{ marginLeft: "-33px" }}
                 ></i>
               </div>

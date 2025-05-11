@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import Data from "../../Data/ShiftData.json";
+import React, { useState, useEffect } from "react";
 import { columns } from "../../Data/ShiftColumns";
 import Table from "../../Table/Table";
 import Head from "../../Head";
 import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-let sharedRowData = null; // Placeholder for the clicked row's data
-const setSharedRowData = (data) => {
-  sharedRowData = data;
-};
-export const SGetSharedRowData = () => sharedRowData;
-const Shift = () => {
-  const handleEdit = (rowData) => {
-    setSharedRowData(rowData);
-    console.log("Edit clicked for row:", SGetSharedRowData());
-  };
+import Loading from "../../Loading";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  const data = Data.data.map((item) => ({
-    ...item,
-    onEdit: handleEdit, // Attach the onEdit function to each row
-  }));
-
+const Shift = ({ shifts, id }) => {
+  const [loading, setLoading] = useState(true);
   const [searchItem, setSearchItem] = useState("");
+
+  useEffect(() => {
+    if (shifts) {
+      setLoading(false);
+    }
+  }, [shifts]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <div className="department ms-1 mt-6 w-100">
+      <div className="shift ms-1 mt-6 w-100">
         <div className="container">
           <Head title="Shift" />
           <div className="add_button mb-2">
-            <Link to="/shift/add">
+            <Link to={`/admin/${id}/shift/add`}>
               <button
                 className="pushable"
                 data-aos="fade-right"
@@ -45,7 +45,7 @@ const Shift = () => {
               </button>
             </Link>
           </div>
-          <div className="table bg-light ">
+          <div className="table bg-light">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
               <p
                 className="mt-3"
@@ -55,12 +55,12 @@ const Shift = () => {
                 DataTable Shift
               </p>
               <div
-                class="d-flex align-items-center form"
+                className="d-flex align-items-center form"
                 data-aos="fade-left"
                 data-aos-duration="1500"
               >
                 <input
-                  class="form-control "
+                  className="form-control"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
@@ -68,17 +68,18 @@ const Shift = () => {
                   onChange={(e) => setSearchItem(e.target.value)}
                 />
                 <i
-                  class="fa-solid fa-magnifying-glass"
+                  className="fa-solid fa-magnifying-glass"
                   style={{ marginLeft: "-33px" }}
                 ></i>
               </div>
             </div>
             <div className="tab p-2 bg-white">
-              <Table columns={columns} data={data} search={searchItem} />
+              <Table columns={columns} data={shifts} search={searchItem} />
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

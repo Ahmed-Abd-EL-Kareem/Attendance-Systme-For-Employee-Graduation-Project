@@ -1,59 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Head from "../../Head";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import Loading from "../../Loading";
 import SmallLoad from "../../SmallLoad";
-// import { UGetSharedRowData } from "./User";
 
-const EditUsers = ({ id1 }) => {
-  const { id } = useParams();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+const ChangePassword = () => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${id}`,
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.data.status === "success") {
-          setUserName(response.data.data.account.userName);
-        }
-      } catch (error) {
-        toast.error("Error fetching user data", {
-          theme: "colored",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [id]);
+    setIsLoading(false);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!password.trim() || !confirmPassword.trim()) {
-      toast.error("Please enter a password and confirm it", {
+    if (
+      !currentPassword.trim() ||
+      !newPassword.trim() ||
+      !confirmPassword.trim()
+    ) {
+      toast.error("Please enter all password fields", {
         theme: "colored",
       });
       return;
     }
 
-    if (password !== confirmPassword) {
-      toast.error("Password does not match", {
+    if (newPassword !== confirmPassword) {
+      toast.error("New password does not match confirmation", {
         theme: "colored",
       });
       return;
@@ -62,8 +42,12 @@ const EditUsers = ({ id1 }) => {
     setLoading(true);
     try {
       const response = await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/updateEmployeePassword/${id}`,
-        { password },
+        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/updateMyPassword`,
+        {
+          passwordCurrent: currentPassword,
+          password: newPassword,
+          passwordConfirm: confirmPassword,
+        },
         {
           withCredentials: true,
           headers: {
@@ -76,6 +60,9 @@ const EditUsers = ({ id1 }) => {
         toast.success("Password updated successfully", {
           theme: "colored",
         });
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       }
     } catch (error) {
       if (error.response) {
@@ -99,64 +86,87 @@ const EditUsers = ({ id1 }) => {
   return (
     <>
       <div className="add mt-6 w-100">
-        <div className="container ">
-          <Head title="User" />
-          <div className="back_button mb-2">
-            <Link to={`/admin/${id1}/users`}>
-              <button className="pushable">
-                <span className="shadow" />
-                <span className="edge" />
-                <span className="front">
-                  <span className="pe-2 me-2 border-end">
-                    <MdArrowBackIos />
-                  </span>
-                  Back
-                </span>
-              </button>
-            </Link>
-          </div>
-          <div className="card col-lg-8 col-xl-8 col-xxl-8 bg-light mt-3 ms-1">
+        <div className="container">
+          <Head title="Change Password" />
+          <div className="card col-lg-8 col-xl-8 col-xxl-8 bg-light mt-3 ms-1 mb-5">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
-              <p className="mt-3">User Data</p>
+              <p className="mt-3">Change Password</p>
             </div>
             <div className="box mt-3 p-3 px-4">
-              <h3>Edit Password</h3>
+              <h3 data-aos="zoom-in" data-aos-easing="linear">
+                Update Your Password
+              </h3>
               <form
                 onSubmit={handleSubmit}
                 className="form mt-4 px-3 d-flex flex-column"
               >
-                <label htmlFor="userName">UserName:</label>
-                <input
-                  type="text"
-                  name="userName"
-                  id="userName"
-                  value={userName}
-                  disabled
-                  className="form-control"
-                />
-                <label htmlFor="pass" className="mt-3">
-                  Password :
+                <label
+                  htmlFor="currentPass"
+                  data-aos="fade-right"
+                  data-aos-easing="linear"
+                  data-aos-delay="300"
+                >
+                  Current Password:
                 </label>
                 <input
+                  data-aos="fade-down"
+                  data-aos-easing="linear"
+                  data-aos-delay="300"
                   type="password"
-                  name="pass"
-                  id="pass"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="currentPass"
+                  id="currentPass"
+                  placeholder="Enter your current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                   className="form-control"
                 />
-                <label htmlFor="confirmPass" className="mt-3">
-                  Confirm Password:
+                <label
+                  htmlFor="newPass"
+                  className="mt-3"
+                  data-aos="fade-right"
+                  data-aos-easing="linear"
+                  data-aos-delay="500"
+                >
+                  New Password:
                 </label>
                 <input
+                  data-aos="fade-down"
+                  data-aos-easing="linear"
+                  data-aos-delay="500"
+                  type="password"
+                  name="newPass"
+                  id="newPass"
+                  placeholder="Enter your new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="form-control"
+                />
+                <label
+                  htmlFor="confirmPass"
+                  className="mt-3"
+                  data-aos="fade-right"
+                  data-aos-easing="linear"
+                  data-aos-delay="700"
+                >
+                  Confirm New Password:
+                </label>
+                <input
+                  data-aos="fade-down"
+                  data-aos-easing="linear"
+                  data-aos-delay="700"
                   type="password"
                   name="confirmPass"
                   id="confirmPass"
+                  placeholder="Confirm your new password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="form-control"
                 />
-                <div className="d-flex justify-content-end mt-3">
+                <div
+                  className="d-flex justify-content-end mt-3"
+                  data-aos="fade-left"
+                  data-aos-easing="linear"
+                >
                   <button
                     className="button d-flex"
                     type="submit"
@@ -188,4 +198,4 @@ const EditUsers = ({ id1 }) => {
   );
 };
 
-export default EditUsers;
+export default ChangePassword;

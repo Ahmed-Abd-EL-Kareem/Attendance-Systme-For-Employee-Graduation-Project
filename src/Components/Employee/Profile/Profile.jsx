@@ -1,24 +1,51 @@
 import React from "react";
 import Head from "../../Head";
-const Profile = () => {
-  return (
-    <>
+// import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const Profile = ({ employee }) => {
+  // const [loading, setLoading] = useState(true);
+  // const [employee, setEmployee] = useState(null);
+
+  // useEffect(() => {
+
+  // }, []);
+
+  // if (loading) {
+  //   return <Loading />;
+  // }
+
+  if (!employee) {
+    return (
       <div className="profile mt-6 w-100">
         <div className="container">
           <Head title="Profile" />
-          <div className="card  col-lg-10 col-xl-9 col-xxl-8 bg-light mt-3 ms-1 mb-3">
-            <div className=" px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
+          <div className="alert alert-danger" role="alert">
+            Failed to load employee data
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="profile mt-6 w-100 mb-3">
+        <div className="container">
+          <Head title="Profile" />
+          <div className="card col-lg-10 col-xl-9 col-xxl-8 bg-light mt-3 ms-1 mb-3">
+            <div className="px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
               <p
                 className="mt-3 text-center"
                 data-aos="zoom-in"
                 data-aos-duration="1500"
               >
-                HR
+                {employee.department.depId}
               </p>
             </div>
             <div className="box mt-3 p-3 px-4">
               <h3 data-aos="fade-right" data-aos-duration="1500">
-                Ahmed Abd ELKareem Ali
+                {employee.name}
               </h3>
               <div className="form mt-4 px-3 row">
                 <div
@@ -27,62 +54,58 @@ const Profile = () => {
                   data-aos-duration="1500"
                 >
                   <img
-                    src="./img/team-1.png"
+                    src={employee.image}
                     alt=""
                     className="w-25 rounded-circle mb-4"
                   />
                 </div>
                 <div className="d-flex align-items-baseline justify-content-center mt-2">
-                  <div className="emCard col-12 ">
+                  <div className="emCard col-12">
                     <p
-                      className="d-flex  align-items-baseline justify-content-between "
+                      className="d-flex align-items-baseline justify-content-between"
                       data-aos="fade-right"
                       data-aos-duration="1500"
                     >
-                      <p className="w-75">Employee ID :</p>
-                      <p className="info">123</p>
+                      <p className="w-75">Employee ID:</p>
+                      <p className="info">{employee.emId}</p>
                     </p>
                     <p
-                      className="d-flex  align-items-baseline justify-content-between "
+                      className="d-flex align-items-baseline justify-content-between"
                       data-aos="fade-left"
                       data-aos-duration="1500"
                     >
-                      <p className="w-75">Gender :</p>
-                      <p className="info">Male</p>
+                      <p className="w-75">Gender:</p>
+                      <p className="info">{employee.gender}</p>
                     </p>
                     <p
-                      className="d-flex  align-items-baseline justify-content-between "
+                      className="d-flex align-items-baseline justify-content-between"
                       data-aos="fade-right"
                       data-aos-duration="1500"
                     >
-                      <p className="w-75">Department :</p>
-                      <p className="info">Human Resource</p>
+                      <p className="w-75">Department:</p>
+                      <p className="info">{employee.department.name}</p>
                     </p>
                     <p
-                      className="d-flex  align-items-baseline justify-content-between "
+                      className="d-flex align-items-baseline justify-content-between"
                       data-aos="fade-left"
                       data-aos-duration="1500"
                     >
-                      <p className="w-75">BirthDate :</p>
-                      <p className="info">01/01/1990</p>
+                      <p className="w-75">BirthDate:</p>
+                      <p className="info">
+                        {new Date(employee.dof).toLocaleDateString()}
+                      </p>
                     </p>
                     <p
-                      className="d-flex  align-items-baseline justify-content-between "
+                      className="d-flex align-items-baseline justify-content-between"
                       data-aos="fade-right"
                       data-aos-duration="1500"
                     >
-                      <p className="w-75">Joined On :</p>
-                      <p className="info">01/01/2021</p>
+                      <p className="w-75">Joined On:</p>
+                      <p className="info">
+                        {new Date(employee.date).toLocaleDateString()}
+                      </p>
                     </p>
                   </div>
-
-                  {/* <div className="col-4 d-flex flex-column">
-                    <p className="info">123</p>
-                    <p className="info">Male</p>
-                    <p className="info">Human Resource</p>
-                    <p className="info">01/01/1990</p>
-                    <p className="info">01/01/2021</p>
-                  </div> */}
                 </div>
               </div>
             </div>

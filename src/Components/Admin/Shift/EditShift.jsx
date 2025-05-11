@@ -1,24 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "../../Head";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { toast, ToastContainer } from "react-toastify";
-import { SGetSharedRowData } from "./Shift";
+import axios from "axios";
+import Loading from "../../Loading";
 import "react-toastify/dist/ReactToastify.css";
-const EditShift = () => {
-  const notify = () =>
-    toast.success("Shift Updated Successfully!!", {
-      theme: "colored",
-    });
-  const start = SGetSharedRowData().start.split(":");
-  const end = SGetSharedRowData().end.split(":");
-  const [startHours, setStartHours] = useState(start[0]);
-  const [startMinutes, setStartMinutes] = useState(start[1]);
-  const [startSeconds, setStartSeconds] = useState(start[2]);
-  const [endHours, setEndHours] = useState(end[0]);
-  const [endMinutes, setEndMinutes] = useState(end[1]);
-  const [endSeconds, setEndSeconds] = useState(end[2]);
+import SmallLoad from "../../SmallLoad";
+
+const EditShift = ({ onUpdateSuccess, id1 }) => {
+  const { id } = useParams();
+  // const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [shift, setShift] = useState({
+    startTime: "",
+    endTime: "",
+  });
+
+  useEffect(() => {
+    const fetchShift = async () => {
+      try {
+        const response = await axios.get(
+          `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.status === "success") {
+          const shiftData = response.data.data.shift;
+          setShift({
+            startTime: shiftData.startTime,
+            endTime: shiftData.endTime,
+          });
+        }
+      } catch (error) {
+        toast.error("Error fetching shift data", {
+          theme: "colored",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchShift();
+  }, [id]);
+
+  const formatTime = (time) => {
+    if (!time) return "";
+    const [hours, minutes] = time.split(":");
+    return `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}:00`;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const formattedShift = {
+        startTime: formatTime(shift.startTime),
+        endTime: formatTime(shift.endTime),
+      };
+
+      const response = await axios.patch(
+        `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
+        formattedShift,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status === "success") {
+        toast.success("Shift updated successfully", {
+          theme: "colored",
+        });
+        if (onUpdateSuccess) {
+          await onUpdateSuccess();
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Error updating shift", {
+          theme: "colored",
+        });
+      } else {
+        toast.error("Connection error", {
+          theme: "colored",
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -26,7 +107,7 @@ const EditShift = () => {
         <div className="container">
           <Head title="SHIFT" />
           <div className="back_button mb-2">
-            <Link to="/shift">
+            <Link to={`/admin/${id1}/shift`}>
               <button className="pushable">
                 <span className="shadow" />
                 <span className="edge" />
@@ -45,99 +126,58 @@ const EditShift = () => {
             </div>
             <div className="box mt-3 p-3 px-4">
               <h3>Edit Shift Data</h3>
-              <div className="form mt-4 px-3 d-flex flex-column">
-                <label htmlFor="start">Shift Start Time :</label>
-                <div className="d-flex flex-wrap justify-content-evenly">
-                  <input
-                    value={startHours}
-                    className="w-25"
-                    type="number"
-                    name="Hours"
-                    id="start"
-                    placeholder="Hours"
-                    min="0"
-                    max="23"
-                    onChange={(e) => setStartHours(e.target.value.slice(0, 2))}
-                  />
-                  <input
-                    value={startMinutes}
-                    className="w-25"
-                    type="number"
-                    name="Minutes"
-                    id="start"
-                    placeholder="Minutes"
-                    min="0"
-                    max="59"
-                    onChange={(e) =>
-                      setStartMinutes(e.target.value.slice(0, 2))
-                    }
-                  />
-                  <input
-                    value={startSeconds}
-                    className="w-25"
-                    type="number"
-                    name="Seconds"
-                    id="start"
-                    placeholder="Seconds"
-                    min="0"
-                    max="59"
-                    onChange={(e) =>
-                      setStartSeconds(e.target.value.slice(0, 2))
-                    }
-                  />
+              <form
+                onSubmit={handleSubmit}
+                className="form mt-4 px-3 d-flex flex-column"
+              >
+                <label htmlFor="start">Shift Start Time:</label>
+                <input
+                  type="time"
+                  name="start"
+                  id="start"
+                  value={shift.startTime}
+                  onChange={(e) =>
+                    setShift({ ...shift, startTime: e.target.value })
+                  }
+                  className="form-control"
+                  required
+                />
+                <label htmlFor="end">Shift End Time:</label>
+                <input
+                  type="time"
+                  name="end"
+                  id="end"
+                  value={shift.endTime}
+                  onChange={(e) =>
+                    setShift({ ...shift, endTime: e.target.value })
+                  }
+                  className="form-control"
+                  required
+                />
+                <div className="d-flex justify-content-end mt-3">
+                  <button
+                    className="button d-flex"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <SmallLoad />
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <span className="pe-1 me-1">
+                          <BsPlusCircleFill
+                            style={{ transform: "translateY(-1px)" }}
+                          />
+                        </span>
+                        Save Changes
+                      </>
+                    )}
+                  </button>
                 </div>
-                <label htmlFor="name">Shift End Time :</label>
-                <div className="d-flex flex-wrap justify-content-evenly">
-                  <input
-                    value={endHours}
-                    className="w-25"
-                    type="number"
-                    name="Hours"
-                    id="end"
-                    placeholder="Hours"
-                    min="0"
-                    max="23"
-                    onChange={(e) => setEndHours(e.target.value.slice(0, 2))}
-                  />
-                  <input
-                    value={endMinutes}
-                    className="w-25"
-                    type="number"
-                    name="Minutes"
-                    id="end"
-                    placeholder="Minutes"
-                    min="0"
-                    max="59"
-                    onChange={(e) => setEndMinutes(e.target.value.slice(0, 2))}
-                  />
-                  <input
-                    value={endSeconds}
-                    className="w-25"
-                    type="number"
-                    name="Seconds"
-                    id="end"
-                    placeholder="Seconds"
-                    min="0"
-                    max="59"
-                    onChange={(e) => setEndSeconds(e.target.value.slice(0, 2))}
-                  />
-                </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3">
-                <button
-                  class="button"
-                  onClick={() => {
-                    notify();
-                  }}
-                >
-                  <span className="pe-1 me-1 ">
-                    <BsPlusCircleFill
-                      style={{ transform: "translateY(-1px)" }}
-                    />
-                  </span>
-                  Save Changes
-                </button>
-              </div>
+              </form>
             </div>
           </div>
         </div>
