@@ -1120,6 +1120,7 @@ sub {
 /* -------------------------- Employee -------------------------- */
 .employee table span,
 .report table span,
+.history table span,
 .shift table span {
   font-size: 12px;
   color: gray;
@@ -1342,6 +1343,15 @@ sub {
 .report .switch > input:checked ~ span:last-of-type {
   opacity: 1;
 }
+.report td:has(> div.null),
+.history td:has(> div.null) {
+  background-color: red !important;
+}
+.report td:has(> div.warm),
+.history td:has(> div.warm) {
+  background-color: rgb(232, 232, 33) !important;
+}
+
 @media (max-width: 767px) {
   .report .switch {
     font-size: 12px !important;
