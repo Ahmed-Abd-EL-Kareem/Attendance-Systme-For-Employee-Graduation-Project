@@ -1,0 +1,37 @@
+# نقاط النهاية المستخدمة في التطبيق
+
+## الموظفين (Employees)
+- GET /api/v1/employees - جلب جميع الموظفين
+- GET /api/v1/employees/${id} - جلب موظف محدد
+- POST /api/v1/employees - إضافة موظف جديد
+- PATCH /api/v1/employees/${id} - تحديث بيانات موظف
+- DELETE /api/v1/employees/${id} - حذف موظف
+- GET /api/v1/employees/employee-counts-by-department - جلب عدد الموظفين حسب القسم
+- GET /api/v1/employees/employee-counts-by-shift - جلب عدد الموظفين حسب الوردية
+
+## الأقسام (Departments)
+- GET /api/v1/departments - جلب جميع الأقسام
+- GET /api/v1/departments/${id} - جلب قسم محدد
+- POST /api/v1/departments - إضافة قسم جديد
+- PATCH /api/v1/departments/${id} - تحديث بيانات قسم
+- DELETE /api/v1/departments/${id} - حذف قسم
+
+## الورديات (Shifts)
+- GET /api/v1/shifts - جلب جميع الورديات
+- GET /api/v1/shifts/${id} - جلب وردية محددة
+- POST /api/v1/shifts - إضافة وردية جديدة
+- PATCH /api/v1/shifts/${id} - تحديث بيانات وردية
+- DELETE /api/v1/shifts/${id} - حذف وردية
+
+## الحسابات (Accounts)
+- GET /api/v1/accounts - جلب جميع الحسابات
+- GET /api/v1/accounts/${id} - جلب حساب محدد
+- POST /api/v1/accounts/signup - إنشاء حساب جديد
+- PATCH /api/v1/accounts/updateMyPassword - تحديث كلمة المرور الخاصة بالمستخدم
+- PATCH /api/v1/accounts/updateEmployeePassword/${id} - تحديث كلمة مرور موظف
+- DELETE /api/v1/accounts/${id} - حذف حساب
+
+## التقارير (Reports)
+- GET /api/v1/reports - جلب جميع التقارير
+- POST /api/v1/reports - إنشاء تقرير جديد
+- PATCH /api/v1/reports/${id} - تحديث تقرير 

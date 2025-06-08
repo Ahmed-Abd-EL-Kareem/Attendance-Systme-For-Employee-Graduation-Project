@@ -1,118 +1,138 @@
-// import React, { useRef, useState } from "react";
-
-// const FaceRecognition = ({ onFaceRecognition }) => {
-//   const videoRef = useRef(null);
-//   const canvasRef = useRef(null);
-//   const [isCameraOn, setIsCameraOn] = useState(false);
-
-//   const startCamera = async () => {
-//     try {
-//       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-//       videoRef.current.srcObject = stream;
-//       videoRef.current.play();
-//       setIsCameraOn(true);
-//     } catch (err) {
-//       console.error("Error accessing the camera:", err);
-//     }
-//   };
-
-//   const stopCamera = () => {
-//     const stream = videoRef.current.srcObject;
-//     if (stream) {
-//       stream.getTracks().forEach((track) => track.stop());
-//     }
-//     videoRef.current.srcObject = null;
-//     setIsCameraOn(false);
-//   };
-
-//   const captureImage = () => {
-//     if (!videoRef.current || !canvasRef.current) return;
-
-//     const canvas = canvasRef.current;
-//     const video = videoRef.current;
-
-//     // Set canvas dimensions to video dimensions
-//     canvas.width = video.videoWidth;
-//     canvas.height = video.videoHeight;
-
-//     // Draw video frame to canvas
-//     const context = canvas.getContext("2d");
-//     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-//     // Get image data from canvas
-//     const imageData = canvas.toDataURL("image/png");
-
-//     // Send imageData to face recognition model
-//     onFaceRecognition(imageData);
-//   };
-
-//   return (
-//     <div>
-//       <div>
-//         {isCameraOn ? (
-//           <video
-//             ref={videoRef}
-//             style={{ width: "100%", borderRadius: "10px" }}
-//           />
-//         ) : (
-//           <button onClick={startCamera}>Start Camera</button>
-//         )}
-//         {isCameraOn && <button onClick={stopCamera}>Stop Camera</button>}
-//       </div>
-//       <div>
-//         {isCameraOn && <button onClick={captureImage}>Capture Image</button>}
-//       </div>
-//       <canvas ref={canvasRef} style={{ display: "none" }} />
-//     </div>
-//   );
-// };
-
-// export default FaceRecognition;
-import { useState, useEffect, useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { RiCameraLensFill } from "react-icons/ri";
 import { CgClose } from "react-icons/cg";
+import axios from "axios";
 
-const CameraAccess = () => {
+const FaceRecognition = ({
+  onRecognitionResult,
+  onProcessingChange,
+  employeeId,
+}) => {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const [cameraActive, setCameraActive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [iconColor, setIconColor] = useState("white");
+  const [toggle, setToggle] = useState(false);
 
   // Start camera
   const startCamera = async () => {
-    console.log("Start camera button clicked"); // Debug log
     try {
-      setError(""); // Clear previous errors
-      console.log("Requesting camera access..."); // Debug log
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" }, // Front camera by default
-      });
-      console.log("Camera access granted"); // Debug log
+      setError("");
+      if (onProcessingChange) onProcessingChange(true);
+      setToggle(true);
 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" },
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         setCameraActive(true);
-        console.log("Camera is active"); // Debug log
       }
     } catch (err) {
-      console.error("Camera error:", err); // Debug log
       setError("Camera access denied or not available");
       setCameraActive(false);
+      setToggle(false);
+      if (onRecognitionResult)
+        onRecognitionResult({
+          status: "failed",
+          message: "Camera access denied or not available",
+        });
+      if (onProcessingChange) onProcessingChange(false);
     }
   };
 
   // Stop camera
   const stopCamera = () => {
-    console.log("Stop camera button clicked"); // Debug log
     if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => {
-        track.stop();
-        videoRef.current.srcObject.removeTrack(track);
-      });
+      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
     }
     setCameraActive(false);
+    setToggle(false);
+    if (onProcessingChange) onProcessingChange(false);
   };
+
+  // Capture and send image to backend
+  const captureAndRecognize = async () => {
+    if (!videoRef.current || !canvasRef.current) return;
+    setLoading(true);
+    if (onProcessingChange) onProcessingChange(true);
+
+    setError("");
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(async (blob) => {
+      const formData = new FormData();
+      formData.append("image", blob, "face.jpg");
+      if (!employeeId) {
+        setError("Employee ID not provided");
+        setLoading(false);
+        if (onRecognitionResult)
+          onRecognitionResult({
+            status: "failed",
+            message: "Employee ID not provided",
+          });
+        return;
+      }
+      formData.append("employeeId", employeeId);
+      try {
+        const response = await axios.post(
+          "https://attendancesystem-back-end-production.up.railway.app/api/v1/face-recognition/recognize",
+          formData,
+          { withCredentials: true }
+        );
+        // Check for unknown or failed recognition
+        // console.log(response.data);
+        if (
+          response.data.employee_name &&
+          response.data.employee_name !== "Unknown" &&
+          response.data.employee_id
+        ) {
+          stopCamera();
+          setIconColor("green");
+          if (onRecognitionResult)
+            onRecognitionResult({ status: "success", data: response.data });
+        } else {
+          stopCamera();
+          setIconColor("red");
+          if (onRecognitionResult)
+            onRecognitionResult({
+              status: "failed",
+              message:
+                "Face recognition failed. Please login with your account or change your photo.",
+            });
+        }
+      } catch (error) {
+        // setError("Face recognition failed. Please try again.");
+        setIconColor("red");
+        if (onRecognitionResult)
+          onRecognitionResult({
+            status: "failed",
+            message:
+              error.response?.data?.message ||
+              "Error during face recognition. Please try again.",
+          });
+        stopCamera();
+      } finally {
+        setLoading(false);
+        if (onProcessingChange) onProcessingChange(false);
+      }
+    }, "image/jpeg");
+  };
+
+  // Auto-capture every 3 seconds when camera is active and not loading
+  useEffect(() => {
+    if (cameraActive && !loading) {
+      const interval = setInterval(captureAndRecognize, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [cameraActive, loading]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -131,9 +151,23 @@ const CameraAccess = () => {
         className="w-100"
         style={{ height: "50vh", display: cameraActive ? "block" : "none" }}
       />
-
-      {error && <p className="text-danger mt-2">{error}</p>}
-
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+      {loading && (
+        <div
+          className="position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+          style={{ background: "#0008", top: 0, left: 0 }}
+        >
+          <div className="spinner-border text-light" role="status"></div>
+        </div>
+      )}
+      {error && (
+        <p
+          className="text-danger mt-2 position-absolute"
+          style={{ bottom: 10 }}
+        >
+          {error}
+        </p>
+      )}
       <div className="position-absolute camBtn w-100 h-100">
         {!cameraActive ? (
           <button
@@ -143,10 +177,15 @@ const CameraAccess = () => {
           >
             <div className="custum-file-upload w-100 h-100">
               <div className="camIcon">
-                <RiCameraLensFill className="fs-1 text-white" />
+                <RiCameraLensFill
+                  className="fs-1 "
+                  style={{ color: iconColor }}
+                />
               </div>
               <div className="text">
-                <span>Click to Check Your Face Recognition</span>
+                <span style={{ color: iconColor }}>
+                  Click to Check Your Face Recognition
+                </span>
               </div>
             </div>
           </button>
@@ -155,6 +194,7 @@ const CameraAccess = () => {
             onClick={stopCamera}
             aria-label="Stop camera"
             className="btn-close-camera"
+            disabled={loading}
           >
             <CgClose className="fs-1" style={{ color: "red" }} />
           </button>
@@ -164,123 +204,4 @@ const CameraAccess = () => {
   );
 };
 
-export default CameraAccess;
-// import { useState, useRef, useEffect } from 'react';
-// import * as faceapi from 'face-api.js';
-
-// const FaceRecognition = () => {
-//   const videoRef = useRef(null);
-//   const canvasRef = useRef(null);
-//   const [loading, setLoading] = useState(true);
-//   const [facesDetected, setFacesDetected] = useState(0);
-//   const [modelLoaded, setModelLoaded] = useState(false);
-
-//   // Load models
-//   useEffect(() => {
-//     const loadModels = async () => {
-//       try {
-//         await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-//         await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-//         await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-//         setModelLoaded(true);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error loading models:', error);
-//         setLoading(false);
-//       }
-//     };
-
-//     loadModels();
-//   }, []);
-
-//   // Start camera and detection
-//   const startCamera = async () => {
-//     try {
-//       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-//       videoRef.current.srcObject = stream;
-
-//       // Start face detection when video starts playing
-//       videoRef.current.onplaying = () => detectFaces();
-//     } catch (error) {
-//       console.error('Camera error:', error);
-//     }
-//   };
-
-//   // Face detection function
-//   const detectFaces = async () => {
-//     if (!modelLoaded || !videoRef.current) return;
-
-//     const options = new faceapi.TinyFaceDetectorOptions({
-//       inputSize: 512,
-//       scoreThreshold: 0.5
-//     });
-
-//     const detect = async () => {
-//       const detections = await faceapi.detectAllFaces(
-//         videoRef.current,
-//         options
-//       ).withFaceLandmarks().withFaceDescriptors();
-
-//       setFacesDetected(detections.length);
-//       drawDetectionBoxes(detections);
-//       requestAnimationFrame(detect);
-//     };
-
-//     detect();
-//   };
-
-//   // Draw bounding boxes
-//   const drawDetectionBoxes = (detections) => {
-//     const canvas = canvasRef.current;
-//     const displaySize = {
-//       width: videoRef.current.videoWidth,
-//       height: videoRef.current.videoHeight
-//     };
-
-//     faceapi.matchDimensions(canvas, displaySize);
-
-//     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-//     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-
-//     faceapi.draw.drawDetections(canvas, resizedDetections);
-//     faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-//   };
-
-//   return (
-//     <div className="face-recognition">
-//       <h2>Face Recognition Demo</h2>
-
-//       {loading && <p>Loading models...</p>}
-
-//       <div style={{ position: 'relative' }}>
-//         <video
-//           ref={videoRef}
-//           autoPlay
-//           playsInline
-//           style={{ width: '100%', maxWidth: '640px' }}
-//         />
-//         <canvas
-//           ref={canvasRef}
-//           style={{
-//             position: 'absolute',
-//             top: 0,
-//             left: 0,
-//             width: '100%',
-//             maxWidth: '640px'
-//           }}
-//         />
-//       </div>
-
-//       <div className="controls">
-//         <button onClick={startCamera} disabled={!modelLoaded}>
-//           {modelLoaded ? 'Start Camera' : 'Loading Models...'}
-//         </button>
-//         <div className="stats">
-//           Faces Detected: {facesDetected}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FaceRecognition;
+export default FaceRecognition;

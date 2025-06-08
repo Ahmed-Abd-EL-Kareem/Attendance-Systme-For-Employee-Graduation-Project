@@ -9,7 +9,6 @@ import Login from "./Components/Login";
 import NotFound from "./notFound";
 import Admin from "./Admin";
 import EmployeeRoute from "./Components/EmployeeRoute";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 function App() {

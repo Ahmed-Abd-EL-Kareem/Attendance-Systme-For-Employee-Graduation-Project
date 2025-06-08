@@ -22,7 +22,7 @@ export const columns = [
       <img
         src={value}
         alt="profile"
-        style={{ width: "40px", borderRadius: "50%" }}
+        style={{ width: "40px", height: "40px", borderRadius: "50%" }}
       />
     ),
   },
@@ -75,6 +75,7 @@ export const columns = [
       const deleteEmployee = async (employeeId) => {
         try {
           const response = await axios.delete(
+            // `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${employeeId}`,
             `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${employeeId}`,
             {
               withCredentials: true,

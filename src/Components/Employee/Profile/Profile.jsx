@@ -56,7 +56,7 @@ const Profile = ({ employee }) => {
                   <img
                     src={employee.image}
                     alt=""
-                    className="w-25 rounded-circle mb-4"
+                    className=" rounded-circle mb-4 img-circle"
                   />
                 </div>
                 <div className="d-flex align-items-baseline justify-content-center mt-2">

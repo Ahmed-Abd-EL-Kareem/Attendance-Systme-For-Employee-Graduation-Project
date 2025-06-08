@@ -64,7 +64,8 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
       }
 
       await axios.post(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
+        // "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
+        `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees`,
         formData,
         {
           withCredentials: true,
@@ -155,9 +156,20 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
               <form onSubmit={handleSubmit} className="form mt-4 px-3 row">
                 <div className="img d-flex flex-column align-items-center justify-content-center mb-4">
                   <img
-                    src={img || "./img/avatar.png"}
-                    alt=""
-                    className="w-25 rounded-circle mb-4"
+                    src={
+                      img ||
+                      "https://ui-avatars.com/api/?name=Employee&background=0D8ABC&color=fff"
+                    }
+                    alt="Employee"
+                    className="rounded-circle mb-4"
+                    style={{
+                      width: "170px",
+                      height: "170px",
+                      objectFit: "cover",
+                      background: "#eee",
+                      borderRadius: "50%",
+                      border: "2px solid #ccc",
+                    }}
                   />
                   <div className="d-flex justify-content-between w-100">
                     <label htmlFor="image">Employee Image:</label>

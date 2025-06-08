@@ -208,7 +208,7 @@ const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
                   <img
                     src={img.startsWith("../") ? `../../${img}` : img}
                     alt=""
-                    className="w-25 rounded-circle mb-4"
+                    className="rounded-circle mb-4 img-circle"
                   />
                   <div className="d-flex justify-content-between w-100">
                     <label htmlFor="image">Change Employee Image:</label>

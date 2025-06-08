@@ -24,6 +24,7 @@ const AddUsers = ({ onUpdateSuccess, id1 }) => {
     const fetchEmployeeData = async () => {
       try {
         const response = await axios.get(
+          // `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
           `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
           {
             withCredentials: true,
@@ -67,7 +68,8 @@ const AddUsers = ({ onUpdateSuccess, id1 }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/signup",
+        // "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/signup",
+        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/signup`,
         {
           userName,
           password,
@@ -86,13 +88,17 @@ const AddUsers = ({ onUpdateSuccess, id1 }) => {
         toast.success("User created successfully", {
           theme: "colored",
         });
+        setLoading(false);
+        setTimeout(() => {
+          navigate(`/admin/${id1}/users`);
+        }, 5000);
         // تحديث البيانات في جميع المسارات
         if (onUpdateSuccess) {
           await onUpdateSuccess();
         }
-        setTimeout(() => {
-          navigate(`/admin/${id1}/users`);
-        }, 5000);
+        // setTimeout(() => {
+        //   navigate(`/admin/${id1}/users`);
+        // }, 5000);
       }
     } catch (error) {
       if (error.response) {

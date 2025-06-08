@@ -68,6 +68,10 @@ export const columns = [
           const deleteUser = async (userId) => {
             try {
               const response = await axios.delete(
+                // `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${userId}`,
+                // {
+                //   withCredentials: true,
+                // }
                 `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${userId}`,
                 {
                   withCredentials: true,

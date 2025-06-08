@@ -40,6 +40,10 @@ const Admin = () => {
   const refreshData = async () => {
     try {
       // جلب بيانات الموظفين
+      // const employeesResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/employees",
+      //   { withCredentials: true }
+      // );
       const employeesResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
         { withCredentials: true }
@@ -48,6 +52,10 @@ const Admin = () => {
       setLenEmp(employeesResponse.data.results);
 
       // جلب بيانات الأقسام
+      // const departmentsResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/departments",
+      //   { withCredentials: true }
+      // );
       const departmentsResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/departments",
         { withCredentials: true }
@@ -56,6 +64,10 @@ const Admin = () => {
       setLenDep(departmentsResponse.data.results);
 
       // جلب بيانات الورديات
+      // const shiftsResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/shifts",
+      //   { withCredentials: true }
+      // );
       const shiftsResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts",
         { withCredentials: true }
@@ -64,6 +76,10 @@ const Admin = () => {
       setLenShift(shiftsResponse.data.results);
 
       // جلب بيانات الحسابات
+      // const accountsResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/accounts",
+      //   { withCredentials: true }
+      // );
       const accountsResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts",
         { withCredentials: true }
@@ -72,6 +88,10 @@ const Admin = () => {
       setLenAccount(accountsResponse.data.results);
 
       // جلب بيانات التقارير
+      // const reportsResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/reports",
+      //   { withCredentials: true }
+      // );
       const reportsResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/reports",
         { withCredentials: true }
@@ -79,6 +99,10 @@ const Admin = () => {
       setReports(reportsResponse.data.data.reports);
 
       // جلب عدد الموظفين حسب القسم
+      // const empByDepResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/employees/employee-counts-by-department",
+      //   { withCredentials: true }
+      // );
       const empByDepResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/employee-counts-by-department",
         { withCredentials: true }
@@ -86,6 +110,10 @@ const Admin = () => {
       setEmpByDep(empByDepResponse.data.data.counts);
 
       // جلب عدد الموظفين حسب الوردية
+      // const empByShiftResponse = await axios.get(
+      //   "http://127.0.0.1:8000/api/v1/employees/employee-counts-by-shift",
+      //   { withCredentials: true }
+      // );
       const empByShiftResponse = await axios.get(
         "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/employee-counts-by-shift",
         { withCredentials: true }

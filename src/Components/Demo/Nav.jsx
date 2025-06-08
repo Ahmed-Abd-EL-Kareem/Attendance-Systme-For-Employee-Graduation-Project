@@ -59,6 +59,10 @@ const Nav = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setSideBar(!sideBar);
+  };
+
   return (
     <>
       <div className="sideBar">
@@ -67,17 +71,14 @@ const Nav = () => {
           style={
             sideBar
               ? { margin: " 12px 0 0 190px", color: "white" }
-              : { margin: " 12px 0 0 15px", color: "white" }
+              : { margin: " 20px 0 0 15px", color: "white" }
           }
-          onClick={() => {
-            setSideBar(!sideBar);
-          }}
+          onClick={toggleSidebar}
         />
         <div
           className={`dashboard text-light position-fixed ${
             sideBar ? "" : "hide"
           }`}
-          // style={sideBar ? { display: "block" } : { display: "none" }}
         >
           <div className="content">
             <img className="mt-2" src="/img/face-gate.png" alt="" />
@@ -91,7 +92,6 @@ const Nav = () => {
                         className={`box d-flex ms-2 mb-4 ${
                           isActive2("dashboard") ? "active" : "text-light"
                         }`}
-                        // onClick={() => setActive1("/")}
                       >
                         <LayoutDashboard /> <p className="ms-2 ">Dashboard</p>
                       </div>
@@ -106,7 +106,6 @@ const Nav = () => {
                           to={`/admin/${id}/${val.text.toLowerCase()}`}
                         >
                           <li
-                            key={index}
                             className={`box d-flex ms-2 mb-4 ${
                               isActive2(`${val.text.toLowerCase()}`) ||
                               location.pathname.includes(
@@ -115,7 +114,6 @@ const Nav = () => {
                                 ? "active"
                                 : "text-light"
                             }`}
-                            // onClick={() => setActive1(location.pathname)}
                           >
                             {val.icon} <p className="ms-2">{val.text}</p>
                           </li>
@@ -133,7 +131,6 @@ const Nav = () => {
                             ? "active"
                             : "text-light"
                         }`}
-                        // onClick={() => setActive(-1)}
                       >
                         <FaPaste /> <p className="ms-2">Print Report</p>
                       </div>
@@ -156,7 +153,6 @@ const Nav = () => {
                                 ? "active"
                                 : "text-light"
                             }`}
-                            // onClick={() => setActive(index)}
                           >
                             {val.icon} <p className="ms-2">{val.text}</p>
                           </li>
@@ -171,7 +167,6 @@ const Nav = () => {
                         className={`box d-flex ms-2 mb-4 ${
                           isActive2("profile") ? "active" : "text-light"
                         }`}
-                        // onClick={() => setActive(-1)}
                       >
                         <FaAddressCard /> <p className="ms-2">My Profile</p>
                       </div>
@@ -183,7 +178,6 @@ const Nav = () => {
                         className={`box d-flex ms-2 mb-4 align-items-center ${
                           isActive2("change-password") ? "active" : "text-light"
                         }`}
-                        // onClick={() => setActive(-1)}
                       >
                         <PiPasswordFill className="fs-5" />
                         <p className="ms-2">Change Password</p>

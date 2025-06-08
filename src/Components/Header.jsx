@@ -9,6 +9,9 @@ const Header = () => {
   const fetchEmployee = async () => {
     const employeeId = localStorage.getItem("employeeId");
     const response = await axios.get(
+      // `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${JSON.parse(
+      //   employeeId
+      // )}`,
       `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${JSON.parse(
         employeeId
       )}`,

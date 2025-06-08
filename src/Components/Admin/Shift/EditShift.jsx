@@ -23,6 +23,7 @@ const EditShift = ({ onUpdateSuccess, id1 }) => {
     const fetchShift = async () => {
       try {
         const response = await axios.get(
+          // `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
           `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
           {
             withCredentials: true,
@@ -64,6 +65,7 @@ const EditShift = ({ onUpdateSuccess, id1 }) => {
       };
 
       const response = await axios.patch(
+        // `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
         `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${id}`,
         formattedShift,
         {

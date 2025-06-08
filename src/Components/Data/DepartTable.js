@@ -32,6 +32,7 @@ export const columns = [
       const deleteDepartment = async (departmentId) => {
         try {
           const response = await axios.delete(
+            // `https://attendancesystem-back-end-production.up.railway.app/api/v1/departments/${departmentId}`,
             `https://attendancesystem-back-end-production.up.railway.app/api/v1/departments/${departmentId}`,
             {
               withCredentials: true,

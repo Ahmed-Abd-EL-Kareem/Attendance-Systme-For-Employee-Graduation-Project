@@ -46,6 +46,7 @@ export const columns = [
       const deleteShift = async (shiftId) => {
         try {
           const response = await axios.delete(
+            // `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${shiftId}`,
             `https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts/${shiftId}`,
             {
               withCredentials: true,

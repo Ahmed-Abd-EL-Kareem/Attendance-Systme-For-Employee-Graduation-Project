@@ -61,8 +61,11 @@ sub {
   margin: 0;
 }
 .header img {
-  height: 100%;
+  width: 45px;
   border-radius: 50%;
+  height: 45px;
+  object-fit: contain;
+  background: black;
 }
 /* @media (max-width: 768px) {
   .header img {
@@ -285,7 +288,7 @@ sub {
     margin-bottom: 0;
   }
   .logOut {
-    top: 4px;
+    top: 11px;
     left: 55px;
   }
   .logout {
@@ -932,95 +935,85 @@ sub {
 /* USER Buttons*/
 .attendance .button {
   position: relative;
-  padding: 10px 20px;
-  border-radius: 7px;
-  font-size: 14px;
+  padding: 15px 30px;
+  color: #fff;
+  /* border: 2px solid #00ff00; */
   text-transform: uppercase;
-  font-weight: 600;
   letter-spacing: 2px;
-  background: transparent;
   overflow: hidden;
-  box-shadow: 0 0 0 0 transparent;
-  -webkit-transition: all 0.2s ease-in;
-  -moz-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
+  transition: 0.3s;
+  transition-timing-function: linear;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  background: transparent;
 }
+
 .attendance .in {
-  border: 1px solid rgb(41, 154, 29);
-  color: rgb(41, 154, 29);
+  border: 2px solid #00ff00;
+  color: #00ff00;
 }
+
 .attendance .out {
-  border: 1px solid rgb(166, 33, 29);
-  color: rgb(166, 33, 29);
+  border: 2px solid #ff0000;
+  color: #ff0000;
 }
+
 .attendance .disabled {
-  border: 1px solid gray;
-  color: gray;
+  border: 2px solid #808080;
+  color: white;
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
+
 .attendance .in:hover,
 .attendance .out:hover {
-  -webkit-transition: all 0.2s ease-out;
-  -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
   color: #fff;
+  box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00;
+  transition-delay: 0.2s;
 }
+
 .attendance .in:hover {
-  background: rgb(41, 154, 29);
-  box-shadow: 0 0 30px 5px rgba(41, 154, 29, 0.815);
+  border-color: #00ff00;
+  background: #00ff00;
 }
+
 .attendance .out:hover {
-  background: rgb(166, 33, 29);
-  box-shadow: 0 0 30px 5px rgba(166, 33, 29, 0.815);
+  border-color: #ff0000;
+  background: #ff0000;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
 }
 
 .attendance .in:hover::before,
 .attendance .out:hover::before {
-  -webkit-animation: sh02 0.5s 0s linear;
-  -moz-animation: sh02 0.5s 0s linear;
-  animation: sh02 0.5s 0s linear;
+  width: 100%;
+  height: 100%;
 }
 
 .attendance .in::before,
 .attendance .out::before {
   content: "";
-  display: block;
-  width: 0px;
-  height: 86%;
   position: absolute;
-  top: 7%;
-  left: 0%;
-  opacity: 0;
-  background: #fff;
-  box-shadow: 0 0 50px 30px #fff;
-  -webkit-transform: skewX(-20deg);
-  -moz-transform: skewX(-20deg);
-  -ms-transform: skewX(-20deg);
-  -o-transform: skewX(-20deg);
-  transform: skewX(-20deg);
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.2s;
 }
 
-@keyframes sh02 {
-  from {
-    opacity: 0;
-    left: 0%;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    left: 100%;
-  }
+.attendance .button.disabled-no-hover {
+  background-color: #808080 !important;
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
-.attendance .in:active,
-.attendance .out:active {
-  box-shadow: 0 0 0 0 transparent;
-  -webkit-transition: box-shadow 0.2s ease-in;
-  -moz-transition: box-shadow 0.2s ease-in;
-  transition: box-shadow 0.2s ease-in;
+.attendance .button.disabled-no-hover:hover {
+  background-color: #808080 !important;
+  transform: none;
+  box-shadow: none;
 }
 
 /* USER Buttons*/
@@ -1170,6 +1163,12 @@ sub {
 }
 .add .gender input:focus {
   box-shadow: none !important;
+}
+.img-circle {
+  width: 170px !important;
+  height: 170px;
+  object-fit: contain;
+  background: black;
 }
 /* -------------------------- Employee -------------------------- */
 /* -------------------------- Report -------------------------- */
