@@ -20,7 +20,7 @@ const EditDepart = ({ onUpdateSuccess, id1 }) => {
     const fetchDepartment = async () => {
       try {
         const response = await axios.get(
-          `https://attendancesystem-back-end-production.up.railway.app/api/v1/departments/${id}`,
+          `https://90-attendance-system-back-end.vercel.app/api/v1/departments/${id}`,
           {
             withCredentials: true,
           }
@@ -48,7 +48,7 @@ const EditDepart = ({ onUpdateSuccess, id1 }) => {
 
     try {
       const response = await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/departments/${id}`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/departments/${id}`,
         { name },
         {
           withCredentials: true,

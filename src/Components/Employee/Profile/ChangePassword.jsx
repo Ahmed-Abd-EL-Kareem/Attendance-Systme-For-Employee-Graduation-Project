@@ -42,7 +42,7 @@ const ChangePassword = () => {
     setLoading(true);
     try {
       const response = await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/updateMyPassword`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/updateMyPassword`,
         {
           passwordCurrent: currentPassword,
           password: newPassword,

@@ -72,7 +72,7 @@ export const columns = [
                 // {
                 //   withCredentials: true,
                 // }
-                `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${userId}`,
+                `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/${userId}`,
                 {
                   withCredentials: true,
                 }

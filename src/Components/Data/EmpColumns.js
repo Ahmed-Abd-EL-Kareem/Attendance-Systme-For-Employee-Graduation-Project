@@ -76,7 +76,7 @@ export const columns = [
         try {
           const response = await axios.delete(
             // `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${employeeId}`,
-            `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${employeeId}`,
+            `https://90-attendance-system-back-end.vercel.app/api/v1/employees/${employeeId}`,
             {
               withCredentials: true,
             }

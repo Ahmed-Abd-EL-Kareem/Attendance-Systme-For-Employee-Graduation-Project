@@ -22,7 +22,7 @@ const EditUsers = ({ id1 }) => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/${id}`,
+          `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/${id}`,
           {
             withCredentials: true,
           }
@@ -62,7 +62,7 @@ const EditUsers = ({ id1 }) => {
     setLoading(true);
     try {
       const response = await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/updateEmployeePassword/${id}`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/updateEmployeePassword/${id}`,
         { password },
         {
           withCredentials: true,

@@ -25,7 +25,7 @@ const AddUsers = ({ onUpdateSuccess, id1 }) => {
       try {
         const response = await axios.get(
           // `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
-          `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
+          `https://90-attendance-system-back-end.vercel.app/api/v1/employees/${id}`,
           {
             withCredentials: true,
           }
@@ -69,7 +69,7 @@ const AddUsers = ({ onUpdateSuccess, id1 }) => {
     try {
       const response = await axios.post(
         // "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/signup",
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/signup`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/signup`,
         {
           userName,
           password,

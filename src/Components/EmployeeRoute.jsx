@@ -21,7 +21,7 @@ const EmployeeRoute = () => {
       }
 
       const response = await axios.get(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${employeeId}`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/employees/${employeeId}`,
         {
           withCredentials: true,
         }

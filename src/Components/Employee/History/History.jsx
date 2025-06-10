@@ -30,7 +30,7 @@ const History = () => {
       // let url = `http://127.0.0.1:8000/api/v1/reports/${employeeId}`;
       // تم استبداله بالرابط الجديد
 
-      let url = `https://attendancesystem-back-end-production.up.railway.app/api/v1/reports/${employeeId}`;
+      let url = `https://90-attendance-system-back-end.vercel.app/api/v1/reports/${employeeId}`;
       const params = new URLSearchParams();
 
       if (fromDate) {

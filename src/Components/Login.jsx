@@ -50,7 +50,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/login",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/accounts/login",
         {
           userName: userName.toUpperCase().trim(),
           password: password.trim(),

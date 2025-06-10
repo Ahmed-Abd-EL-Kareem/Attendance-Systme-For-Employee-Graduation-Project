@@ -42,7 +42,7 @@ const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
       try {
         // تحميل بيانات الموظف
         const employeeResponse = await axios.get(
-          `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
+          `https://90-attendance-system-back-end.vercel.app/api/v1/employees/${id}`,
           { withCredentials: true }
         );
         const employeeData = employeeResponse.data.data.employee;
@@ -119,7 +119,7 @@ const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
       // }
 
       await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/${id}`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/employees/${id}`,
         formData,
         {
           withCredentials: true,

@@ -45,7 +45,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const employeesResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/employees",
         { withCredentials: true }
       );
       setEmployees(employeesResponse.data.data.employees);
@@ -57,7 +57,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const departmentsResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/departments",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/departments",
         { withCredentials: true }
       );
       setDepartments(departmentsResponse.data.data.departments);
@@ -69,7 +69,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const shiftsResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/shifts",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/shifts",
         { withCredentials: true }
       );
       setShifts(shiftsResponse.data.data.shifts);
@@ -81,7 +81,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const accountsResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/accounts",
         { withCredentials: true }
       );
       setAccounts(accountsResponse.data.data.accounts);
@@ -93,7 +93,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const reportsResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/reports",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/reports",
         { withCredentials: true }
       );
       setReports(reportsResponse.data.data.reports);
@@ -104,7 +104,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const empByDepResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/employee-counts-by-department",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/employees/employee-counts-by-department",
         { withCredentials: true }
       );
       setEmpByDep(empByDepResponse.data.data.counts);
@@ -115,7 +115,7 @@ const Admin = () => {
       //   { withCredentials: true }
       // );
       const empByShiftResponse = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees/employee-counts-by-shift",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/employees/employee-counts-by-shift",
         { withCredentials: true }
       );
       setEmpByShift(empByShiftResponse.data.data.counts);

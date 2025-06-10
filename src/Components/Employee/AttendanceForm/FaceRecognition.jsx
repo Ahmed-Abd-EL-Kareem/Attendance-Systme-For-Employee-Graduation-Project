@@ -83,7 +83,7 @@ const FaceRecognition = ({
       formData.append("employeeId", employeeId);
       try {
         const response = await axios.post(
-          "https://attendancesystem-back-end-production.up.railway.app/api/v1/face-recognition/recognize",
+          "https://90-attendance-system-back-end.vercel.app/api/v1/face-recognition/recognize",
           formData,
           { withCredentials: true }
         );

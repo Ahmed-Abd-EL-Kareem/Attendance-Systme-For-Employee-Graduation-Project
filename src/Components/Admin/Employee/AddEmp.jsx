@@ -64,8 +64,8 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
       }
 
       await axios.post(
-        // "https://attendancesystem-back-end-production.up.railway.app/api/v1/employees",
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/employees`,
+        // "https://90-attendance-system-back-end.vercel.app/api/v1/employees",
+        `https://90-attendance-system-back-end.vercel.app/api/v1/employees`,
         formData,
         {
           withCredentials: true,

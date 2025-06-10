@@ -20,7 +20,7 @@ const Nav = () => {
   const handleLogout = async () => {
     try {
       const response = await axios.get(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/accounts/logout",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/accounts/logout",
         {
           withCredentials: true,
         }

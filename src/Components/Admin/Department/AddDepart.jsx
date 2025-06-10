@@ -27,8 +27,8 @@ const AddDepart = ({ onUpdateSuccess, id }) => {
       };
 
       const response = await axios.post(
-        // "https://attendancesystem-back-end-production.up.railway.app/api/v1/departments",
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/departments`,
+        // "https://90-attendance-system-back-end.vercel.app/api/v1/departments",
+        `https://90-attendance-system-back-end.vercel.app/api/v1/departments`,
         formattedDepartment,
         {
           withCredentials: true,

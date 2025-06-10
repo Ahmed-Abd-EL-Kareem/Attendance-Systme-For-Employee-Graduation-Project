@@ -35,7 +35,7 @@ const Report = ({ reportData, departments }) => {
       setLoading(true);
       // let url = "http://127.0.0.1:8000/api/v1/reports";
       let url =
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/reports";
+        "https://90-attendance-system-back-end.vercel.app/api/v1/reports";
 
       const params = new URLSearchParams();
 

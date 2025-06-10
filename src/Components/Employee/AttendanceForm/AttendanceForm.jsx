@@ -93,7 +93,7 @@ const AttendanceForm = () => {
     setIsProcessing(true);
     try {
       const response = await axios.post(
-        "https://attendancesystem-back-end-production.up.railway.app/api/v1/reports",
+        "https://90-attendance-system-back-end.vercel.app/api/v1/reports",
         {
           date: new Date().toISOString().split("T")[0],
           notes: "",
@@ -144,7 +144,7 @@ const AttendanceForm = () => {
         return;
       }
       const response = await axios.patch(
-        `https://attendancesystem-back-end-production.up.railway.app/api/v1/reports/${reportId}`,
+        `https://90-attendance-system-back-end.vercel.app/api/v1/reports/${reportId}`,
         {
           timeOut: getCurrentTime(),
           statusOut: "Checked",
