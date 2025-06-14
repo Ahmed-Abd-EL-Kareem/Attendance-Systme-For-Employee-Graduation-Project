@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { RiCameraLensFill } from "react-icons/ri";
 import { CgClose } from "react-icons/cg";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const FaceRecognition = ({
   onRecognitionResult,
@@ -83,7 +84,7 @@ const FaceRecognition = ({
       formData.append("employeeId", employeeId);
       try {
         const response = await axios.post(
-          "https://90-attendance-system-back-end.vercel.app/api/v1/face-recognition/recognize",
+          "http://127.0.0.1:8000/api/v1/face-recognition/recognize",
           formData,
           { withCredentials: true }
         );
@@ -94,6 +95,7 @@ const FaceRecognition = ({
           response.data.employee_name !== "Unknown" &&
           response.data.employee_id
         ) {
+          toast.success("Face recognition successful", { theme: "colored" });
           stopCamera();
           setIconColor("green");
           if (onRecognitionResult)

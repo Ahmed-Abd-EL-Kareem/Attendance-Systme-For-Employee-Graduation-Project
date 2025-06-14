@@ -55,26 +55,22 @@ const AttendanceForm = () => {
   const handleLocationChange = useCallback(
     (insidePolygon) => {
       setIsLocationValid(insidePolygon);
-      if (insidePolygon && isFaceRecognized) {
+      if (insidePolygon && isFaceRecognized && !isLocationValid) {
         toast.success("Location verified successfully!", { theme: "colored" });
       }
     },
-    [isFaceRecognized]
+    [isFaceRecognized, isLocationValid]
   );
 
   const getCurrentTime = () => {
     return new Date().toTimeString().split(" ")[0];
   };
 
-  const isFormValid = useCallback(
-    () => {
-      return true;
-      // && isLocationValid && !isProcessing;
-    },
-    [
-      // isFaceRecognized
-    ]
-  );
+  const isFormValid = useCallback(() => {
+    // return true;
+    return isFaceRecognized && isLocationValid && !isProcessing;
+    // && isLocationValid && !isProcessing;
+  }, [isFaceRecognized, isLocationValid, isProcessing]);
 
   const handleCheckIn = async () => {
     if (!isFormValid()) {
