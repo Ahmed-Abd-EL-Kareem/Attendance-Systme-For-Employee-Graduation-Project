@@ -15,19 +15,14 @@ const MapBox = ({ onLocationChange }) => {
   }, [onLocationChange]);
 
   const polygonCoordinates = [
-    // [31.706848, 26.563412],
-    // [31.70914, 26.563613],
-    // [31.708994, 26.565924],
-    // [31.709151, 26.566343],
-    // [31.708764, 26.566395],
-    // [31.708521, 26.566081],
-    // [31.706914, 26.566116],
-    // [31.706844, 26.563392],
-    [31.687678, 26.562222],
-    [31.688111, 26.562543],
-    [31.687629, 26.563157],
-    [31.686875, 26.562681],
-    [31.687678, 26.562222],
+    [31.706848, 26.563412],
+    [31.70914, 26.563613],
+    [31.708994, 26.565924],
+    [31.709151, 26.566343],
+    [31.708764, 26.566395],
+    [31.708521, 26.566081],
+    [31.706914, 26.566116],
+    [31.706844, 26.563392],
   ];
 
   const isPointInPolygon = useCallback((point, polygon) => {
@@ -81,7 +76,8 @@ const MapBox = ({ onLocationChange }) => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [31.687678, 26.562222],
+      center: [31.708109, 26.565009],
+
       zoom: 16,
       attributionControl: false,
       preserveDrawingBuffer: true,
