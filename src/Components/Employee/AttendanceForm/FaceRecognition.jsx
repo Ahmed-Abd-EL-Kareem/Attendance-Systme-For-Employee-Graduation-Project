@@ -327,7 +327,7 @@ const FaceRecognition = ({
 
     try {
       const response = await axios.post(
-        "/api/recognize", // عدل هذا إذا كان لديك endpoint مختلف
+        "https://90-attendance-system-back-end.vercel.app/api/v1/face-recognition/recognize", // عدل هذا إذا كان لديك endpoint مختلف
         {
           employeeId,
           imageBase64,
