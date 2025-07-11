@@ -29,7 +29,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/history" element={<History />} /> */}
           <Route path="/employee/:id/*" element={<EmployeeRoute />} />
-          <Route path="/*" element={<NotFound />} />
+          // <Route path="/*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
