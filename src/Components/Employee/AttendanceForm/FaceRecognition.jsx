@@ -231,8 +231,8 @@ const FaceRecognition = ({
   // Load face-api.js models once
   useEffect(() => {
     const loadModels = async () => {
-      // const MODEL_URL = "https://attendance-system-mu.vercel.app/models";
-      const MODEL_URL = `${window.location.origin}/models`;
+      const MODEL_URL = "https://attendance-system-mu.vercel.app/models";
+      // const MODEL_URL = `${window.location.origin}/models`;
       try {
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
