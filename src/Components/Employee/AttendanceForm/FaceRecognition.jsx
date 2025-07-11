@@ -232,15 +232,21 @@ const FaceRecognition = ({
   useEffect(() => {
     const loadModels = async () => {
       const MODEL_URL = "/models";
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-      await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
-      await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
-      setModelsLoaded(true);
+      try {
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+          faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+        ]);
+        setModelsLoaded(true);
+      } catch (err) {
+        console.error("Error loading models", err);
+        setError("Failed to load face recognition models.");
+      }
     };
     loadModels();
   }, []);
 
-  // Start camera
   const startCamera = async () => {
     try {
       setError("");
@@ -267,7 +273,6 @@ const FaceRecognition = ({
     }
   };
 
-  // Stop camera
   const stopCamera = () => {
     if (videoRef.current?.srcObject) {
       videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
@@ -278,32 +283,43 @@ const FaceRecognition = ({
     if (onProcessingChange) onProcessingChange(false);
   };
 
-  // Capture and recognize face
   const captureAndRecognize = async () => {
-    console.log("Capture & Recognize button clicked");
+    console.log(">>> captureAndRecognize called");
+
     if (!videoRef.current || !canvasRef.current || !modelsLoaded) {
-      console.log("Missing refs or models not loaded");
+      console.warn("Missing refs or models not loaded");
       return;
     }
+
+    const video = videoRef.current;
+
+    // Ensure video is ready
+    if (video.readyState < 2) {
+      console.log("Waiting for video to be ready...");
+      await new Promise((resolve) => {
+        video.onloadeddata = () => resolve();
+      });
+    }
+
     setLoading(true);
     if (onProcessingChange) onProcessingChange(true);
-
     setError("");
-    const video = videoRef.current;
+
+    // Draw to canvas
     const canvas = canvasRef.current;
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Detect face using face-api.js
-    const detections = await faceapi.detectAllFaces(
-      canvas,
+    // Detect face
+    const detection = await faceapi.detectSingleFace(
+      video,
       new faceapi.TinyFaceDetectorOptions()
     );
-    console.log("Detections:", detections);
+    console.log("Detection:", detection);
 
-    if (!detections.length) {
+    if (!detection) {
       setError("No face detected. Please try again.");
       setIconColor("red");
       setLoading(false);
@@ -316,9 +332,7 @@ const FaceRecognition = ({
       return;
     }
 
-    // Convert to base64
     const imageBase64 = canvas.toDataURL("image/jpeg");
-    console.log("employeeId:", employeeId);
 
     if (!employeeId) {
       setError("Employee ID not provided");
@@ -339,7 +353,9 @@ const FaceRecognition = ({
           imageBase64,
         }
       );
+
       console.log("Response:", response.data);
+
       if (response.data.status === "success") {
         toast.success("Face recognition successful", { theme: "colored" });
         stopCamera();
@@ -373,7 +389,6 @@ const FaceRecognition = ({
     }
   };
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => stopCamera();
   }, []);
@@ -417,7 +432,7 @@ const FaceRecognition = ({
             <div className="custum-file-upload w-100 h-100">
               <div className="camIcon">
                 <RiCameraLensFill
-                  className="fs-1 "
+                  className="fs-1"
                   style={{ color: iconColor }}
                 />
               </div>
