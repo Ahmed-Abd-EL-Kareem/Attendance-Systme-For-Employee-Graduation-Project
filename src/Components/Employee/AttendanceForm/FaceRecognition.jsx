@@ -280,7 +280,11 @@ const FaceRecognition = ({
 
   // Capture and recognize face
   const captureAndRecognize = async () => {
-    if (!videoRef.current || !canvasRef.current || !modelsLoaded) return;
+    console.log("Capture & Recognize button clicked");
+    if (!videoRef.current || !canvasRef.current || !modelsLoaded) {
+      console.log("Missing refs or models not loaded");
+      return;
+    }
     setLoading(true);
     if (onProcessingChange) onProcessingChange(true);
 
@@ -297,6 +301,7 @@ const FaceRecognition = ({
       canvas,
       new faceapi.TinyFaceDetectorOptions()
     );
+    console.log("Detections:", detections);
 
     if (!detections.length) {
       setError("No face detected. Please try again.");
@@ -313,6 +318,7 @@ const FaceRecognition = ({
 
     // Convert to base64
     const imageBase64 = canvas.toDataURL("image/jpeg");
+    console.log("employeeId:", employeeId);
 
     if (!employeeId) {
       setError("Employee ID not provided");
@@ -327,15 +333,14 @@ const FaceRecognition = ({
 
     try {
       const response = await axios.post(
-        "https://90-attendance-system-back-end.vercel.app/api/v1/face-recognition/recognize", // عدل هذا إذا كان لديك endpoint مختلف
+        "https://90-attendance-system-back-end.vercel.app/api/v1/face-recognition/recognize",
         {
           employeeId,
           imageBase64,
         }
       );
-      if (
-        response.data.status === "success"
-      ) {
+      console.log("Response:", response.data);
+      if (response.data.status === "success") {
         toast.success("Face recognition successful", { theme: "colored" });
         stopCamera();
         setIconColor("green");
