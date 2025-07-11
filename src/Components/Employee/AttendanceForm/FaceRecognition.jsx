@@ -229,24 +229,41 @@ const FaceRecognition = ({
   const [modelsLoaded, setModelsLoaded] = useState(false);
 
   // Load face-api.js models once
-  useEffect(() => {
-    const loadModels = async () => {
-      const MODEL_URL = "/models";
-      // const MODEL_URL = `${window.location.origin}/models`;
-      try {
-        await Promise.all([
-          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-          faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-          faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-        ]);
-        setModelsLoaded(true);
-      } catch (err) {
-        console.error("Error loading models", err);
-        setError("Failed to load face recognition models.");
-      }
-    };
-    loadModels();
-  }, []);
+  // useEffect(() => {
+  //   const loadModels = async () => {
+  //     const MODEL_URL = "/models";
+  //     // const MODEL_URL = `${window.location.origin}/models`;
+  //     try {
+  //       await Promise.all([
+  //         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+  //         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+  //         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+  //       ]);
+  //       setModelsLoaded(true);
+  //     } catch (err) {
+  //       console.error("Error loading models", err);
+  //       setError("Failed to load face recognition models.");
+  //     }
+  //   };
+  //   loadModels();
+  // }, []);
+useEffect(() => {
+  const loadModels = async () => {
+    const MODEL_URL = `${window.location.origin}/models`;
+    try {
+      await Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+        faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+      ]);
+      setModelsLoaded(true);
+    } catch (err) {
+      console.error("Error loading models", err);
+      setError("Failed to load face recognition models.");
+    }
+  };
+  loadModels();
+}, []);
 
   const startCamera = async () => {
     try {
