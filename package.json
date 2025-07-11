@@ -26,6 +26,7 @@
     "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
     "typewriter-effect": "^2.21.0",
+    "face-api.js": "^0.22.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
