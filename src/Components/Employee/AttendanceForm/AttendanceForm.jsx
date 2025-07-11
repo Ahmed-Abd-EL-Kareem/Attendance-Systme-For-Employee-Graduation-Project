@@ -68,7 +68,8 @@ const AttendanceForm = () => {
 
   const isFormValid = useCallback(() => {
     // return true;
-    return isFaceRecognized && isLocationValid && !isProcessing;
+    // return isFaceRecognized && isLocationValid && !isProcessing;
+    return isFaceRecognized  && !isProcessing;
     // && isLocationValid && !isProcessing;
   }, [isFaceRecognized, isLocationValid, isProcessing]);
 
