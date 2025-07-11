@@ -25,11 +25,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/admin/:id/*" element={<Admin />} />
+          <Route path="/employee/:id/*" element={<EmployeeRoute />} />
           {/* <Route path="/attendance-form" element={<AttendanceForm />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/history" element={<History />} /> */}
-          <Route path="/employee/:id/*" element={<EmployeeRoute />} />
-          // <Route path="/*" element={<NotFound />} />
+      <Route path="/history" element={<History />} /> 
+       <Route path="/*" element={<NotFound />} />
+      */}
         </Routes>
       </BrowserRouter>
     </>
