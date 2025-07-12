@@ -267,13 +267,15 @@ const FaceRecognition = ({
 // }, []);
 useEffect(() => {
   const loadModels = async () => {
-    const MODEL_URL = `${window.location.origin}/models`;
+    const MODEL_URL = '/models';
     console.log("Loading models from:", MODEL_URL);
     
     try {
       // Test if models exist
-      const testResponse = await fetch(`${MODEL_URL}/tiny_face_detector_model-shard1`);
-      if (!testResponse.ok) throw new Error("Model file not found");
+      const testResponse = await fetch(`${MODEL_URL}/tiny_face_detector_model-weights_manifest.json`);
+      if (!testResponse.ok) {
+        throw new Error(`Model file not found (status ${testResponse.status})`);
+      }
       
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
@@ -287,6 +289,7 @@ useEffect(() => {
       setError(`Model loading error: ${err.message}`);
     }
   };
+  
   loadModels();
 }, []);
 
