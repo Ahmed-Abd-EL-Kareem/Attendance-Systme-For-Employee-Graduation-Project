@@ -265,13 +265,16 @@ const FaceRecognition = ({
 //   };
 //   loadModels();
 // }, []);
-  useEffect(() => {
+useEffect(() => {
   const loadModels = async () => {
-    // Use relative path to models
-    const MODEL_URL = '/models';
+    const MODEL_URL = `${window.location.origin}/models`;
     console.log("Loading models from:", MODEL_URL);
     
     try {
+      // Test if models exist
+      const testResponse = await fetch(`${MODEL_URL}/tiny_face_detector_model-shard1`);
+      if (!testResponse.ok) throw new Error("Model file not found");
+      
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
@@ -280,11 +283,10 @@ const FaceRecognition = ({
       console.log("Models loaded successfully");
       setModelsLoaded(true);
     } catch (err) {
-      console.error("Model loading error:", err);
-      setError("Failed to load face recognition models. Check console for details.");
+      console.error("Model loading failed:", err);
+      setError(`Model loading error: ${err.message}`);
     }
   };
-  
   loadModels();
 }, []);
 
