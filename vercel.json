@@ -1,0 +1,15 @@
+{
+  "routes": [
+    {
+      "src": "/models/(.*)",
+      "headers": {
+        "Content-Type": "application/octet-stream",
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
