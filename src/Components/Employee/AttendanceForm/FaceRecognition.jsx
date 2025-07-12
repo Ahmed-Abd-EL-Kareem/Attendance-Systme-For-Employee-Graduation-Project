@@ -206,7 +206,7 @@ const FaceRecognition = ({
   );
 };
 
-// export default FaceRecognition;
+export default FaceRecognition;
 // import React, { useRef, useState, useEffect } from "react";
 // import { RiCameraLensFill } from "react-icons/ri";
 // import { CgClose } from "react-icons/cg";
