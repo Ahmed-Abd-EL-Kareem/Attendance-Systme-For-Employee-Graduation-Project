@@ -250,6 +250,7 @@ const FaceRecognition = ({
 useEffect(() => {
   const loadModels = async () => {
     const MODEL_URL = `${window.location.origin}/models`;
+    console.log(MODEL_URL);
     try {
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
