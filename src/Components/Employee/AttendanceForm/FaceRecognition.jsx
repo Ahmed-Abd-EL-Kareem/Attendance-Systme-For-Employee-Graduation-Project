@@ -247,22 +247,44 @@ const FaceRecognition = ({
   //   };
   //   loadModels();
   // }, []);
-useEffect(() => {
+// useEffect(() => {
+//   const loadModels = async () => {
+//     const MODEL_URL = `${window.location.origin}/models`;
+//     console.log(MODEL_URL);
+//     try {
+//       await Promise.all([
+//         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+//         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+//         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+//       ]);
+//       setModelsLoaded(true);
+//     } catch (err) {
+//       console.error("Error loading models", err);
+//       setError("Failed to load face recognition models.");
+//     }
+//   };
+//   loadModels();
+// }, []);
+  useEffect(() => {
   const loadModels = async () => {
-    const MODEL_URL = `${window.location.origin}/models`;
-    console.log(MODEL_URL);
+    // Use relative path to models
+    const MODEL_URL = '/models';
+    console.log("Loading models from:", MODEL_URL);
+    
     try {
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
       ]);
+      console.log("Models loaded successfully");
       setModelsLoaded(true);
     } catch (err) {
-      console.error("Error loading models", err);
-      setError("Failed to load face recognition models.");
+      console.error("Model loading error:", err);
+      setError("Failed to load face recognition models. Check console for details.");
     }
   };
+  
   loadModels();
 }, []);
 
