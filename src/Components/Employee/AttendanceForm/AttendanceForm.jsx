@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AttendanceForm = () => {
+const AttendanceForm = ({ employee }) => {
   const [isLocationValid, setIsLocationValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [employeeId, setEmployeeId] = useState(null);
@@ -37,12 +37,10 @@ const AttendanceForm = () => {
   }, []);
 
   const handleFaceRecognition = useCallback((result) => {
-    if (result.status === "success") {
-      // toast.success("Face recognized successfully!", { theme: "colored" });
-      setEmployeeId(result.data.employee_id);
-      setEmployeeName(result.data.employee_name);
+    if (result.status === "success" && result.data?.match) {
       setIsFaceRecognized(true);
       setVerificationStatus("success");
+      toast.success("Face recognized successfully!", { theme: "colored" });
     } else {
       setVerificationStatus("failed");
       setIsFaceRecognized(false);
@@ -69,7 +67,7 @@ const AttendanceForm = () => {
   const isFormValid = useCallback(() => {
     // return true;
     // return isFaceRecognized && isLocationValid && !isProcessing;
-    return isFaceRecognized  && !isProcessing;
+    return isFaceRecognized && !isProcessing;
     // && isLocationValid && !isProcessing;
   }, [isFaceRecognized, isLocationValid, isProcessing]);
 
@@ -163,6 +161,11 @@ const AttendanceForm = () => {
     }
   };
 
+  // استخراج رابط صورة الموظف
+  const employeePhoto = employee?.image || null;
+
+  // (إزالة جميع console.log)
+
   return (
     <>
       <div className="attendance w-100 mt-6">
@@ -174,11 +177,18 @@ const AttendanceForm = () => {
               style={{ height: "75%" }}
             >
               <div className="face w-50 p-4 position-relative">
-                <FaceRecognition
-                  onRecognitionResult={handleFaceRecognition}
-                  onProcessingChange={setIsProcessing}
-                  employeeId={employeeId}
-                />
+                {employeePhoto ? (
+                  <FaceRecognition
+                    onRecognitionResult={handleFaceRecognition}
+                    onProcessingChange={setIsProcessing}
+                    employeeId={employeeId}
+                    registeredImageUrl={employeePhoto}
+                  />
+                ) : (
+                  <div className="alert alert-warning">
+                    No registered photo for this employee!
+                  </div>
+                )}
               </div>
               <div className="mapBox w-50 p-4" style={{ height: "100%" }}>
                 <MapBox onLocationChange={handleLocationChange} />

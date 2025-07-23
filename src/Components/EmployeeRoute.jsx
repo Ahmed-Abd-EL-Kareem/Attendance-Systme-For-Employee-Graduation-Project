@@ -46,7 +46,10 @@ const EmployeeRoute = () => {
     <div className="d-flex">
       <NavBar />
       <Routes>
-        <Route path="/attendance-form" element={<AttendanceForm />} />
+        <Route
+          path="/attendance-form"
+          element={<AttendanceForm employee={employee} />}
+        />
         <Route path="/profile" element={<Profile employee={employee} />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/history" element={<History />} />
