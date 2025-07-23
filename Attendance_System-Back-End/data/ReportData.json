@@ -1,0 +1,38 @@
+[
+  {
+    "date": "2023-10-03",
+    "employee": "67d24297ec88ad2d34b10aeb",
+    "notes": "On time",
+    "timeIn": "08:00",
+    "timeOut": "12:00",
+    "statusIn": "Checked",
+    "statusOut": "Checked"
+  },
+  {
+    "date": "2023-10-03",
+    "employee": "67d24297ec88ad2d34b10aec",
+    "notes": "Late",
+    "timeIn": "08:15",
+    "timeOut": "12:00",
+    "statusIn": "Checked",
+    "statusOut": "Checked"
+  },
+  {
+    "date": "2023-10-04",
+    "employee": "67d24297ec88ad2d34b10aeb",
+    "notes": "Sick leave",
+    "timeIn": "",
+    "timeOut": "",
+    "statusIn": "Not Checked",
+    "statusOut": "Not Checked"
+  },
+  {
+    "date": "2023-10-04",
+    "employee": "67d24297ec88ad2d34b10aec",
+    "notes": "On time",
+    "timeIn": "08:00",
+    "timeOut": "12:00",
+    "statusIn": "Checked",
+    "statusOut": "Checked"
+  }
+]

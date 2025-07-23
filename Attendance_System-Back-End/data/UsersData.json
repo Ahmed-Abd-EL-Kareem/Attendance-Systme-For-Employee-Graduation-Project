@@ -1,0 +1,142 @@
+[
+  {
+    "userName": "IT145",
+    "password": "password123",
+    "role": "admin",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6c9"
+  },
+  {
+    "userName": "HR146",
+    "password": "password123",
+    "role": "admin",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6ca"
+  },
+  {
+    "userName": "FIN147",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6cb"
+  },
+  {
+    "userName": "MKT148",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6cc"
+  },
+  {
+    "userName": "ENG149",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6cd"
+  },
+  {
+    "userName": "OPS150",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6ce"
+  },
+  {
+    "userName": "SALES151",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6cf"
+  },
+  {
+    "userName": "QA152",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d0"
+  },
+  {
+    "userName": "CS153",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d1"
+  },
+  {
+    "userName": "SEC154",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d2"
+  },
+  {
+    "userName": "LOG155",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d3"
+  },
+  {
+    "userName": "RD156",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d4"
+  },
+  {
+    "userName": "ADM157",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d5"
+  },
+  {
+    "userName": "TCH158",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d6"
+  },
+  {
+    "userName": "HRD159",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d7"
+  },
+  {
+    "userName": "PR160",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d8"
+  },
+  {
+    "userName": "DES161",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6d9"
+  },
+  {
+    "userName": "MLT162",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6da"
+  },
+  {
+    "userName": "PM163",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6db"
+  },
+  {
+    "userName": "LE164",
+    "password": "password123",
+    "role": "user",
+    "passwordConfirm": "password123",
+    "employee": "67f8120d9485ff550443a6dc"
+  }
+]
