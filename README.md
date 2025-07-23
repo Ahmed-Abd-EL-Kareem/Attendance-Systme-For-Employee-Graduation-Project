@@ -59,5 +59,3 @@ You can try the system online here: [https://attendance-system-mu.vercel.app/](h
 يمكنك تجربة النظام من خلال الرابط التالي: [https://attendance-system-mu.vercel.app/](https://attendance-system-mu.vercel.app/)
 
 ---
-
-**بالتوفيق في مشروعك! | Good luck with your project!**
