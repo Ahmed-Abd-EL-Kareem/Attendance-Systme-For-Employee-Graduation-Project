@@ -115,6 +115,7 @@ const ReportRouter = require("./routes/reportRoutes");
 const departmentRouter = require("./routes/departmentRoutes");
 const shiftRouter = require("./routes/shiftRoutes");
 const faceRecognitionRouter = require("./routes/faceRecognitionRoutes");
+const dashboardRouter = require("./routes/dashboardRoutes");
 
 const app = express();
 
@@ -183,6 +184,7 @@ app.use("/api/v1/accounts", accountsRouter);
 app.use("/api/v1/departments", departmentRouter);
 app.use("/api/v1/shifts", shiftRouter);
 app.use("/api/v1/reports", ReportRouter);
+app.use("/api/v1/dashboard", dashboardRouter);
 app.use(
   "/api/v1/face-recognition",
   upload.single("image"),
