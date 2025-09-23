@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Head from "../../Head";
 // import DData from "../../Data/DepartData.json";
 import { HiDocumentReport } from "react-icons/hi";
+import axios from "axios";
 import Table from "../../Table/Table";
 import { columns } from "../../Data/ReportColumns";
-import axios from "axios";
-import Loading from "../../Loading";
-import SmallLoad from "./../../SmallLoad";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
+import SmallLoad from "../../ui/SmallLoad";
 
 const Report = ({ reportData, departments }) => {
   const [isByDepartment, setIsByDepartment] = useState(false); // Default to "By Department"

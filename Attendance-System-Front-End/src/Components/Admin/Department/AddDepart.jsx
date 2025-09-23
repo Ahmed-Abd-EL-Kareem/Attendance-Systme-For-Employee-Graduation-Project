@@ -1,67 +1,37 @@
 import React, { useState } from "react";
-import Head from "../../Head";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import SmallLoad from "../../SmallLoad";
+import Head from "../../ui/Head";
+import SmallLoad from "../../ui/SmallLoad";
+import { useCreateDepartment } from "../../../hooks/useApiQueries";
 
-const AddDepart = ({ onUpdateSuccess, id }) => {
+const AddDepart = ({ id }) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState({
     depId: "",
     name: "",
   });
 
+  // Use React Query mutation
+  const createDepartmentMutation = useCreateDepartment();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      const formattedDepartment = {
-        ...department,
-        depId: department.depId.toUpperCase(),
-      };
+    const formattedDepartment = {
+      ...department,
+      depId: department.depId.toUpperCase(),
+    };
 
-      const response = await axios.post(
-        // "https://90-attendance-system-back-end.vercel.app/api/v1/departments",
-        `https://90-attendance-system-back-end.vercel.app/api/v1/departments`,
-        formattedDepartment,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.status === "success") {
-        toast.success("Department Added Successfully", {
-          theme: "colored",
-        });
-        if (onUpdateSuccess) {
-          setTimeout(() => {
-            navigate(`/admin/${id}/department`);
-          }, 5000);
-          await onUpdateSuccess();
-        }
-      }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message || "Error Adding Department", {
-          theme: "colored",
-        });
-      } else {
-        toast.error("Connection error", {
-          theme: "colored",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
+    createDepartmentMutation.mutate(formattedDepartment, {
+      onSuccess: () => {
+        setTimeout(() => {
+          navigate(`/admin/${id}/department`);
+        }, 2000);
+      },
+    });
   };
 
   return (
@@ -121,9 +91,9 @@ const AddDepart = ({ onUpdateSuccess, id }) => {
                   <button
                     className="button d-flex"
                     type="submit"
-                    disabled={loading}
+                    disabled={createDepartmentMutation.isPending}
                   >
-                    {loading ? (
+                    {createDepartmentMutation.isPending ? (
                       <>
                         <SmallLoad /> Saving...
                       </>
@@ -144,7 +114,6 @@ const AddDepart = ({ onUpdateSuccess, id }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

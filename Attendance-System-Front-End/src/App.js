@@ -5,11 +5,10 @@ import React, { useEffect } from "react";
 // import Profile from "./Components/Employee/Profile/Profile";
 import AOS from "aos";
 // import History from "./Components/Employee/History/History";
-import Login from "./Components/Login";
-import NotFound from "./notFound";
-import Admin from "./Admin";
-import EmployeeRoute from "./Components/EmployeeRoute";
-import { ToastContainer } from "react-toastify";
+import Login from "./Components/ui/Login";
+import NotFound from "./Components/ui/notFound";
+import Admin from "./Components/Router/Admin";
+import EmployeeRoute from "./Components/Router/EmployeeRoute";
 
 function App() {
   useEffect(() => {
@@ -19,7 +18,6 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
       <BrowserRouter>
         {/* <AppContent /> */}
         <Routes>

@@ -1,65 +1,37 @@
 import React, { useState } from "react";
-import Head from "../../Head";
 import { RiFileHistoryFill } from "react-icons/ri";
 import { columns } from "../../Data/ReportColumns";
-import Table from "../../Table/Table";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SmallLoad from "../../SmallLoad";
+import Table from "../../Table/Table";
+import SmallLoad from "../../ui/SmallLoad";
+import Head from "../../ui/Head";
+import { useEmployeeReports } from "../../../hooks/useApiQueries";
 
 const History = () => {
   const [searchItem, setSearchItem] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [reports, setReports] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState(false);
 
-  const fetchReports = async () => {
-    try {
-      setLoading(true);
-      const employeeId = JSON.parse(localStorage.getItem("employeeId"));
-      if (!employeeId) {
-        toast.error("Employee ID not found", {
-          theme: "colored",
-        });
-        return;
-      }
+  // Get employee ID from localStorage
+  const employeeId = JSON.parse(localStorage.getItem("employeeId"));
 
-      // let url = `http://127.0.0.1:8000/api/v1/reports/${employeeId}`;
-      // تم استبداله بالرابط الجديد
+  // Build query parameters
+  const queryParams = {};
+  if (fromDate) queryParams["date[gte]"] = fromDate;
+  if (toDate) queryParams["date[lte]"] = toDate;
 
-      let url = `https://90-attendance-system-back-end.vercel.app/api/v1/reports/${employeeId}`;
-      const params = new URLSearchParams();
+  // Use React Query hook
+  const {
+    data: reports = [],
+    isLoading,
+    error,
+    refetch,
+  } = useEmployeeReports(employeeId, queryParams);
 
-      if (fromDate) {
-        params.append("date[gte]", fromDate);
-      }
-
-      if (toDate) {
-        params.append("date[lte]", toDate);
-      }
-
-      if (params.toString()) {
-        url += `?${params.toString()}`;
-      }
-
-      const response = await axios.get(url, {
-        withCredentials: true,
-      });
-
-      if (response.data.status === "success") {
-        setReports(response.data.data.reports);
-        setFilter(true);
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Error fetching reports", {
-        theme: "colored",
-      });
-    } finally {
-      setLoading(false);
-    }
+  const fetchReports = () => {
+    setFilter(true);
+    refetch();
   };
 
   const handlePrint = () => {
@@ -106,9 +78,9 @@ const History = () => {
                 <button
                   className="btn-rep mt-3 d-flex align-items-center"
                   onClick={fetchReports}
-                  disabled={loading}
+                  disabled={isLoading}
                 >
-                  {loading ? (
+                  {isLoading ? (
                     <>
                       <SmallLoad />
                       Show Attendance
@@ -154,7 +126,6 @@ const History = () => {
           )}
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

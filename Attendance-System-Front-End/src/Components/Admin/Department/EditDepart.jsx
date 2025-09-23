@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Head from "../../Head";
 import { Link, useParams } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
-import Loading from "../../Loading";
 import "react-toastify/dist/ReactToastify.css";
 // import Department from "./Department";
-import SmallLoad from "../../SmallLoad";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
+import SmallLoad from "../../ui/SmallLoad";
 
 const EditDepart = ({ onUpdateSuccess, id1 }) => {
   const { id } = useParams();
@@ -162,7 +162,6 @@ const EditDepart = ({ onUpdateSuccess, id1 }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

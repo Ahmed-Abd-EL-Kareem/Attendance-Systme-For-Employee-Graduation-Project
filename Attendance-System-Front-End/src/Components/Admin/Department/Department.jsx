@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import Data from "../../Data/DepartData.json";
-import { columns } from "../../Data/DepartTable";
-import Table from "../../Table/Table";
-import Head from "../../Head";
 import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-import Loading from "../../Loading";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { columns } from "../../Data/DepartTable";
+import Table from "../../Table/Table";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
 // let sharedRowData = null; // Placeholder for the clicked row's data
 // const setSharedRowData = (data) => {
 //   sharedRowData = data;
@@ -46,22 +45,23 @@ const Department = ({ departments, id }) => {
         <div className="container">
           <Head title="Department" />
           <div className="add_button mb-2">
-            <Link to={`/admin/${id}/department/add`}>
-              <button
-                data-aos="fade-right"
-                data-aos-duration="1500"
-                className="pushable"
-              >
-                <span className="shadow" />
-                <span className="edge" />
-                <span className="front">
-                  <span className="pe-2 me-2 border-end">
-                    <FaCirclePlus />
-                  </span>
-                  Add Department
+            <button
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              className="pushable"
+              title="Disabled to protect database"
+              disabled
+              style={{ cursor: "not-allowed", opacity: 0.6 }}
+            >
+              <span className="shadow" />
+              <span className="edge" />
+              <span className="front">
+                <span className="pe-2 me-2 border-end">
+                  <FaCirclePlus />
                 </span>
-              </button>
-            </Link>
+                Add Department
+              </span>
+            </button>
           </div>
           <div className="table bg-light">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
@@ -97,7 +97,6 @@ const Department = ({ departments, id }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

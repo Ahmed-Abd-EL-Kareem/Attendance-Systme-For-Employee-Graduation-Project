@@ -1,7 +1,7 @@
 import React from "react";
-import Head from "../../Head";
-// import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Head from "../../ui/Head";
+// import { toast, ToastContainer } from "react-toastify";
 
 const Profile = ({ employee }) => {
   // const [loading, setLoading] = useState(true);

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import Head from "../../Head";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import SmallLoad from "../../SmallLoad";
+import Head from "../../ui/Head";
+import SmallLoad from "../../ui/SmallLoad";
+import { useCreateShift } from "../../../hooks/useApiQueries";
 
-const AddShift = ({ onUpdateSuccess, id }) => {
+const AddShift = ({ id }) => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [shift, setShift] = useState({
     startTime: "",
     endTime: "",
   });
+
+  // Use React Query mutation
+  const createShiftMutation = useCreateShift();
 
   const formatTime = (time) => {
     if (!time) return "";
@@ -24,50 +25,19 @@ const AddShift = ({ onUpdateSuccess, id }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      const formattedShift = {
-        startTime: formatTime(shift.startTime),
-        endTime: formatTime(shift.endTime),
-      };
+    const formattedShift = {
+      startTime: formatTime(shift.startTime),
+      endTime: formatTime(shift.endTime),
+    };
 
-      const response = await axios.post(
-        "https://90-attendance-system-back-end.vercel.app/api/v1/shifts",
-        formattedShift,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.status === "success") {
-        toast.success("Shift added successfully", {
-          theme: "colored",
-        });
-        setLoading(false);
-        if (onUpdateSuccess) {
-          setTimeout(() => {
-            navigate(`/admin/${id}/shift`);
-          }, 5000);
-          await onUpdateSuccess();
-        }
-      }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message || "Error adding shift", {
-          theme: "colored",
-        });
-      } else {
-        toast.error("Connection error", {
-          theme: "colored",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
+    createShiftMutation.mutate(formattedShift, {
+      onSuccess: () => {
+        setTimeout(() => {
+          navigate(`/admin/${id}/shift`);
+        }, 2000);
+      },
+    });
   };
 
   return (
@@ -127,9 +97,9 @@ const AddShift = ({ onUpdateSuccess, id }) => {
                   <button
                     className="button d-flex"
                     type="submit"
-                    disabled={loading}
+                    disabled={createShiftMutation.isPending}
                   >
-                    {loading ? (
+                    {createShiftMutation.isPending ? (
                       <>
                         <SmallLoad /> Saving...
                       </>
@@ -150,7 +120,6 @@ const AddShift = ({ onUpdateSuccess, id }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

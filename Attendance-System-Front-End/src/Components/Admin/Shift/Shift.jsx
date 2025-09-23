@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { columns } from "../../Data/ShiftColumns";
-import Table from "../../Table/Table";
-import Head from "../../Head";
 import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-import Loading from "../../Loading";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { columns } from "../../Data/ShiftColumns";
+import Table from "../../Table/Table";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
 
 const Shift = ({ shifts, id }) => {
   const [loading, setLoading] = useState(true);
@@ -28,22 +27,23 @@ const Shift = ({ shifts, id }) => {
         <div className="container">
           <Head title="Shift" />
           <div className="add_button mb-2">
-            <Link to={`/admin/${id}/shift/add`}>
-              <button
-                className="pushable"
-                data-aos="fade-right"
-                data-aos-duration="1500"
-              >
-                <span className="shadow" />
-                <span className="edge" />
-                <span className="front">
-                  <span className="pe-2 me-2 border-end">
-                    <FaCirclePlus />
-                  </span>
-                  Add Shift
+            <button
+              className="pushable"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              title="Disabled to protect database"
+              disabled
+              style={{ cursor: "not-allowed", opacity: 0.6 }}
+            >
+              <span className="shadow" />
+              <span className="edge" />
+              <span className="front">
+                <span className="pe-2 me-2 border-end">
+                  <FaCirclePlus />
                 </span>
-              </button>
-            </Link>
+                Add Shift
+              </span>
+            </button>
           </div>
           <div className="table bg-light">
             <div className="d-flex align-items-center justify-content-between px-4 text bg-body-secondary bg-gradient text-center border-bottom border-black fw-semibold text-secondary-emphasis p-1">
@@ -79,7 +79,6 @@ const Shift = ({ shifts, id }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

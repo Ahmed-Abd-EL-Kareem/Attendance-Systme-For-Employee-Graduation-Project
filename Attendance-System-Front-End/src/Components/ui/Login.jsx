@@ -3,109 +3,72 @@ import { useNavigate } from "react-router-dom";
 import { CiAt } from "react-icons/ci";
 import { CiLock } from "react-icons/ci";
 import Typewriter from "typewriter-effect";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLogin } from "../../hooks/useApiQueries";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "../../hooks/useApiQueries";
+import { apiService } from "../../services/api";
 
 const Login = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [userIn, setUserIn] = useState(true);
   const [passwordIn, setPasswordIn] = useState(true);
-  const [loading, setLoading] = useState(false);
+
+  // Use React Query login mutation
+  const loginMutation = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if username and password are entered
     if (!userName.trim() && !password.trim()) {
-      toast.error("Please enter your UserName and Password", {
-        theme: "colored",
-      });
       setPasswordIn(false);
       setUserIn(false);
       return;
     }
     if (!userName.trim()) {
-      toast.error("Please enter your UserName", {
-        theme: "colored",
-      });
       setUserIn(false);
       setPasswordIn(true);
       return;
     }
 
     if (!password.trim()) {
-      toast.error("Please enter your Password", {
-        theme: "colored",
-      });
       setPasswordIn(false);
       setUserIn(true);
       return;
     }
     setPasswordIn(true);
     setUserIn(true);
-    setLoading(true);
 
-    try {
-      const response = await axios.post(
-        "https://90-attendance-system-back-end.vercel.app/api/v1/accounts/login",
-        {
-          userName: userName.toUpperCase().trim(),
-          password: password.trim(),
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
+    const loginData = {
+      userName: userName.toUpperCase().trim(),
+      password: password.trim(),
+    };
+
+    loginMutation.mutate(loginData, {
+      onSuccess: async (response) => {
+        if (response.data.status === "success") {
+          if (response.data.data.account.role === "admin") {
+            // Prefetch dashboard counts before navigating
+            await queryClient.prefetchQuery({
+              queryKey: queryKeys.dashboard,
+              queryFn: () => apiService.dashboard.getCounts(),
+              staleTime: 2 * 60 * 1000,
+            });
+            navigate(
+              `/admin/${response.data.data.account.employee._id}/dashboard`
+            );
+          } else {
+            navigate(
+              `/employee/${response.data.data.account.employee._id}/attendance-form`
+            );
+          }
         }
-      );
-
-      if (response.data.status === "success") {
-        // Store user information in localStorage
-        localStorage.setItem(
-          "employeeId",
-          JSON.stringify(response.data.data.account.employee._id)
-        );
-        localStorage.setItem(
-          "Role",
-          JSON.stringify(response.data.data.account.role)
-        );
-
-        localStorage.setItem(
-          "loginToast",
-          JSON.stringify({
-            message: "Login Successful",
-            type: "success",
-          })
-        );
-
-        if (response.data.data.account.role === "admin") {
-          navigate(
-            `/admin/${response.data.data.account.employee._id}/dashboard`
-          );
-        } else {
-          navigate(
-            `/employee/${response.data.data.account.employee._id}/attendance-form`
-          );
-        }
-      }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message || "Login Error", {
-          theme: "colored",
-        });
-      } else {
-        toast.error("Connection Error", {
-          theme: "colored",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
+      },
+    });
   };
 
   return (
@@ -183,15 +146,14 @@ const Login = () => {
                 data-aos-duration="1500"
                 className="button mt-5"
                 type="submit"
-                disabled={loading}
+                disabled={loginMutation.isPending}
               >
-                <span>{loading ? "Loading..." : "Login"}</span>
+                <span>{loginMutation.isPending ? "Loading..." : "Login"}</span>
               </button>
             </form>
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

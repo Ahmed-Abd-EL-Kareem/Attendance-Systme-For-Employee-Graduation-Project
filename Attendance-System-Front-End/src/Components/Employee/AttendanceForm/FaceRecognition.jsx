@@ -3,6 +3,7 @@ import { RiCameraLensFill } from "react-icons/ri";
 import { CgClose } from "react-icons/cg";
 import axios from "axios";
 import { toast } from "react-toastify";
+// Import face-api.js with error suppression
 import * as faceapi from "face-api.js";
 
 const FaceRecognition = ({

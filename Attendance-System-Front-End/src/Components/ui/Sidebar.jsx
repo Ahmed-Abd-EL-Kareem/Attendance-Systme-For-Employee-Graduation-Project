@@ -1,6 +1,6 @@
 import { LayoutDashboard } from "lucide-react";
 import React, { useState } from "react";
-import { adminDashBoard, employeeDashBoard } from "./Data/data";
+import { adminDashBoard, employeeDashBoard } from "../Data/data";
 import { FaAddressCard, FaPaste } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 

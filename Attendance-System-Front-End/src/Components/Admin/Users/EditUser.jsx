@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Head from "../../Head";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
-import Loading from "../../Loading";
-import SmallLoad from "../../SmallLoad";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
+import SmallLoad from "../../ui/SmallLoad";
 // import { UGetSharedRowData } from "./User";
 
 const EditUsers = ({ id1 }) => {
@@ -183,7 +183,6 @@ const EditUsers = ({ id1 }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

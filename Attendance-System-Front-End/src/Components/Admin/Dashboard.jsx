@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import Head from "../Head";
-import DashCard from "./DashCard";
 import { ArrowRightLeft, Building } from "lucide-react";
 import { FaClipboardUser } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Head from "../ui/Head";
+import DashCard from "./DashCard";
 
 const Dashboard = ({
   lenEmp,
@@ -27,10 +27,8 @@ const Dashboard = ({
           theme: "colored",
         });
       }
-      // حذف الرسالة من localStorage بعد عرضها
-      setTimeout(() => {
-        localStorage.removeItem("loginToast");
-      }, 6000);
+      // حذف الرسالة من localStorage فوراً بعد عرضها
+      localStorage.removeItem("loginToast");
     }
 
     // إعداد الإعدادات الافتراضية لـ axios
@@ -162,7 +160,6 @@ const Dashboard = ({
             </div>
           </div>
         </div>
-        <ToastContainer />
       </div>
     </>
   );

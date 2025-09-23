@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import MapBox from "./MapBox";
-import Head from "../../Head";
 import FaceRecognition from "./FaceRecognition";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MapBox from "./MapBox";
+import Head from "../../ui/Head";
 
 const AttendanceForm = ({ employee }) => {
   const [isLocationValid, setIsLocationValid] = useState(false);
@@ -20,7 +20,8 @@ const AttendanceForm = ({ employee }) => {
     if (loginToast) {
       const { message, type } = JSON.parse(loginToast);
       toast[type](message, { theme: "colored" });
-      setTimeout(() => localStorage.removeItem("loginToast"), 6000);
+      // Remove immediately after showing to prevent duplicate toasts
+      localStorage.removeItem("loginToast");
     }
     const storedEmployeeId = localStorage.getItem("employeeId");
     if (storedEmployeeId) {

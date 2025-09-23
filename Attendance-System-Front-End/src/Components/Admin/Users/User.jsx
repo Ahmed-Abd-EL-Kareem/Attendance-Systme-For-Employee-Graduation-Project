@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Head from "../../Head";
+import Head from "../../ui/Head";
 import Table from "../../Table/Table";
 import { columns } from "../../Data/UserColumns";
 

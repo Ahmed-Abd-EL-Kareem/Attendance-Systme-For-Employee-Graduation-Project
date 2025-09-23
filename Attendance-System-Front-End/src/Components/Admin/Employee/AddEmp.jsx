@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import Head from "../../Head";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
-// import DData from "../../Data/DepartData.json";
-// import SData from "../../Data/ShiftData.json";
-import axios from "axios";
-import SmallLoad from "../../SmallLoad";
+import { toast } from "react-toastify";
+import Head from "../../ui/Head";
+import SmallLoad from "../../ui/SmallLoad";
+import { useCreateEmployee } from "../../../hooks/useApiQueries";
 
-const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
-  const [loading, setLoading] = useState(false);
+const AddEmp = ({ departments, shifts, id }) => {
   const [empName, setEmpName] = useState("");
   const [img, setImg] = useState("");
   const [gender, setGender] = useState("");
@@ -20,10 +17,9 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
   const [date, setDate] = useState("");
   const [department, setDepartment] = useState("");
   const navigate = useNavigate();
-  // const notify = () =>
-  //   toast.success("New Employee Added!!", {
-  //     theme: "colored",
-  //   });
+
+  // Use React Query mutation
+  const createEmployeeMutation = useCreateEmployee();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,61 +35,32 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
     if (!img) missingFields.push("Employee Image");
 
     if (missingFields.length > 0) {
-      toast.error(`Please enter: ${missingFields.join(", ")}`, {
-        theme: "colored",
-      });
+      // This will be handled by the mutation's onError
       return;
     }
 
-    setLoading(true);
+    const formData = new FormData();
+    formData.append("name", empName);
+    formData.append("gender", gender);
+    formData.append("dof", dof);
+    formData.append("shift", shift);
+    formData.append("date", date);
+    const departmentId = departments.find((d) => d.name === department)._id;
+    formData.append("department", departmentId);
 
-    try {
-      const formData = new FormData();
-      formData.append("name", empName);
-      formData.append("gender", gender);
-      formData.append("dof", dof);
-      formData.append("shift", shift);
-      formData.append("date", date);
-      const departmentId = departments.find((d) => d.name === department)._id;
-      formData.append("department", departmentId);
-
-      if (img && img.startsWith("data:image")) {
-        const response = await fetch(img);
-        const blob = await response.blob();
-        formData.append("image", blob, "image.jpg");
-      }
-
-      await axios.post(
-        // "https://90-attendance-system-back-end.vercel.app/api/v1/employees",
-        `https://90-attendance-system-back-end.vercel.app/api/v1/employees`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      toast.success("Employee added successfully!", {
-        theme: "colored",
-      });
-      setLoading(false);
-      setTimeout(() => {
-        navigate(`/admin/${id}/employee`);
-      }, 5000);
-      // تحديث البيانات في جميع المسارات
-      if (onUpdateSuccess) {
-        await onUpdateSuccess();
-      }
-    } catch (error) {
-      console.error("Error adding employee:", error);
-      toast.error("Failed to add employee", {
-        theme: "colored",
-      });
-    } finally {
-      setLoading(false);
+    if (img && img.startsWith("data:image")) {
+      const response = await fetch(img);
+      const blob = await response.blob();
+      formData.append("image", blob, "image.jpg");
     }
+
+    createEmployeeMutation.mutate(formData, {
+      onSuccess: () => {
+        setTimeout(() => {
+          navigate(`/admin/${id}/employee`);
+        }, 2000);
+      },
+    });
   };
 
   const handleImageChange = (e) => {
@@ -269,9 +236,9 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
                   <button
                     type="submit"
                     className="button d-flex"
-                    disabled={loading}
+                    disabled={createEmployeeMutation.isPending}
                   >
-                    {loading ? (
+                    {createEmployeeMutation.isPending ? (
                       <>
                         <SmallLoad /> Saving...
                       </>
@@ -292,7 +259,6 @@ const AddEmp = ({ departments, shifts, onUpdateSuccess, id }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

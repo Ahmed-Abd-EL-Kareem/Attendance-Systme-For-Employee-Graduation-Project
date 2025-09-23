@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { columns } from "../../Data/EmpColumns";
-import Table from "../../Table/Table";
-import Head from "../../Head";
+// import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
+import { columns } from "../../Data/EmpColumns";
+import Table from "../../Table/Table";
+import Head from "../../ui/Head";
 
 const Employee = ({ employees, id }) => {
   const [data, setData] = useState([]);

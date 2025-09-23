@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Head from "../../Head";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
-import Loading from "../../Loading";
-import SmallLoad from "../../SmallLoad";
+import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
+import SmallLoad from "../../ui/SmallLoad";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -193,7 +193,6 @@ const ChangePassword = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };
