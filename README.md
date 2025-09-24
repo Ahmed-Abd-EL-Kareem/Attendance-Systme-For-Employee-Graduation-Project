@@ -23,14 +23,32 @@ Face Gate is a graduation project for an employee attendance system based on fac
 
 ### Technologies Used
 
-- **Backend:** Node.js, Express.js
-- **Frontend:** React.js
+- **Backend:** Node.js, Express.js, MongoDB, Mongoose, JWT (jsonwebtoken), Multer, Cloudinary
+- **Frontend:** React.js, React Router, React Query, React-Bootstrap/Bootstrap, React Toastify, React Table, Lucide Icons
 - **Face Recognition:** face-api.js
-- **Database:** (JSON files for demo, can be replaced with MongoDB)
+- **Maps:** Mapbox GL JS
+- **Build Tools:** CRACO (Create React App Configuration Override)
+- **Data Storage (Demo):** JSON files (can be replaced with MongoDB in production)
 
 ### Live Demo
 
 You can try the system online here: [https://attendance-system-mu.vercel.app/](https://attendance-system-mu.vercel.app/)
+
+### Demo Admin Login
+
+- Username: `it145`
+- Password: `newpassword`
+
+### How to Try Face Recognition
+
+1. Log in as admin using the credentials above.
+2. Go to the Employee page and create a new employee (if needed).
+3. Go to the Users page and create an account for that employee (username/password).
+4. Log out, then return to the Login page and sign in with the newly created employee account.
+5. After login, open the Attendance form to test the face recognition model.
+6. Allow camera permissions when prompted by the browser.
+
+Note: Edit/Delete actions for Departments, Shifts, Employees, and Accounts are disabled in the demo to keep the shared database safe.
 
 ---
 
@@ -49,13 +67,31 @@ You can try the system online here: [https://attendance-system-mu.vercel.app/](h
 
 ### التقنيات المستخدمة
 
-- **الخلفية:** Node.js, Express.js
-- **الواجهة الأمامية:** React.js
+- **الخلفية (Backend):** Node.js, Express.js, MongoDB, Mongoose, JWT (jsonwebtoken), Multer, Cloudinary
+- **الواجهة الأمامية (Frontend):** React.js, React Router, React Query, React-Bootstrap/Bootstrap, React Toastify, React Table, Lucide Icons
 - **التعرف على الوجه:** face-api.js
-- **قاعدة البيانات:** (ملفات JSON للتجربة، ويمكن استبدالها بـ MongoDB)
+- **الخرائط:** Mapbox GL JS
+- **أدوات البناء:** CRACO (تخصيص Create React App)
+- **التخزين (نسخة التجربة):** ملفات JSON (ويمكن استبدالها بـ MongoDB في بيئة الإنتاج)
 
 ### تجربة النظام مباشرة
 
 يمكنك تجربة النظام من خلال الرابط التالي: [https://attendance-system-mu.vercel.app/](https://attendance-system-mu.vercel.app/)
+
+### بيانات دخول المدير للتجربة
+
+- اسم المستخدم: `it145`
+- كلمة المرور: `newpassword`
+
+### طريقة تجربة التعرف على الوجه
+
+1. سجِّل الدخول كمسؤول باستخدام البيانات أعلاه.
+2. انتقل إلى صفحة الموظفين وقم بإنشاء موظف جديد (إن لزم).
+3. انتقل إلى صفحة المستخدمين وأنشئ حساباً لذلك الموظف (اسم مستخدم وكلمة مرور).
+4. سجِّل الخروج، ثم عُد إلى صفحة تسجيل الدخول وسجِّل الدخول بالحساب الذي أنشأته للتو.
+5. بعد تسجيل الدخول، افتح نموذج الحضور لتجربة نموذج التعرف على الوجه.
+6. عند ظهور طلب إذن الكاميرا من المتصفح، اسمح بالوصول.
+
+ملاحظة: تم تعطيل عمليات التعديل/الحذف للأقسام والورديات والموظفين والحسابات في نسخة التجربة للحفاظ على سلامة قاعدة البيانات المشتركة.
 
 ---

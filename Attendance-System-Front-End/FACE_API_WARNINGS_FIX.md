@@ -81,3 +81,4 @@ These warnings only appear in development. Your production build (`npm run build
 
 If you continue to have issues, the warnings are cosmetic and don't affect functionality. Your attendance system with face recognition should work perfectly despite these warnings.
 
+

@@ -54,18 +54,14 @@ const EditEmp = ({ onUpdateSuccess }) => {
         //   "http://127.0.0.1:8000/api/v1/shifts",
         //   { withCredentials: true }
         // );
-        const shiftsData = shifts;
 
         // تحميل بيانات الأقسام
         // const departmentsResponse = await axios.get(
         //   "http://127.0.0.1:8000/api/v1/departments",
         //   { withCredentials: true }
         // );
-        const departmentsData = departments;
 
         setEmployeeData(employeeData);
-        setShifts(shiftsData);
-        setDepartments(departmentsData);
 
         // تعيين بيانات النموذج
         setEmpId(employeeData.emId);
