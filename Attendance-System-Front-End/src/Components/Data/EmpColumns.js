@@ -59,8 +59,8 @@ export const columns = [
   },
   {
     Header: "Actions",
-    Cell: ({ row }) => {
-      const { id } = useParams();
+    Cell: () => {
+      useParams();
       return (
         <>
           <button

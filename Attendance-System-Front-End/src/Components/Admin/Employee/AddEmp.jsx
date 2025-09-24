@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import Head from "../../ui/Head";
 import SmallLoad from "../../ui/SmallLoad";
-import { useCreateEmployee } from "../../../hooks/useApiQueries";
+import {
+  useCreateEmployee,
+  useDepartments,
+  useShifts,
+} from "../../../hooks/useApiQueries";
 
-const AddEmp = ({ departments, shifts, id }) => {
+const AddEmp = () => {
   const [empName, setEmpName] = useState("");
   const [img, setImg] = useState("");
   const [gender, setGender] = useState("");
@@ -17,6 +21,9 @@ const AddEmp = ({ departments, shifts, id }) => {
   const [date, setDate] = useState("");
   const [department, setDepartment] = useState("");
   const navigate = useNavigate();
+  const { adminId: id } = useParams();
+  const { data: departments = [] } = useDepartments();
+  const { data: shifts = [] } = useShifts();
 
   // Use React Query mutation
   const createEmployeeMutation = useCreateEmployee();

@@ -4,10 +4,12 @@ import Table from "../../Table/Table";
 import { columns } from "../../Data/UserColumns";
 
 import { Link, useNavigate } from "react-router-dom";
+import { useEmployees } from "../../../hooks/useApiQueries";
 import { FaCirclePlus } from "react-icons/fa6";
 
-const User = ({ employees }) => {
+const User = () => {
   const [data, setData] = useState([]);
+  const { data: employees = [] } = useEmployees();
   // const navigate = useNavigate();
 
   useEffect(() => {

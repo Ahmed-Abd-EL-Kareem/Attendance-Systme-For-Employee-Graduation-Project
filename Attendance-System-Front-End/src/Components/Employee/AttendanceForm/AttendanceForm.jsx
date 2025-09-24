@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import FaceRecognition from "./FaceRecognition";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MapBox from "./MapBox";
 import Head from "../../ui/Head";
+import Loading from "../../ui/Loading";
+import { useParams } from "react-router-dom";
+import {
+  useEmployee,
+  useTimeIn,
+  useTimeOut,
+} from "../../../hooks/useApiQueries";
 
-const AttendanceForm = ({ employee }) => {
+const AttendanceForm = () => {
   const [isLocationValid, setIsLocationValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [employeeId, setEmployeeId] = useState(null);
@@ -14,6 +20,17 @@ const AttendanceForm = ({ employee }) => {
   const [employeeName, setEmployeeName] = useState("");
   const [verificationStatus, setVerificationStatus] = useState("pending");
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const { employeeId: idFromRoute } = useParams();
+  const {
+    data: employee,
+    isLoading: employeeLoading,
+    error,
+  } = useEmployee(
+    idFromRoute || JSON.parse(localStorage.getItem("employeeId"))
+  );
+  const timeInMutation = useTimeIn();
+  const timeOutMutation = useTimeOut();
 
   useEffect(() => {
     const loginToast = localStorage.getItem("loginToast");
@@ -23,18 +40,9 @@ const AttendanceForm = ({ employee }) => {
       // Remove immediately after showing to prevent duplicate toasts
       localStorage.removeItem("loginToast");
     }
-    const storedEmployeeId = localStorage.getItem("employeeId");
-    if (storedEmployeeId) {
-      setEmployeeId(JSON.parse(storedEmployeeId));
-    }
-    const reportId = localStorage.getItem("reportId");
-    const reportExpiry = localStorage.getItem("reportExpiry");
-    if (reportId && reportExpiry) {
-      if (new Date() > new Date(reportExpiry)) {
-        localStorage.removeItem("reportId");
-        localStorage.removeItem("reportExpiry");
-      }
-    }
+    const effectiveId =
+      idFromRoute || JSON.parse(localStorage.getItem("employeeId"));
+    if (effectiveId) setEmployeeId(effectiveId);
   }, []);
 
   const handleFaceRecognition = useCallback((result) => {
@@ -88,29 +96,9 @@ const AttendanceForm = ({ employee }) => {
     setLoading(true);
     setIsProcessing(true);
     try {
-      const response = await axios.post(
-        "https://90-attendance-system-back-end.vercel.app/api/v1/reports",
-        {
-          date: new Date().toISOString().split("T")[0],
-          notes: "",
-          timeIn: getCurrentTime(),
-          statusIn: "Checked",
-          employee: employeeId,
-        },
-        { withCredentials: true }
-      );
-      if (response.data.status === "success") {
-        toast.success("Check-in successful", { theme: "colored" });
-        const reportId = response.data.data.report._id;
-        localStorage.setItem("reportId", reportId);
-        const expiryDate = new Date();
-        expiryDate.setHours(expiryDate.getHours() + 12);
-        localStorage.setItem("reportExpiry", expiryDate.toISOString());
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Error checking in", {
-        theme: "colored",
-      });
+      await timeInMutation.mutateAsync({ employeeId });
+    } catch (e) {
+      // Toast handled in hook
     } finally {
       setLoading(false);
       setIsProcessing(false);
@@ -133,29 +121,9 @@ const AttendanceForm = ({ employee }) => {
     setLoading(true);
     setIsProcessing(true);
     try {
-      const reportId = localStorage.getItem("reportId");
-      const reportExpiry = localStorage.getItem("reportExpiry");
-      if (!reportId || new Date() > new Date(reportExpiry)) {
-        toast.error("No valid check-in found", { theme: "colored" });
-        return;
-      }
-      const response = await axios.patch(
-        `https://90-attendance-system-back-end.vercel.app/api/v1/reports/${reportId}`,
-        {
-          timeOut: getCurrentTime(),
-          statusOut: "Checked",
-        },
-        { withCredentials: true }
-      );
-      if (response.data.status === "success") {
-        toast.success("Check-out successful", { theme: "colored" });
-        localStorage.removeItem("reportId");
-        localStorage.removeItem("reportExpiry");
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Error checking out", {
-        theme: "colored",
-      });
+      await timeOutMutation.mutateAsync({ employeeId });
+    } catch (e) {
+      // Toast handled in hook
     } finally {
       setLoading(false);
       setIsProcessing(false);
@@ -164,6 +132,18 @@ const AttendanceForm = ({ employee }) => {
 
   // استخراج رابط صورة الموظف
   const employeePhoto = employee?.image || null;
+
+  if (employeeLoading) return <Loading />;
+  if (error) {
+    return (
+      <div className="attendance w-100 mt-6">
+        <div className="dash container">
+          <Head title="Attendance Form" />
+          <div className="alert alert-danger">Failed to load employee data</div>
+        </div>
+      </div>
+    );
+  }
 
   // (إزالة جميع console.log)
 

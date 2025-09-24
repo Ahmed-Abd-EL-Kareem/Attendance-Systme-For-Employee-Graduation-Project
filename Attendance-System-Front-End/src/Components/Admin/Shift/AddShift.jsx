@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,8 +7,9 @@ import Head from "../../ui/Head";
 import SmallLoad from "../../ui/SmallLoad";
 import { useCreateShift } from "../../../hooks/useApiQueries";
 
-const AddShift = ({ id }) => {
+const AddShift = () => {
   const navigate = useNavigate();
+  const { adminId: id } = useParams();
   const [shift, setShift] = useState({
     startTime: "",
     endTime: "",

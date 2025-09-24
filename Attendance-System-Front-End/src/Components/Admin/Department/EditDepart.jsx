@@ -10,8 +10,9 @@ import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
 import SmallLoad from "../../ui/SmallLoad";
 
-const EditDepart = ({ onUpdateSuccess, id1 }) => {
+const EditDepart = ({ onUpdateSuccess }) => {
   const { id } = useParams();
+  const { adminId } = useParams();
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [department, setDepartment] = useState([]);
@@ -94,7 +95,7 @@ const EditDepart = ({ onUpdateSuccess, id1 }) => {
         <div className="container">
           <Head title="DEPARTMENT" />
           <div className="back_button mb-2">
-            <Link to={`/admin/${id1}/department`}>
+            <Link to={`/admin/${adminId}/department`}>
               <button className="pushable">
                 <span className="shadow" />
                 <span className="edge" />

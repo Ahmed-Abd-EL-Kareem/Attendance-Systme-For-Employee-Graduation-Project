@@ -8,6 +8,7 @@ import { useLogin } from "../../hooks/useApiQueries";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "../../hooks/useApiQueries";
 import { apiService } from "../../services/api";
+import SmallLoad from "./SmallLoad";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,14 +54,14 @@ const Login = () => {
         if (response.data.status === "success") {
           if (response.data.data.account.role === "admin") {
             // Prefetch dashboard counts before navigating
+            navigate(
+              `/admin/${response.data.data.account.employee._id}/dashboard`
+            );
             await queryClient.prefetchQuery({
               queryKey: queryKeys.dashboard,
               queryFn: () => apiService.dashboard.getCounts(),
               staleTime: 2 * 60 * 1000,
             });
-            navigate(
-              `/admin/${response.data.data.account.employee._id}/dashboard`
-            );
           } else {
             navigate(
               `/employee/${response.data.data.account.employee._id}/attendance-form`
@@ -148,7 +149,15 @@ const Login = () => {
                 type="submit"
                 disabled={loginMutation.isPending}
               >
-                <span>{loginMutation.isPending ? "Loading..." : "Login"}</span>
+                <span>
+                  {loginMutation.isPending ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <SmallLoad /> Login...
+                    </div>
+                  ) : (
+                    "Login"
+                  )}
+                </span>
               </button>
             </form>
           </div>

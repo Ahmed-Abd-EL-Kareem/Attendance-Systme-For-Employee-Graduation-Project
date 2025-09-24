@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import Data from "../../Data/DepartData.json";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css";
 import { columns } from "../../Data/DepartTable";
 import Table from "../../Table/Table";
 import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
+import { useDepartments } from "../../../hooks/useApiQueries";
 // let sharedRowData = null; // Placeholder for the clicked row's data
 // const setSharedRowData = (data) => {
 //   sharedRowData = data;
 // };
 // export const DGetSharedRowData = () => sharedRowData;
-const Department = ({ departments, id }) => {
-  const [loading, setLoading] = useState(true);
+const Department = () => {
   const [searchItem, setSearchItem] = useState("");
+  const { data: departments = [], isLoading } = useDepartments();
 
-  useEffect(() => {
-    if (departments) {
-      setLoading(false);
-    }
-  }, [departments]);
-
-  if (loading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   // const handleEdit = (rowData) => {
   //   setSharedRowData(rowData);

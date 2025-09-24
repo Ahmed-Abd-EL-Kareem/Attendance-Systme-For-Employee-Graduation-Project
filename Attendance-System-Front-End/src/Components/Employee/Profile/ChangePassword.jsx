@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
-import axios from "axios";
 import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
 import SmallLoad from "../../ui/SmallLoad";
+import { useUpdateMyPassword } from "../../../hooks/useApiQueries";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -13,6 +13,7 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const updateMyPassword = useUpdateMyPassword();
 
   useEffect(() => {
     setIsLoading(false);
@@ -41,39 +42,16 @@ const ChangePassword = () => {
 
     setLoading(true);
     try {
-      const response = await axios.patch(
-        `https://90-attendance-system-back-end.vercel.app/api/v1/accounts/updateMyPassword`,
-        {
-          passwordCurrent: currentPassword,
-          password: newPassword,
-          passwordConfirm: confirmPassword,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.data.status === "success") {
-        toast.success("Password updated successfully", {
-          theme: "colored",
-        });
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-      }
-    } catch (error) {
-      if (error.response) {
-        toast.error(error.response.data.message || "Error updating password", {
-          theme: "colored",
-        });
-      } else {
-        toast.error("Connection error", {
-          theme: "colored",
-        });
-      }
+      await updateMyPassword.mutateAsync({
+        passwordCurrent: currentPassword,
+        password: newPassword,
+        passwordConfirm: confirmPassword,
+      });
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (e) {
+      // toast handled inside hook
     } finally {
       setLoading(false);
     }

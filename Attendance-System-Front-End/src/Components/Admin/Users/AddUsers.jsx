@@ -8,8 +8,8 @@ import Loading from "../../ui/Loading";
 import SmallLoad from "../../ui/SmallLoad";
 import { useEmployee, useCreateAccount } from "../../../hooks/useApiQueries";
 
-const AddUsers = ({ id1 }) => {
-  const { id } = useParams();
+const AddUsers = () => {
+  const { id, adminId: id1 } = useParams();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");

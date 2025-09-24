@@ -462,6 +462,7 @@ sub {
 /* -------------------------- DEPARTMENT -------------------------- */
 
 .icon {
+  border: none;
   border-radius: 50%;
   display: inline-flex;
   width: 30px;

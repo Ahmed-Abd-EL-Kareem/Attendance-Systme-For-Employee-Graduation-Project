@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,20 +6,13 @@ import { columns } from "../../Data/ShiftColumns";
 import Table from "../../Table/Table";
 import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
+import { useShifts } from "../../../hooks/useApiQueries";
 
-const Shift = ({ shifts, id }) => {
-  const [loading, setLoading] = useState(true);
+const Shift = () => {
   const [searchItem, setSearchItem] = useState("");
+  const { data: shifts = [], isLoading } = useShifts();
 
-  useEffect(() => {
-    if (shifts) {
-      setLoading(false);
-    }
-  }, [shifts]);
-
-  if (loading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   return (
     <>

@@ -3,20 +3,34 @@ import { ArrowRightLeft, Building } from "lucide-react";
 import { FaClipboardUser } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Head from "../ui/Head";
 import DashCard from "./DashCard";
+import Loading from "../ui/Loading";
+import {
+  useDashboardCounts,
+  useEmployeeCountsByDepartment,
+  useEmployeeCountsByShift,
+} from "../../hooks/useApiQueries";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiService } from "../../services/api";
+import { queryKeys } from "../../hooks/useApiQueries";
 
-const Dashboard = ({
-  lenEmp,
-  lenDep,
-  lenShift,
-  lenAccount,
-  empByDep,
-  empByShift,
-  id,
-}) => {
+const Dashboard = () => {
+  const { adminId: id } = useParams();
+
+  const { data: dashboardCounts, isLoading: dashboardLoading } =
+    useDashboardCounts();
+  const { data: empByDep = [], isLoading: empByDepLoading } =
+    useEmployeeCountsByDepartment();
+  const { data: empByShift = [], isLoading: empByShiftLoading } =
+    useEmployeeCountsByShift();
+  const queryClient = useQueryClient();
+
+  const lenEmp = dashboardCounts?.employee ?? 0;
+  const lenDep = dashboardCounts?.department ?? 0;
+  const lenShift = dashboardCounts?.shift ?? 0;
+  const lenAccount = dashboardCounts?.user ?? 0;
   useEffect(() => {
     // التحقق من وجود رسالة Toast مخزنة
     const storedToast = localStorage.getItem("loginToast");
@@ -31,9 +45,56 @@ const Dashboard = ({
       localStorage.removeItem("loginToast");
     }
 
-    // إعداد الإعدادات الافتراضية لـ axios
-    axios.defaults.withCredentials = true;
+    // no-op
   }, []);
+
+  // After dashboard loads, prefetch other resources sequentially (one by one)
+  useEffect(() => {
+    const prefetchSequentially = async () => {
+      try {
+        if (!dashboardCounts) return;
+        // Employees
+        await queryClient.prefetchQuery({
+          queryKey: queryKeys.employees,
+          queryFn: () => apiService.employees.getAll(),
+          staleTime: 5 * 60 * 1000,
+        });
+        // Departments
+        await queryClient.prefetchQuery({
+          queryKey: queryKeys.departments,
+          queryFn: () => apiService.departments.getAll(),
+          staleTime: 5 * 60 * 1000,
+        });
+        // Shifts
+        await queryClient.prefetchQuery({
+          queryKey: queryKeys.shifts,
+          queryFn: () => apiService.shifts.getAll(),
+          staleTime: 5 * 60 * 1000,
+        });
+        // Accounts
+        await queryClient.prefetchQuery({
+          queryKey: queryKeys.accounts,
+          queryFn: () => apiService.accounts.getAll(),
+          staleTime: 5 * 60 * 1000,
+        });
+        // Reports (no params => default set)
+        await queryClient.prefetchQuery({
+          queryKey: queryKeys.reports({}),
+          queryFn: () => apiService.reports.getAll({}),
+          staleTime: 2 * 60 * 1000,
+        });
+      } catch (e) {
+        // ignore prefetch errors to avoid blocking UI
+      }
+    };
+
+    prefetchSequentially();
+  }, [dashboardCounts, queryClient]);
+
+  // Block UI until all dashboard data fully loaded
+  if (dashboardLoading || empByDepLoading || empByShiftLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

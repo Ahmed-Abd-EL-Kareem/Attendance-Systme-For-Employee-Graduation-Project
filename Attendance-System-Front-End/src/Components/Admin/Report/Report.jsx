@@ -6,9 +6,10 @@ import Table from "../../Table/Table";
 import { columns } from "../../Data/ReportColumns";
 import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
+import { useDepartments } from "../../../hooks/useApiQueries";
 import SmallLoad from "../../ui/SmallLoad";
 
-const Report = ({ reportData, departments }) => {
+const Report = () => {
   const [isByDepartment, setIsByDepartment] = useState(false); // Default to "By Department"
 
   const handleToggle = (event) => {
@@ -21,9 +22,10 @@ const Report = ({ reportData, departments }) => {
     // Example: Trigger API call based on filter
     // fetchData(event.target.checked ? "department" : "employee");
   };
-  const [reports, setReports] = useState(reportData);
+  const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(false);
   const [department, setDepartment] = useState("");
+  const { data: departments = [], isLoading: depLoading } = useDepartments();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   // const [filteredData, setFilteredData] = useState(data.reports);
@@ -102,6 +104,8 @@ const Report = ({ reportData, departments }) => {
   // if (loading) {
   //   return <Loading />;
   // }
+
+  if (depLoading) return <Loading />;
 
   return (
     // <div className="report ms-1 mt-6 w-100">

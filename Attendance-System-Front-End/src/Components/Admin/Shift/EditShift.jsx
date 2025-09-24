@@ -9,8 +9,8 @@ import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
 import SmallLoad from "../../ui/SmallLoad";
 
-const EditShift = ({ onUpdateSuccess, id1 }) => {
-  const { id } = useParams();
+const EditShift = ({ onUpdateSuccess }) => {
+  const { id, adminId: id1 } = useParams();
   // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

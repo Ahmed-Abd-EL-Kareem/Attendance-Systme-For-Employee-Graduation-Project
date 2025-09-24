@@ -1,9 +1,19 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Head from "../../ui/Head";
-// import { toast, ToastContainer } from "react-toastify";
+import Loading from "../../ui/Loading";
+import { useParams } from "react-router-dom";
+import { useEmployee } from "../../../hooks/useApiQueries";
 
-const Profile = ({ employee }) => {
+const Profile = () => {
+  const { employeeId: idFromRoute } = useParams();
+  const {
+    data: employee,
+    isLoading,
+    error,
+  } = useEmployee(
+    idFromRoute || JSON.parse(localStorage.getItem("employeeId"))
+  );
   // const [loading, setLoading] = useState(true);
   // const [employee, setEmployee] = useState(null);
 
@@ -15,7 +25,8 @@ const Profile = ({ employee }) => {
   //   return <Loading />;
   // }
 
-  if (!employee) {
+  if (isLoading) return <Loading />;
+  if (error || !employee) {
     return (
       <div className="profile mt-6 w-100">
         <div className="container">

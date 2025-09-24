@@ -9,14 +9,16 @@ import Head from "../../ui/Head";
 import Loading from "../../ui/Loading";
 import SmallLoad from "../../ui/SmallLoad";
 
-const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
-  const { id } = useParams();
+import { useDepartments, useShifts } from "../../../hooks/useApiQueries";
+
+const EditEmp = ({ onUpdateSuccess }) => {
+  const { id, adminId: id1 } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [employeeData, setEmployeeData] = useState(null);
-  const [shifts, setShifts] = useState([]);
-  const [departments, setDepartments] = useState([]);
+  const { data: shifts = [] } = useShifts();
+  const { data: departments = [] } = useDepartments();
   const [empId, setEmpId] = useState("");
   const [empName, setEmpName] = useState("");
   const [img, setImg] = useState("");
@@ -52,14 +54,14 @@ const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
         //   "http://127.0.0.1:8000/api/v1/shifts",
         //   { withCredentials: true }
         // );
-        const shiftsData = EmpShifts;
+        const shiftsData = shifts;
 
         // تحميل بيانات الأقسام
         // const departmentsResponse = await axios.get(
         //   "http://127.0.0.1:8000/api/v1/departments",
         //   { withCredentials: true }
         // );
-        const departmentsData = EmpDepartments;
+        const departmentsData = departments;
 
         setEmployeeData(employeeData);
         setShifts(shiftsData);
@@ -92,7 +94,7 @@ const EditEmp = ({ EmpDepartments, EmpShifts, onUpdateSuccess, id1 }) => {
     if (id) {
       fetchData();
     }
-  }, [id, navigate, EmpDepartments, EmpShifts]);
+  }, [id, navigate, departments, shifts]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

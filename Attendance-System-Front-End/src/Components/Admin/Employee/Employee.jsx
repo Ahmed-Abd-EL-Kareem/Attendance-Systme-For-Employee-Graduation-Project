@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 // import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import { columns } from "../../Data/EmpColumns";
 import Table from "../../Table/Table";
 import Head from "../../ui/Head";
+import { useEmployees } from "../../../hooks/useApiQueries";
+import { useParams } from "react-router-dom";
 
-const Employee = ({ employees, id }) => {
+const Employee = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  const { adminId: id } = useParams();
+
+  const { data: employees = [] } = useEmployees();
 
   useEffect(() => {
     setData(employees);
